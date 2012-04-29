@@ -1,6 +1,13 @@
-A location/network-aware Place Search Framework
+Ulysses is a location/network-aware Place Search Framework
+[Place refers to GooglePlaces]
 
-Place refers to GooglePlaces
+Why "Ulysses" ? Because Ulysses is latin name of Homer's Odyssey protagonist. 
+A famous navigator, explorer, curious man.
+He always knews his position, seeing stars and so on, so we could says he is "location-aware".
+And he always was aware about his means of transport, its ships: so this is "network-aware" property.
+And when he had land to any coast, in forced way or not, he always wanted to explore, searching for anything.  
+
+And so Ulysses component, an android component for curious people, but (always?) awareness ;D 
 
 usage (requires roboguice):
 
