@@ -42,7 +42,7 @@ really, UlyssesSearcher uses these 3 delegates for its stuffs.
 a watch inside implementation:
 
 every delegates interface extends others interfaces, combining all them together in order to provide a focused interface for particular job:
-this super-interfaces comes from another framework, diane (http://github.com/k0smik0/diane ), which provides a set of interfaces and abstract 
+this super-interfaces comes from another framework, diane (http://github.com/k0smik0/diane ) which provides a set of interfaces and abstract 
 classes for location and network searching.
 Diane is result-agnostic (all framework is generics based) VS ulysses which is focused on googleplaces
 So, Diane "only" provides algorithms for searching using last recent location (and to retrieve it) and/or using network
