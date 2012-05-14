@@ -27,7 +27,7 @@ import com.androidquery.AQuery;
 import net.iubris.socrates.model.data.places.search.Place;
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.PlaceHere;
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -36,27 +36,27 @@ import android.widget.TextView;
 
 public class PlacesHereListAdapter extends ArrayAdapter<PlaceHere> {
 
-	private final FragmentActivity fragmentActivity;
+	private final Activity activity;
 	private final int textViewResourceId;
 	private AQuery aQuery;
 
-	public PlacesHereListAdapter(FragmentActivity fragmentActivity, int textViewResourceId, List<PlaceHere> places) {		
-		super(fragmentActivity, textViewResourceId,places);
+	public PlacesHereListAdapter(Activity activity, int textViewResourceId, List<PlaceHere> places) {		
+		super(activity, textViewResourceId,places);
 		
-		this.fragmentActivity = fragmentActivity;
+		this.activity = activity;
 		this.textViewResourceId = textViewResourceId;
-		this.aQuery = new AQuery(fragmentActivity);
+		this.aQuery = new AQuery(activity);
 		
-		fragmentActivity.setProgressBarIndeterminateVisibility(true);				
+		activity.setProgressBarIndeterminateVisibility(true);				
 	}
-	public PlacesHereListAdapter(FragmentActivity activity, int textViewResourceId) {
+	public PlacesHereListAdapter(Activity activity, int textViewResourceId) {
 		super(activity, textViewResourceId);
 		
-		this.fragmentActivity = activity;
+		this.activity = activity;
 		this.textViewResourceId = textViewResourceId;
-		this.aQuery = new AQuery(fragmentActivity);
+		this.aQuery = new AQuery(activity);
 		
-		fragmentActivity.setProgressBarIndeterminateVisibility(true);
+		activity.setProgressBarIndeterminateVisibility(true);
 	}
 	
 	@Override
@@ -67,7 +67,7 @@ public class PlacesHereListAdapter extends ArrayAdapter<PlaceHere> {
 			PlaceHolder placeHolder;
 			if(convertView == null){
 	            placeHolder = new PlaceHolder();            
-	            convertView = fragmentActivity.getLayoutInflater().inflate(textViewResourceId, null, false);
+	            convertView = activity.getLayoutInflater().inflate(textViewResourceId, null, false);
 	            
 	            placeHolder.icon = (ImageView) convertView.findViewById(R.id.icon);            
 				placeHolder.name = (TextView) convertView.findViewById(R.id.name_text_view);
@@ -95,7 +95,7 @@ public class PlacesHereListAdapter extends ArrayAdapter<PlaceHere> {
 	private void setImage(View convertView, ImageView icon, String iconUrl, int position) {
 		aQuery.recycle(convertView).id( icon ).image(iconUrl,true,true);
 		// last image => stop bar
-		if (position == getCount()-1) fragmentActivity.setProgressBarIndeterminateVisibility(false);
+		if (position == getCount()-1) activity.setProgressBarIndeterminateVisibility(false);
 	}
 	
 	@Override

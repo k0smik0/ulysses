@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="net/iubris/ulysses/controller/LocationNetworkAwareSearcher.java" kind="src" path="src/core"/>
-	<classpathentry kind="src" path="src/roboguice"/>
+	<classpathentry excluding="net/iubris/ulysses/_roboguice/progressdialog/annotations/ProgressDialogProviderForGetPlace.java|net/iubris/ulysses/asynctask/UlyssesRoboAsyncTaskSearchAndStartingActivity.java|net/iubris/ulysses/asynctask/UlyssesRoboAsyncTaskUseResults.java" kind="src" path="src/roboguice"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/google-places"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/aquery"/>
@@ -9,5 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/epicurus"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/android-compatibilty-v4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/roboguice"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

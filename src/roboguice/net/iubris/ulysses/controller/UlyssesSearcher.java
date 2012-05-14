@@ -22,9 +22,8 @@ package net.iubris.ulysses.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.iubris.diane.searcher.Searcher;
 import net.iubris.diane.searcher.locationaware.exceptions.location.LocationNotNewerStateException;
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationNullException;
+import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
 import net.iubris.diane.searcher.networkaware.exceptions.network.NoNetworkException;
 import net.iubris.kusor.updater.LocationUpdater;
 import net.iubris.ulysses.controller.delegates.cacheaware.IUlyssesCacheSearcherDelegate;
@@ -39,7 +38,7 @@ import com.google.inject.Inject;
 
 public class UlyssesSearcher 
 //implements LocationNetworkAwareSearcher<Void, List<PlaceHere>, Boolean, Boolean> {
-implements LocationUpdater, Searcher<Void, List<PlaceHere>> {
+implements LocationUpdater, IUlyssesSearcher {
 		
 	private final IUlyssesLocationSearcherDelegate locationSearcherDelegate;
 	private final IUlyssesNetworkSearcherDelegate networkSearcherDelegate;

@@ -21,12 +21,8 @@ package net.iubris.ulysses.controller.delegates.networkaware;
 
 import java.util.List;
 
-import com.google.inject.Inject;
-
-import android.location.Location;
-import android.net.ConnectivityManager;
 import net.iubris.diane.searcher.exceptions.SearchException;
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationNullException;
+import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
 import net.iubris.diane.searcher.networkaware.base.AbstractNetworkAwareSearcher;
 import net.iubris.diane.searcher.networkaware.exceptions.network.NoNetworkException;
 import net.iubris.diane.searcher.networkaware.exceptions.search.NetworkAwareSearchException;
@@ -41,6 +37,10 @@ import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.google.PlacesUnbelievableZeroResultStatusException;
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.network.PlacesNoNetworkException;
 import net.iubris.ulysses.model.PlaceHere;
+import android.location.Location;
+import android.net.ConnectivityManager;
+
+import com.google.inject.Inject;
 
 public class UlyssesNetworkSearcherDelegate extends
 		AbstractNetworkAwareSearcher<Void, List<PlaceHere>> 

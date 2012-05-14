@@ -20,13 +20,20 @@
 package net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.google;
 
 import net.iubris.diane.searcher.exceptions.SearchException;
-
+/**
+ * Map ZERO_RESULT from GooglePLaces Api request
+ * 
+ * @author "Massimiliano Leone - massimiliano.leone@iubris.net"
+ */
 public class PlacesUnbelievableZeroResultStatusException extends SearchException {
 	
 	private static final long serialVersionUID = 8592296267637386716L;
 
 	public PlacesUnbelievableZeroResultStatusException(String string) {
 		super(string);
+	}
+	public PlacesUnbelievableZeroResultStatusException(Throwable cause) {
+		super(cause);
 	}
 
 }

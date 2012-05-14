@@ -22,7 +22,7 @@ package net.iubris.ulysses.controller.delegates.networkaware.socrates;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationNullException;
+import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
 import net.iubris.socrates.detailer.PlaceDetailsRetriever;
 import net.iubris.socrates.detailer.exception.PlaceDetailsRetrieverException;
 import net.iubris.socrates.model.data.places.details.PlaceDetails;
@@ -37,6 +37,7 @@ import net.iubris.socrates.searcher.PlacesSearcher;
 import net.iubris.socrates.searcher.exception.PlacesSearcherException;
 import net.iubris.ulysses.model.PlaceHere;
 import android.location.Location;
+
 import com.google.inject.Inject;
 
 public class SocratesDelegate  {

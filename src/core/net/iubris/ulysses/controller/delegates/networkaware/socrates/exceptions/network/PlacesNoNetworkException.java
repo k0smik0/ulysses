@@ -26,6 +26,9 @@ public class PlacesNoNetworkException extends NoNetworkException {
 	public PlacesNoNetworkException(String string) {
 		super(string);
 	}
+	public PlacesNoNetworkException(Throwable cause) {
+		super(cause);
+	}
 	
 	private static final long serialVersionUID = 4930413813602225645L;
 }

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.iubris.diane.searcher.exceptions.SearchException;
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationNullException;
+import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
 import net.iubris.ulysses.model.PlaceHere;
 import android.location.Location;
 

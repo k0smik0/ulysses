@@ -21,10 +21,18 @@ package net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions
 
 import net.iubris.diane.searcher.exceptions.SearchException;
 
+/**
+ * Map OVER_QUOTA or INVALID_REQUEST or REQUEST_DENIED from GooglePlaces API
+ *  
+ * @author "Massimiliano Leone - massimiliano.leone@iubris.net"
+  */
 public class PlacesTyrannusStatusException extends SearchException {
 
 	public PlacesTyrannusStatusException(String message) {
 		super(message);
+	}
+	public PlacesTyrannusStatusException(Throwable cause) {
+		super(cause);
 	}
 	private static final long serialVersionUID = 7742158513201454837L;
 }

@@ -20,16 +20,15 @@
 package net.iubris.ulysses._roboguice.progressdialog.providers;
 
 
-import net.iubris.ulysses.R;
+import net.iubris.ulysses._roboguice.progressdialog.annotations.ProgressDialogSearchString;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.res.Resources;
 
-public class ProgressDialogProviderGetPlace
+public class ProgressDialogForGetPlaceProvider
 implements Provider<ProgressDialog> {
 //extends ProgressDialogProvider 
 	
@@ -38,17 +37,14 @@ implements Provider<ProgressDialog> {
 	//@InjectResource(name="net.iubris.ulysses:string/searching") private String searchingString;
 	//@InjectResource(name="searching") private String searchingString;
 	//@InjectResource(R.string.searching) 
-	private final String searchingString;
-	
 
-	private final Context context; 
+	private final Context context;
+	private final String searchingString;	 
 	
 	@Inject
-	public ProgressDialogProviderGetPlace(Context context, Resources resources) {
-		//this.resources = resources;
-		searchingString = resources.getString(R.string.searching);
+	public ProgressDialogForGetPlaceProvider(Context context, @ProgressDialogSearchString String searchingString) {
 		this.context = context;
-//Ln.d(resources);
+		this.searchingString = searchingString;
 	}
 
 	//@Override
