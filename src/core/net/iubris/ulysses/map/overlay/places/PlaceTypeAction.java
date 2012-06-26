@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * PlaceComparatorByAscendingDistance.java is part of 'Ulysses'
+ * PlaceTypeAction.java is part of 'Ulysses'
  * 
  * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,20 +17,19 @@
  * along with 'Ulysses' ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  ******************************************************************************/
-package net.iubris.ulysses.model.comparators;
+package net.iubris.ulysses.map.overlay.places;
 
-import java.util.Comparator;
-
+import net.iubris.hipparcos.overlay.places.PlaceItem;
+import net.iubris.hipparcos.overlay.places.PlaceItemizedOverlay;
 import net.iubris.ulysses.model.PlaceHere;
 
-public class PlaceComparatorByAscendingDistance implements Comparator<PlaceHere> {
-	@Override
-	public int compare(PlaceHere placeHere1, PlaceHere placeHere2) {
-		final float distance1 = placeHere1.getDistance();
-		final float distance2 = placeHere2.getDistance();
-		
-		if (distance1 > distance2) return 1;
-		if (distance1 < distance2) return -1;
-		return 0;
-	}	
+/**
+ * Interfacce 
+ * @author "Massimiliano Leone - massimiliano.leone@iubris.net"
+ *
+ * @param <Status>
+ * @param <PI>
+ */
+public interface PlaceTypeAction<Status, PI extends PlaceItem> {
+	Status act(PlaceHere placeHere, PlaceItemizedOverlay<PI> hereOverlay);
 }

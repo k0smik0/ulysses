@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * PlacesHereListAdapter.java is part of ulysses.
+ * PlacesHereListAdapter.java is part of 'Ulysses'
  * 
- * ulysses is free software; you can redistribute it and/or modify
+ * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
@@ -14,17 +14,15 @@
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with ulysses ; if not, write to the Free Software
+ * along with 'Ulysses' ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  ******************************************************************************/
-package net.iubris.ulysses.fragment.list.adapter;
+package net.iubris.ulysses.list.adapter;
 
 import java.util.Comparator;
 import java.util.List;
 
-import com.androidquery.AQuery;
-
-import net.iubris.socrates.model.data.places.search.Place;
+import net.iubris.socrates.model.data.place.search.Place;
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.PlaceHere;
 import android.app.Activity;
@@ -33,6 +31,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.androidquery.AQuery;
 
 public class PlacesHereListAdapter extends ArrayAdapter<PlaceHere> {
 

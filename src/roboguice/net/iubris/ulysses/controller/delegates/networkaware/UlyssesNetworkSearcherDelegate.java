@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * UlyssesNetworkSearcherDelegate.java is part of ulysses.
+ * UlyssesNetworkSearcherDelegate.java is part of 'Ulysses'
  * 
- * ulysses is free software; you can redistribute it and/or modify
+ * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
@@ -14,7 +14,7 @@
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with ulysses ; if not, write to the Free Software
+ * along with 'Ulysses' ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  ******************************************************************************/
 package net.iubris.ulysses.controller.delegates.networkaware;
@@ -26,12 +26,12 @@ import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullExc
 import net.iubris.diane.searcher.networkaware.base.AbstractNetworkAwareSearcher;
 import net.iubris.diane.searcher.networkaware.exceptions.network.NoNetworkException;
 import net.iubris.diane.searcher.networkaware.exceptions.search.NetworkAwareSearchException;
-import net.iubris.socrates.detailer.exception.PlaceDetailsRetrieverException;
+import net.iubris.socrates.engine.details.exception.PlaceDetailsRetrieverException;
+import net.iubris.socrates.engine.searches.exception.PlacesSearcherException;
 import net.iubris.socrates.model.http.exceptions.PlacesInvalidRequestException;
 import net.iubris.socrates.model.http.exceptions.PlacesOverQuotaException;
 import net.iubris.socrates.model.http.exceptions.PlacesRequestDeniedException;
 import net.iubris.socrates.model.http.exceptions.PlacesZeroResultException;
-import net.iubris.socrates.searcher.exception.PlacesSearcherException;
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.SocratesDelegate;
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.google.PlacesTyrannusStatusException;
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.google.PlacesUnbelievableZeroResultStatusException;

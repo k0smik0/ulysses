@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * PlaceComparatorByAscendingDistance.java is part of 'Ulysses'
+ * AdapterUtils.java is part of 'Ulysses'
  * 
  * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,20 +17,27 @@
  * along with 'Ulysses' ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  ******************************************************************************/
-package net.iubris.ulysses.model.comparators;
+package net.iubris.ulysses.list.adapter;
 
 import java.util.Comparator;
+import java.util.List;
 
 import net.iubris.ulysses.model.PlaceHere;
 
-public class PlaceComparatorByAscendingDistance implements Comparator<PlaceHere> {
-	@Override
-	public int compare(PlaceHere placeHere1, PlaceHere placeHere2) {
-		final float distance1 = placeHere1.getDistance();
-		final float distance2 = placeHere2.getDistance();
-		
-		if (distance1 > distance2) return 1;
-		if (distance1 < distance2) return -1;
-		return 0;
-	}	
+public class AdapterUtils {
+	/**
+	 * clean adapter, then populate from list, sort with comparator and notify for the change
+	 * 
+	 * @param adapterToPopulate 	arrayadapter to populate
+	 * @param populatingList 			PlaceHere list used to populate adapter
+	 * @param comparator				a PlaceHere comparator to sort adapter
+	 */
+	public static void clearAndPopulateAdapter(PlacesHereListAdapter adapterToPopulate,List<PlaceHere> populatingList, Comparator<PlaceHere> comparator) {
+		adapterToPopulate.clear();
+		for (PlaceHere placeHere: populatingList) {
+			adapterToPopulate.add(placeHere);
+		}
+		adapterToPopulate.sort( comparator );
+		adapterToPopulate.notifyDataSetChanged();
+	}
 }

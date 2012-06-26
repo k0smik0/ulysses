@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="net/iubris/ulysses/controller/LocationNetworkAwareSearcher.java" kind="src" path="src/core"/>
+	<classpathentry excluding="net/iubris/ulysses/controller/LocationNetworkAwareSearcher.java|net/iubris/ulysses/map/overlay/places/PlaceTypeActionFilter.java" kind="src" path="src/core"/>
 	<classpathentry excluding="net/iubris/ulysses/_roboguice/progressdialog/annotations/ProgressDialogProviderForGetPlace.java|net/iubris/ulysses/asynctask/UlyssesRoboAsyncTaskSearchAndStartingActivity.java|net/iubris/ulysses/asynctask/UlyssesRoboAsyncTaskUseResults.java" kind="src" path="src/roboguice"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/google-places"/>

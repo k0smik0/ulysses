@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * SocratesDelegate.java is part of ulysses.
+ * SocratesDelegate.java is part of 'Ulysses'
  * 
- * ulysses is free software; you can redistribute it and/or modify
+ * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
@@ -14,7 +14,7 @@
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with ulysses ; if not, write to the Free Software
+ * along with 'Ulysses' ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  ******************************************************************************/
 package net.iubris.ulysses.controller.delegates.networkaware.socrates;
@@ -23,18 +23,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
-import net.iubris.socrates.detailer.PlaceDetailsRetriever;
-import net.iubris.socrates.detailer.exception.PlaceDetailsRetrieverException;
-import net.iubris.socrates.model.data.places.details.PlaceDetails;
-import net.iubris.socrates.model.data.places.details.PlaceDetailsResponse;
-import net.iubris.socrates.model.data.places.search.Place;
-import net.iubris.socrates.model.data.places.search.PlacesSearchResponse;
+import net.iubris.socrates.engine.details.PlaceDetailsRetriever;
+import net.iubris.socrates.engine.details.exception.PlaceDetailsRetrieverException;
+import net.iubris.socrates.engine.searches.PlacesSearcher;
+import net.iubris.socrates.engine.searches.exception.PlacesSearcherException;
+import net.iubris.socrates.model.data.place.details.PlaceDetails;
+import net.iubris.socrates.model.data.place.details.PlaceDetailsResponse;
+import net.iubris.socrates.model.data.place.search.Place;
+import net.iubris.socrates.model.data.place.search.PlacesSearchResponse;
 import net.iubris.socrates.model.http.exceptions.PlacesInvalidRequestException;
 import net.iubris.socrates.model.http.exceptions.PlacesOverQuotaException;
 import net.iubris.socrates.model.http.exceptions.PlacesRequestDeniedException;
 import net.iubris.socrates.model.http.exceptions.PlacesZeroResultException;
-import net.iubris.socrates.searcher.PlacesSearcher;
-import net.iubris.socrates.searcher.exception.PlacesSearcherException;
 import net.iubris.ulysses.model.PlaceHere;
 import android.location.Location;
 
