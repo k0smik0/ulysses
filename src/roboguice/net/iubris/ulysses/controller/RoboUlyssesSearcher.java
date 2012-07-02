@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * IUlyssesLocationSearcherDelegate.java is part of 'Ulysses'.
+ * UlyssesSearcher.java is part of 'Ulysses'.
  * 
  * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,17 +17,20 @@
  * along with 'Ulysses' ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  ******************************************************************************/
-package net.iubris.ulysses.controller.delegates.locationaware;
+package net.iubris.ulysses.controller;
 
-import java.util.List;
+import net.iubris.ulysses.controller.delegates.cacheaware.IUlyssesCacheSearcherDelegate;
+import net.iubris.ulysses.controller.delegates.locationaware.IUlyssesLocationSearcherDelegate;
+import net.iubris.ulysses.controller.delegates.networkaware.IUlyssesNetworkSearcherDelegate;
 
-import net.iubris.diane.searcher.locationaware.LocationAwareSearcher;
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationNotNewerStateException;
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationStateException;
-import net.iubris.kusor.updater.LocationUpdater;
-import net.iubris.ulysses.model.PlaceHere;
+import com.google.inject.Inject;
 
-public interface IUlyssesLocationSearcherDelegate extends LocationUpdater,LocationAwareSearcher<Void,List<PlaceHere>,Boolean> {
-	@Override
-	public Boolean isInNewerLocation() throws LocationNotNewerStateException, LocationStateException;
+public class RoboUlyssesSearcher extends UlyssesSearcher {		
+	
+	@Inject
+	public RoboUlyssesSearcher(IUlyssesLocationSearcherDelegate locationSearcherDelegate,
+			IUlyssesNetworkSearcherDelegate networkSearcherDelegate,
+			IUlyssesCacheSearcherDelegate cacheSearcherDelegate) {
+		super(locationSearcherDelegate,networkSearcherDelegate,cacheSearcherDelegate);		
+	}	
 }

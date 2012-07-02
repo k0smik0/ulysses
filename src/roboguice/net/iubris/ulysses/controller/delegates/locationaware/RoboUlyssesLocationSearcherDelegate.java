@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * IUlyssesLocationSearcherDelegate.java is part of 'Ulysses'.
+ * UlyssesLocationSearcherDelegate.java is part of 'Ulysses'.
  * 
  * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,15 +19,19 @@
  ******************************************************************************/
 package net.iubris.ulysses.controller.delegates.locationaware;
 
-import java.util.List;
+import net.iubris.kusor.locator.KLocator;
+import net.iubris.ulysses.controller.delegates.locationaware.annotations.UlyssesDistanceMinimumThreshold;
+import net.iubris.ulysses.controller.delegates.locationaware.annotations.UlyssesTimeMinimumThreshold;
 
-import net.iubris.diane.searcher.locationaware.LocationAwareSearcher;
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationNotNewerStateException;
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationStateException;
-import net.iubris.kusor.updater.LocationUpdater;
-import net.iubris.ulysses.model.PlaceHere;
+import com.google.inject.Inject;
 
-public interface IUlyssesLocationSearcherDelegate extends LocationUpdater,LocationAwareSearcher<Void,List<PlaceHere>,Boolean> {
-	@Override
-	public Boolean isInNewerLocation() throws LocationNotNewerStateException, LocationStateException;
+public class RoboUlyssesLocationSearcherDelegate extends UlyssesLocationSearcherDelegate {
+
+	@Inject
+	public RoboUlyssesLocationSearcherDelegate(KLocator kLocator,
+			@UlyssesDistanceMinimumThreshold Integer distanceMinimumThreshold, 
+			@UlyssesTimeMinimumThreshold long timeMinimumThreshold) {
+		super(kLocator, distanceMinimumThreshold, timeMinimumThreshold);
+	}
+
 }

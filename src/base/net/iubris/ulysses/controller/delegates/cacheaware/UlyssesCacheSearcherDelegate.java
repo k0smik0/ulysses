@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * IUlyssesLocationSearcherDelegate.java is part of 'Ulysses'.
+ * UlyssesCacheSearcherDelegate.java is part of 'Ulysses'.
  * 
  * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,17 +17,33 @@
  * along with 'Ulysses' ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  ******************************************************************************/
-package net.iubris.ulysses.controller.delegates.locationaware;
+package net.iubris.ulysses.controller.delegates.cacheaware;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import net.iubris.diane.searcher.locationaware.LocationAwareSearcher;
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationNotNewerStateException;
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationStateException;
-import net.iubris.kusor.updater.LocationUpdater;
+import net.iubris.diane.searcher.exceptions.SearchException;
+import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
 import net.iubris.ulysses.model.PlaceHere;
+import android.location.Location;
 
-public interface IUlyssesLocationSearcherDelegate extends LocationUpdater,LocationAwareSearcher<Void,List<PlaceHere>,Boolean> {
+public class UlyssesCacheSearcherDelegate implements IUlyssesCacheSearcherDelegate {
+
+	private List<PlaceHere> result = new ArrayList<PlaceHere>();
+	
 	@Override
-	public Boolean isInNewerLocation() throws LocationNotNewerStateException, LocationStateException;
+	public Void search(Location location) throws LocationNullException {
+		return null;
+	}
+
+	@Override
+	public List<PlaceHere> getSearchResult() {
+		return result;
+	}
+
+	@Override
+	public Void search() throws SearchException {
+		return null;
+	}
+
 }
