@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry excluding="net/iubris/ulysses/controller/LocationNetworkAwareSearcher.java|net/iubris/ulysses/map/overlay/places/PlaceTypeActionFilter.java" kind="src" path="src/core"/>
 	<classpathentry kind="src" path="src/base"/>
+	<classpathentry kind="src" path="src/roboguice"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/google-places"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
