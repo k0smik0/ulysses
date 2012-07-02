@@ -2,8 +2,6 @@
 <classpath>
 	<classpathentry excluding="net/iubris/ulysses/controller/LocationNetworkAwareSearcher.java|net/iubris/ulysses/map/overlay/places/PlaceTypeActionFilter.java" kind="src" path="src/core"/>
 	<classpathentry kind="src" path="src/base"/>
-	<classpathentry excluding="net/iubris/ulysses/controller/delegates/cacheaware/UlyssesCacheSearcherDelegate.java" kind="src" path="src/roboguice"/>
-	<classpathentry excluding="net/iubris/ulysses/_roboguice/progressdialog/annotations/ProgressDialogProviderForGetPlace.java|net/iubris/ulysses/asynctask/UlyssesRoboAsyncTaskSearchAndStartingActivity.java|net/iubris/ulysses/asynctask/UlyssesRoboAsyncTaskUseResults.java|net/iubris/ulysses/_roboguice/module/|net/iubris/ulysses/controller/|net/iubris/ulysses/controller/delegates/cacheaware/|net/iubris/ulysses/controller/delegates/locationaware/|net/iubris/ulysses/controller/delegates/locationaware/annotations/|net/iubris/ulysses/controller/delegates/networkaware/|net/iubris/ulysses/controller/delegates/networkaware/socrates/" kind="src" path="src/roboguice_old"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/google-places"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
