@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * UlyssesCacheSearcherDelegate.java is part of 'Ulysses'.
+ * RoboUlyssesCacheSearcherDelegate.java is part of 'Ulysses'.
  * 
  * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by

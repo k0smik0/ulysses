@@ -19,13 +19,13 @@
  ******************************************************************************/
 package net.iubris.ulysses._roboguice.module;
 import net.iubris.ulysses.controller.delegates.cacheaware.IUlyssesCacheSearcherDelegate;
-import net.iubris.ulysses.controller.delegates.cacheaware.UlyssesCacheSearcherDelegate;
+import net.iubris.ulysses.controller.delegates.cacheaware.RoboUlyssesCacheSearcherDelegate;
 import net.iubris.ulysses.controller.delegates.locationaware.IUlyssesLocationSearcherDelegate;
-import net.iubris.ulysses.controller.delegates.locationaware.UlyssesLocationSearcherDelegate;
+import net.iubris.ulysses.controller.delegates.locationaware.RoboUlyssesLocationSearcherDelegate;
 import net.iubris.ulysses.controller.delegates.locationaware.annotations.UlyssesDistanceMinimumThreshold;
 import net.iubris.ulysses.controller.delegates.locationaware.annotations.UlyssesTimeMinimumThreshold;
 import net.iubris.ulysses.controller.delegates.networkaware.IUlyssesNetworkSearcherDelegate;
-import net.iubris.ulysses.controller.delegates.networkaware.UlyssesNetworkSearcherDelegate;
+import net.iubris.ulysses.controller.delegates.networkaware.RoboUlyssesNetworkSearcherDelegate;
 import com.google.inject.AbstractModule;
 
 
@@ -50,8 +50,8 @@ public class UlyssesModule extends AbstractModule {
 		bindConstant().annotatedWith(UlyssesTimeMinimumThreshold.class).to(timeMinimumThreshold); // 15 min
 		
 		//default implementation
-		bind(IUlyssesLocationSearcherDelegate.class).to(UlyssesLocationSearcherDelegate.class);
-		bind(IUlyssesNetworkSearcherDelegate.class).to(UlyssesNetworkSearcherDelegate.class);
-		bind(IUlyssesCacheSearcherDelegate.class).to(UlyssesCacheSearcherDelegate.class);
+		bind(IUlyssesLocationSearcherDelegate.class).to(RoboUlyssesLocationSearcherDelegate.class);
+		bind(IUlyssesNetworkSearcherDelegate.class).to(RoboUlyssesNetworkSearcherDelegate.class);
+		bind(IUlyssesCacheSearcherDelegate.class).to(RoboUlyssesCacheSearcherDelegate.class);
 	}
 }
