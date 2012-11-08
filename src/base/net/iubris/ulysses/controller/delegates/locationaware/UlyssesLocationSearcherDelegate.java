@@ -25,7 +25,7 @@ import java.util.List;
 import net.iubris.diane.searcher.exceptions.SearchException;
 import net.iubris.diane.searcher.locationaware.base.AbstractLocationAwareObserverSearcher;
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationAwareSearchException;
-import net.iubris.kusor.locator.KLocator;
+import net.iubris.diane.searcher.locationaware.locator.Locator;
 import net.iubris.ulysses.model.PlaceHere;
 
 public class UlyssesLocationSearcherDelegate extends AbstractLocationAwareObserverSearcher<Void, List<PlaceHere>> implements IUlyssesLocationSearcherDelegate {
@@ -33,10 +33,10 @@ public class UlyssesLocationSearcherDelegate extends AbstractLocationAwareObserv
 	private List<PlaceHere> result = Collections.emptyList();
 
 	
-	public UlyssesLocationSearcherDelegate(KLocator kLocator,
+	public UlyssesLocationSearcherDelegate(Locator locator,
 			Integer distanceMinimumThreshold, 
 			long timeMinimumThreshold) {
-		super(kLocator, distanceMinimumThreshold, timeMinimumThreshold);
+		super(locator, distanceMinimumThreshold, timeMinimumThreshold);
 	}
 
 	@Override

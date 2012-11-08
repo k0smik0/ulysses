@@ -24,15 +24,15 @@ import java.util.List;
 import net.iubris.diane.searcher.exceptions.SearchException;
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
 import net.iubris.diane.searcher.networkaware.base.AbstractNetworkAwareSearcher;
-import net.iubris.diane.searcher.networkaware.exceptions.network.NoNetworkException;
 import net.iubris.diane.searcher.networkaware.exceptions.search.NetworkAwareSearchException;
-import net.iubris.socrates.engine.details.exception.PlaceDetailsRetrieverException;
-import net.iubris.socrates.engine.searches.exception.PlacesSearcherException;
-import net.iubris.socrates.model.http.exceptions.PlacesInvalidRequestException;
-import net.iubris.socrates.model.http.exceptions.PlacesOverQuotaException;
-import net.iubris.socrates.model.http.exceptions.PlacesRequestDeniedException;
-import net.iubris.socrates.model.http.exceptions.PlacesZeroResultException;
-import net.iubris.ulysses.controller.delegates.networkaware.socrates.RoboSocratesDelegate;
+import net.iubris.diane.searcher.networkaware.exceptions.state.NoNetworkException;
+import net.iubris.socrates.engines.details.exception.DetailsRetrieverException;
+import net.iubris.socrates.engines.search.exception.SearcherException;
+import net.iubris.socrates.model.http.response.exceptions.InvalidRequestException;
+import net.iubris.socrates.model.http.response.exceptions.OverQuotaException;
+import net.iubris.socrates.model.http.response.exceptions.RequestDeniedException;
+import net.iubris.socrates.model.http.response.exceptions.ZeroResultException;
+import net.iubris.ulysses.controller.delegates.networkaware.socrates.SocratesDelegate;
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.google.PlacesTyrannusStatusException;
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.google.PlacesUnbelievableZeroResultStatusException;
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.network.PlacesNoNetworkException;
@@ -44,12 +44,13 @@ public class UlyssesNetworkSearcherDelegate extends
 		AbstractNetworkAwareSearcher<Void, List<PlaceHere>> 
 		implements IUlyssesNetworkSearcherDelegate{
 
-	private final RoboSocratesDelegate socratesDelegate;
+//	private final RoboSocratesDelegate socratesDelegate;
+	private final SocratesDelegate socratesDelegate;
 	private List<PlaceHere> result;
 	
 	
 	public UlyssesNetworkSearcherDelegate(ConnectivityManager connectivityManager, 
-			RoboSocratesDelegate socratesDelegate) {
+			SocratesDelegate socratesDelegate) {
 		super(connectivityManager);
 		this.socratesDelegate = socratesDelegate;
 	}
@@ -60,22 +61,22 @@ public class UlyssesNetworkSearcherDelegate extends
 			PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException {
 		try {
 			result = socratesDelegate.searchPlacesWithDetailsHere(location);
-		} catch (PlacesSearcherException e) {				
+		} catch (SearcherException e) {				
 			//e.printStackTrace();
 			throw new PlacesNoNetworkException( e.getMessage() );
-		} catch (PlaceDetailsRetrieverException e) {
+		} catch (DetailsRetrieverException e) {
 			//e.printStackTrace();
 			throw new PlacesNoNetworkException( e.getMessage() );
-		} catch (PlacesZeroResultException e) {
+		} catch (ZeroResultException e) {
 			//e.printStackTrace();
 			throw new PlacesUnbelievableZeroResultStatusException( e.getMessage() );
-		}  catch (PlacesOverQuotaException e) {
+		}  catch (OverQuotaException e) {
 			//e.printStackTrace();
 			throw new PlacesTyrannusStatusException( e.getMessage() );
-		} catch (PlacesRequestDeniedException e) {
+		} catch (RequestDeniedException e) {
 			//e.printStackTrace();
 			throw new PlacesTyrannusStatusException( e.getMessage() );
-		} catch (PlacesInvalidRequestException e) {
+		} catch (InvalidRequestException e) {
 			//e.printStackTrace();
 			throw new PlacesTyrannusStatusException( e.getMessage() );
 		}

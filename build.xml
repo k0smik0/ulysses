@@ -1,0 +1,159 @@
+<project name="Kusor" default="jars">
+	<!-- change this as your own	-->
+	
+	<property name="name" value="${ant.project.name}"/>
+	<property name="user" value="k0smik0"/>
+	<property name="vendor" value="Massimiliano Leone - k0smik0"/>
+	<property name="version" value="0.1"/>
+	<property name="copyright" value="Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net"/>
+	<property name="license.file" value="COPYING.txt"/>
+	<property name="license.url" value="http://www.gnu.org/licenses/lgpl.txt"/>
+	<property name="docurl" value="https://github.com/k0smik0/ulysses"/>
+	
+	
+	<property name="android-path" value="/data/fucina/develop/usr/apps/android-sdk-linux_86/" />
+	<property name="android-sdk-target-version" value="16"/>
+		
+	<property name="main-libs-dir" value="lib"/>
+	
+		
+	<!-- don't touch below -->
+	
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />	
+	
+	<property name="jar-core.file" value="${build.dir}/jars/ulysses-core.jar" />
+	<property name="jar-base.file" value="${build.dir}/jars/ulysses-base.jar" />	
+	<property name="jar-roboguiced.file" value="${build.dir}/jars/ulysses-roboguiced.jar" />
+		
+	
+	<path id="classpath-android">
+		<fileset dir="${android-path}/platforms/android-${android-sdk-target-version}/">
+			<include name="android*.jar"/>
+		</fileset>
+		<fileset dir="${android-path}/add-ons/addon-google_apis-google-${android-sdk-target-version}/libs/">
+			<include name="maps.jar"/>
+		</fileset>
+	</path>
+				
+	<path id="classpath-core">
+		<path refid="classpath-android"/>
+		<fileset dir="${main-libs-dir}/core">
+			<include name="*.jar"/>
+		</fileset>
+	</path>	
+	<path id="classpath-base">
+		<path refid="classpath-core"/>
+		<fileset dir="${main-libs-dir}/base">
+			<include name="*.jar"/>
+		</fileset>
+		<path location="${build.dir}/classes/core"/>
+	</path>
+	
+	<path id="classpath-roboguiced">
+		<path refid="classpath-base"/>
+		<fileset dir="${main-libs-dir}/roboguiced/roboguice">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${main-libs-dir}/roboguiced/kusor">
+			<include name="*.jar"/>
+		</fileset>
+		<path location="${build.dir}/classes/base"/>
+	</path>
+	
+	<target name="clean-core">
+		<delete dir="${build.dir}/classes/core"/>
+		<delete file="${jar-core.file}"/>
+	</target>
+	<target name="clean-base">
+  	<delete dir="${build.dir}/classes/base"/>
+  	<delete file="${jar-base.file}"/>
+  </target>
+	<target name="clean-roboguiced">
+		<delete dir="${build.dir}/classes/roboguiced"/>
+		<delete file="${jar-roboguiced.file}"/>
+	</target>
+	
+	<target name="clean" depends="clean-core, clean-base, clean-roboguiced"/>	
+	
+		
+	<target name="compile-core">
+		<mkdir dir="${build.dir}/classes/core"/>
+		<javac destdir="${build.dir}/classes/core" includeantruntime="false">
+			<src path="${src.dir}/core" />
+			<include name="**/*.java"/>
+			<exclude name="**LocationNetworkAwareSearcher.java"/>
+			<classpath refid="classpath-core"/>
+		</javac>
+	</target>
+	<target name="compile-base" depends="compile-core">
+		<mkdir dir="${build.dir}/classes/base"/>
+		<javac destdir="${build.dir}/classes/base" includeantruntime="false">
+			<src path="${src.dir}/base" />
+			<include name="**/*.java"/>
+			<classpath refid="classpath-base"/>			
+		</javac>
+	</target>
+	
+	<target name="compile-roboguiced">
+		<mkdir dir="${build.dir}/classes/roboguiced"/>
+		<javac destdir="${build.dir}/classes/roboguiced" includeantruntime="false">
+			<src path="${src.dir}/roboguiced" />				
+			<classpath refid="classpath-roboguiced"/>
+		</javac>
+	</target>
+	
+	
+		
+		
+	<target name="jar-core" depends="clean-core, compile-core">
+		<mkdir dir="${build.dir}/jars/"/>
+		<jar destfile="${jar-core.file}" basedir="${build.dir}/classes/core">
+			<manifest>
+				<attribute name="Built-By" value="${user}" />    
+        <attribute name="Bundle-Name" value="${name}" />
+      	<attribute name="Bundle-Copyright" value="${copyright}" />
+      	<attribute name="Bundle-Vendor" value="${vendor}" />
+        <attribute name="Bundle-Version" value="${version}" />
+        <attribute name="Bundle-License" value="${license.url} " />
+        <attribute name="Build-DocURL" value="${docurl}" />	      
+			</manifest>			
+			<metainf dir="." includes="${license.file}"/>
+		</jar>
+	</target>
+	<target name="jar-base" depends="clean-base, compile-base">
+		<mkdir dir="${build.dir}/jars/"/>
+		<jar destfile="${jar-base.file}" basedir="${build.dir}/classes/base">
+			<manifest>
+				<attribute name="Built-By" value="${user}" />    
+        <attribute name="Bundle-Name" value="${name}" />
+      	<attribute name="Bundle-Copyright" value="${copyright}" />
+      	<attribute name="Bundle-Vendor" value="${vendor}" />
+        <attribute name="Bundle-Version" value="${version}" />
+        <attribute name="Bundle-License" value="${license.url} " />
+        <attribute name="Build-DocURL" value="${docurl}" />	      
+			</manifest>			
+			<metainf dir="." includes="${license.file}"/>
+		</jar>
+	</target>
+	
+	<target name="jar-roboguiced" depends="clean-roboguiced, compile-roboguiced">
+		<mkdir dir="${build.dir}/jars/"/>
+		<jar destfile="${jar-roboguiced.file}" basedir="${build.dir}/classes/roboguiced">
+			<manifest>
+				<attribute name="Built-By" value="${user}" />    
+        <attribute name="Bundle-Name" value="${name}" />
+      	<attribute name="Bundle-Copyright" value="${copyright}" />
+      	<attribute name="Bundle-Vendor" value="${vendor}" />
+        <attribute name="Bundle-Version" value="${version}" />
+        <attribute name="Bundle-License" value="${license.url} " />
+        <attribute name="Build-DocURL" value="${docurl}" />	      
+			</manifest>			
+			<metainf dir="." includes="${license.file}"/>
+		</jar>
+	</target>
+	
+	
+	<target name="jars" depends="jar-core, jar-base, jar-roboguiced"/>	
+
+</project>

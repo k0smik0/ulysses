@@ -2,13 +2,17 @@
 <classpath>
 	<classpathentry excluding="net/iubris/ulysses/controller/LocationNetworkAwareSearcher.java|net/iubris/ulysses/map/overlay/places/PlaceTypeActionFilter.java" kind="src" path="src/core"/>
 	<classpathentry kind="src" path="src/base"/>
-	<classpathentry kind="src" path="src/roboguice"/>
+	<classpathentry kind="src" path="src/roboguiced"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/google-places"/>
-	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/epicurus"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/android-compatibilty-v4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/roboguice"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/epicurus"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/diane"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/socrates"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/roboguice-mapscompatibility_jars"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/kusor-base"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/kusor-roboguiced"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/kusor4diane-base"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/kusor4diane-roboguiced"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * PlacesNoNetworkException.java is part of 'Ulysses'.
+ * RoboSocratesDelegate.java is part of 'Ulysses'.
  * 
  * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,18 +17,18 @@
  * along with 'Ulysses' ; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  ******************************************************************************/
-package net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.network;
+package net.iubris.ulysses.controller.delegates.networkaware.socrates;
 
-import net.iubris.diane.searcher.networkaware.exceptions.state.NoNetworkException;
+import net.iubris.socrates.engines.details.DetailsRetriever;
+import net.iubris.socrates.engines.search.Searcher;
 
-public class PlacesNoNetworkException extends NoNetworkException {
+import com.google.inject.Inject;
 
-	public PlacesNoNetworkException(String string) {
-		super(string);
-	}
-	public PlacesNoNetworkException(Throwable cause) {
-		super(cause);
+public class RoboSocratesDelegate extends SocratesDelegate {	
+	
+	@Inject
+	public RoboSocratesDelegate(Searcher placesSearcher, DetailsRetriever placeDetailsRetriever) {
+		super(placesSearcher,placeDetailsRetriever);
 	}
 	
-	private static final long serialVersionUID = 4930413813602225645L;
 }

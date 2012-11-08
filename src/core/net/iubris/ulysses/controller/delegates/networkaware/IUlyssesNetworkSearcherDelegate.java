@@ -22,8 +22,8 @@ package net.iubris.ulysses.controller.delegates.networkaware;
 import java.util.List;
 
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
-import net.iubris.diane.searcher.networkaware.NetworkAwareByLocationSearcher;
-import net.iubris.diane.searcher.networkaware.exceptions.network.NoNetworkException;
+import net.iubris.diane.searcher.networkaware.exceptions.state.NoNetworkException;
+import net.iubris.diane.searcher.networkaware.locationaware.NetworkAwareByLocationSearcher;
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.google.PlacesTyrannusStatusException;
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.google.PlacesUnbelievableZeroResultStatusException;
 import net.iubris.ulysses.model.PlaceHere;

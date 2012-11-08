@@ -20,32 +20,32 @@
 package net.iubris.ulysses.model;
 
 
-import net.iubris.socrates.model.data.place.details.PlaceDetails;
-import net.iubris.socrates.model.data.place.search.Place;
+import net.iubris.socrates.model.http.response.data.details.Details;
+import net.iubris.socrates.model.http.response.data.search.Place;
 import android.location.Location;
 
 public class PlaceHere {
 	
 	private final Place place;	
 	private final float distance;
-	private PlaceDetails placeDetails;	
+	private Details details;
 	
 	public PlaceHere(Place place, Location locationHere) {
 		this.place = place;		
 		this.distance = distance(place,locationHere);
 	}
 	
-	public PlaceHere(Place place, PlaceDetails placeDetails, Location locationHere) {
+	public PlaceHere(Place place, Details details, Location locationHere) {
 		this.place = place;
-		this.placeDetails = placeDetails;
+		this.details = details;
 		this.distance = distance(place,locationHere);
 	}	
 	
-	public PlaceDetails getPlaceDetails() {
-		return placeDetails;
+	public Details getDetails() {
+		return details;
 	}
-	public void setPlaceDetails(PlaceDetails placeDetails) {
-		this.placeDetails = placeDetails;
+	public void setDetails(Details details) {
+		this.details = details;
 	}
 
 	public Place getPlace() {

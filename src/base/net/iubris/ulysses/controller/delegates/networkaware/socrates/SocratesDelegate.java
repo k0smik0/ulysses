@@ -23,50 +23,69 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
-import net.iubris.socrates.engine.details.PlaceDetailsRetriever;
-import net.iubris.socrates.engine.details.exception.PlaceDetailsRetrieverException;
-import net.iubris.socrates.engine.searches.PlacesSearcher;
-import net.iubris.socrates.engine.searches.exception.PlacesSearcherException;
-import net.iubris.socrates.model.data.place.details.PlaceDetails;
-import net.iubris.socrates.model.data.place.details.PlaceDetailsResponse;
-import net.iubris.socrates.model.data.place.search.Place;
-import net.iubris.socrates.model.data.place.search.PlacesSearchResponse;
-import net.iubris.socrates.model.http.exceptions.PlacesInvalidRequestException;
-import net.iubris.socrates.model.http.exceptions.PlacesOverQuotaException;
-import net.iubris.socrates.model.http.exceptions.PlacesRequestDeniedException;
-import net.iubris.socrates.model.http.exceptions.PlacesZeroResultException;
+import net.iubris.socrates.engines.details.DetailsRetriever;
+import net.iubris.socrates.engines.details.exception.DetailsRetrieverException;
+import net.iubris.socrates.engines.search.Searcher;
+import net.iubris.socrates.engines.search.exception.SearcherException;
+import net.iubris.socrates.model.http.response.data.details.Details;
+import net.iubris.socrates.model.http.response.data.search.Place;
+import net.iubris.socrates.model.http.response.details.DetailsResponse;
+import net.iubris.socrates.model.http.response.exceptions.InvalidRequestException;
+import net.iubris.socrates.model.http.response.exceptions.OverQuotaException;
+import net.iubris.socrates.model.http.response.exceptions.RequestDeniedException;
+import net.iubris.socrates.model.http.response.exceptions.ZeroResultException;
+import net.iubris.socrates.model.http.response.search.SearchResponse;
 import net.iubris.ulysses.model.PlaceHere;
 import android.location.Location;
 
 public class SocratesDelegate  {
 	
-	private final PlacesSearcher placesSearcher;
-	private final PlaceDetailsRetriever placeDetailsRetriever;
+	private final Searcher searcher;
+	private final DetailsRetriever placeDetailsRetriever;
 		
-	public SocratesDelegate(PlacesSearcher placesSearcher, PlaceDetailsRetriever placeDetailsRetriever) {
-		this.placesSearcher = placesSearcher;
-		this.placeDetailsRetriever = placeDetailsRetriever;
+	public SocratesDelegate(Searcher searcher, DetailsRetriever detailsRetriever) {
+		this.searcher = searcher;
+		this.placeDetailsRetriever = detailsRetriever;
+	}
+	
+	public List<PlaceHere> searchPlacesHere(Location here) throws LocationNullException, SearcherException, DetailsRetrieverException, OverQuotaException, ZeroResultException, RequestDeniedException, InvalidRequestException {
+		final SearchResponse searchResponse = searcher.search( here );
+		final List<Place> places = searchResponse.getStatus().act(searchResponse);
+		final List<PlaceHere> placesHere = new ArrayList<PlaceHere>( places.size() );
+		for (Place place: places) {
+			placesHere.add( new PlaceHere(place, null, here) );
+		}
+		return placesHere;		
+	}
+	
+	public List<PlaceHere> prova(Location here) throws LocationNullException, SearcherException, DetailsRetrieverException, OverQuotaException, ZeroResultException, RequestDeniedException, InvalidRequestException{
+		List<PlaceHere> placesHere = searchPlacesHere(here);
+		for (PlaceHere ph: placesHere) {
+			ph.setDetails( 
+				getDetails(	ph.getPlace().getReference() )
+			);
+		}
+		return placesHere;
 	}
 
-	public List<PlaceHere> searchPlacesWithDetailsHere(Location here) throws LocationNullException, PlacesSearcherException, PlaceDetailsRetrieverException, PlacesOverQuotaException, PlacesZeroResultException, PlacesRequestDeniedException, PlacesInvalidRequestException {
+	public List<PlaceHere> searchPlacesWithDetailsHere(Location here) throws LocationNullException, SearcherException, DetailsRetrieverException, OverQuotaException, ZeroResultException, RequestDeniedException, InvalidRequestException {
 		if (here==null) throw new LocationNullException("no valid location");
 		
-		final PlacesSearchResponse placesSearchResponse = placesSearcher.searchPlaces( here );
+		final SearchResponse searchResponse = searcher.search( here );
 
-		final List<Place> places = placesSearchResponse.getStatus().act(placesSearchResponse);
+		final List<Place> places = searchResponse.getStatus().act(searchResponse);
 //Ln.d(places.size());		
 		final List<PlaceHere> placesHere = new ArrayList<PlaceHere>( places.size() );
 		for (Place place: places) {
 //Ln.d(place.getName() + " "+ place.getReferenceForDetails());
 //Ln.d(here);
-			placesHere.add( new PlaceHere(place, getDetails( place.getReferenceForDetails() ), here) );
+			placesHere.add( new PlaceHere(place, getDetails( place.getReference() ), here) );
 		}
 		return placesHere;
-	}	
+	}
 	
-	private PlaceDetails getDetails(String reference) throws PlaceDetailsRetrieverException, PlacesZeroResultException, PlacesOverQuotaException, PlacesRequestDeniedException, PlacesInvalidRequestException {
-//Ln.d(reference);
-		final PlaceDetailsResponse placeDetailsResponse = placeDetailsRetriever.retrieveDetails( reference );
-		return placeDetailsResponse.getStatus().act(placeDetailsResponse);
+	private Details getDetails(String reference) throws DetailsRetrieverException, ZeroResultException, OverQuotaException, RequestDeniedException, InvalidRequestException {
+		final DetailsResponse placeDetailsResponse = placeDetailsRetriever.retrieveDetails( reference );
+		return placeDetailsResponse.getStatus().act( placeDetailsResponse );		
 	}
 }

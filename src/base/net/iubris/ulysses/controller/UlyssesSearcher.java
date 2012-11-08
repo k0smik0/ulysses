@@ -22,10 +22,11 @@ package net.iubris.ulysses.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.iubris.diane.searcher.locationaware.exceptions.location.LocationNotNewerStateException;
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
-import net.iubris.diane.searcher.networkaware.exceptions.network.NoNetworkException;
-import net.iubris.kusor.updater.LocationUpdater;
+import net.iubris.diane.searcher.locationaware.exceptions.state.LocationNotNewerStateException;
+import net.iubris.diane.searcher.locationaware.exceptions.state.LocationStateException;
+import net.iubris.diane.searcher.locationaware.locator.LocationUpdater;
+import net.iubris.diane.searcher.networkaware.exceptions.state.NoNetworkException;
 import net.iubris.ulysses.controller.delegates.cacheaware.IUlyssesCacheSearcherDelegate;
 import net.iubris.ulysses.controller.delegates.locationaware.IUlyssesLocationSearcherDelegate;
 import net.iubris.ulysses.controller.delegates.networkaware.IUlyssesNetworkSearcherDelegate;
@@ -71,7 +72,7 @@ implements LocationUpdater, IUlyssesSearcher {
 	}
 	
 	@Override
-	public Void search() throws LocationNullException, LocationNotNewerStateException, NoNetworkException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException {
+	public Void search() throws LocationNullException, LocationNotNewerStateException, LocationStateException, NoNetworkException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException {
 		synchronized(lock) {
 			try { // newLocation=1, network=1
 				locationSearcherDelegate.isInNewerLocation();

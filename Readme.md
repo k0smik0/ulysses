@@ -34,7 +34,7 @@ conditions can be "no network" and/or "old location" and/or "i have cache?" and 
 -    IUlyssesNetworkSearcherDelegate retrieves results using networks (and of course best location, from IUlyssesLocationSearcherDelegate )   
 -    IUlyssesCacheSearcherDelegate retrieves results from cache, if we don't have network connection
 
-for every interface there are concrete classes for end-user, simply called UlyssesNetworkSearcherDelegate or similar;  
+every interface have implementing concrete classes for end-user, simply called UlyssesNetworkSearcherDelegate or similar;  
 really, UlyssesSearcher uses these 3 delegates for its stuffs.
 
 a watch inside implementation:
