@@ -25,7 +25,6 @@ import java.util.List;
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
 import net.iubris.diane.searcher.locationaware.exceptions.state.LocationNotNewerStateException;
 import net.iubris.diane.searcher.locationaware.exceptions.state.LocationStateException;
-import net.iubris.diane.searcher.locationaware.locator.LocationUpdater;
 import net.iubris.diane.searcher.networkaware.exceptions.state.NoNetworkException;
 import net.iubris.ulysses.controller.delegates.cacheaware.IUlyssesCacheSearcherDelegate;
 import net.iubris.ulysses.controller.delegates.locationaware.IUlyssesLocationSearcherDelegate;
@@ -37,7 +36,7 @@ import android.location.Location;
 
 public class UlyssesSearcher 
 //implements LocationNetworkAwareSearcher<Void, List<PlaceHere>, Boolean, Boolean> {
-implements LocationUpdater, IUlyssesSearcher {
+implements IUlyssesSearcher {
 		
 	private final IUlyssesLocationSearcherDelegate locationSearcherDelegate;
 	private final IUlyssesNetworkSearcherDelegate networkSearcherDelegate;
