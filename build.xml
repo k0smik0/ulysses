@@ -69,7 +69,7 @@
 		<javac destdir="${build.dir}/classes/core" includeantruntime="false">
 			<src path="${src.dir}/core" />
 			<include name="**/*.java"/>
-			<exclude name="**LocationNetworkAwareSearcher.java"/>
+			<exclude name="**/*LocationNetworkAwareSearcher.java"/>
 			<classpath refid="classpath-core"/>
 		</javac>
 	</target>
