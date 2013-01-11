@@ -22,6 +22,8 @@ package net.iubris.ulysses.controller.delegates.locationaware;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.inject.Inject;
+
 import net.iubris.diane.searcher.exceptions.SearchException;
 import net.iubris.diane.searcher.locationaware.base.AbstractLocationAwareObserverSearcher;
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationAwareSearchException;
@@ -32,7 +34,7 @@ public class UlyssesLocationSearcherDelegate extends AbstractLocationAwareObserv
 
 	private List<PlaceHere> result = Collections.emptyList();
 
-	
+	@Inject
 	public UlyssesLocationSearcherDelegate(Locator locator,
 			Integer distanceMinimumThreshold, 
 			long timeMinimumThreshold) {

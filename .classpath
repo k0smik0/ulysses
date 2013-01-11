@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry excluding="net/iubris/ulysses/controller/LocationNetworkAwareSearcher.java|net/iubris/ulysses/map/overlay/places/PlaceTypeActionFilter.java" kind="src" path="src/core"/>
 	<classpathentry kind="src" path="src/base"/>
-	<classpathentry kind="src" path="src/roboguiced"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>

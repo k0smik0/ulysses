@@ -19,8 +19,8 @@
  ******************************************************************************/
 package net.iubris.ulysses.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
 import net.iubris.diane.searcher.locationaware.exceptions.state.LocationNotNewerStateException;
@@ -33,6 +33,9 @@ import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.
 import net.iubris.ulysses.controller.delegates.networkaware.socrates.exceptions.google.PlacesUnbelievableZeroResultStatusException;
 import net.iubris.ulysses.model.PlaceHere;
 import android.location.Location;
+
+import com.google.inject.Inject;
+
 
 public class UlyssesSearcher 
 //implements LocationNetworkAwareSearcher<Void, List<PlaceHere>, Boolean, Boolean> {
@@ -55,6 +58,7 @@ implements IUlyssesSearcher {
 	*/	
 	
 	
+	@Inject
 	public UlyssesSearcher(IUlyssesLocationSearcherDelegate locationSearcherDelegate,
 			IUlyssesNetworkSearcherDelegate networkSearcherDelegate,
 			IUlyssesCacheSearcherDelegate cacheSearcherDelegate) {

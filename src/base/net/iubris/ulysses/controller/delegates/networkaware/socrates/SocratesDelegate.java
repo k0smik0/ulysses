@@ -22,6 +22,8 @@ package net.iubris.ulysses.controller.delegates.networkaware.socrates;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.inject.Inject;
+
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
 import net.iubris.socrates.engines.details.DetailsRetriever;
 import net.iubris.socrates.engines.details.exception.DetailsRetrieverException;
@@ -43,6 +45,7 @@ public class SocratesDelegate  {
 	private final Searcher searcher;
 	private final DetailsRetriever placeDetailsRetriever;
 		
+	@Inject
 	public SocratesDelegate(Searcher searcher, DetailsRetriever detailsRetriever) {
 		this.searcher = searcher;
 		this.placeDetailsRetriever = detailsRetriever;

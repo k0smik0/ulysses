@@ -21,6 +21,8 @@ package net.iubris.ulysses.controller.delegates.networkaware;
 
 import java.util.List;
 
+import com.google.inject.Inject;
+
 import net.iubris.diane.searcher.exceptions.SearchException;
 import net.iubris.diane.searcher.locationaware.exceptions.search.LocationNullException;
 import net.iubris.diane.searcher.networkaware.base.AbstractNetworkAwareSearcher;
@@ -48,7 +50,7 @@ public class UlyssesNetworkSearcherDelegate extends
 	private final SocratesDelegate socratesDelegate;
 	private List<PlaceHere> result;
 	
-	
+	@Inject
 	public UlyssesNetworkSearcherDelegate(ConnectivityManager connectivityManager, 
 			SocratesDelegate socratesDelegate) {
 		super(connectivityManager);

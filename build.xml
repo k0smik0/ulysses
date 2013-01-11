@@ -1,4 +1,4 @@
-<project name="Kusor" default="jars">
+<project name="Ulysses" default="jar">
 	<!-- change this as your own	-->
 	
 	<property name="name" value="${ant.project.name}"/>
@@ -22,10 +22,7 @@
 	<property name="src.dir" value="src" />
 	<property name="build.dir" value="build" />	
 	
-	<property name="jar-core.file" value="${build.dir}/jars/ulysses-core.jar" />
-	<property name="jar-base.file" value="${build.dir}/jars/ulysses-base.jar" />	
-	<property name="jar-roboguiced.file" value="${build.dir}/jars/ulysses-roboguiced.jar" />
-		
+	<property name="jar.file" value="${build.dir}/jars/ulysses.jar" />
 	
 	<path id="classpath-android">
 		<fileset dir="${android-path}/platforms/android-${android-sdk-target-version}/">
@@ -47,34 +44,24 @@
 		<fileset dir="${main-libs-dir}/base">
 			<include name="*.jar"/>
 		</fileset>
+		<fileset dir="${main-libs-dir}/base/roboguice">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${main-libs-dir}/base/kusor">
+			<include name="*.jar"/>
+		</fileset>
 		<path location="${build.dir}/classes/core"/>
 	</path>
 	
-	<path id="classpath-roboguiced">
-		<path refid="classpath-base"/>
-		<fileset dir="${main-libs-dir}/roboguiced/roboguice">
-			<include name="*.jar"/>
-		</fileset>
-		<fileset dir="${main-libs-dir}/roboguiced/kusor">
-			<include name="*.jar"/>
-		</fileset>
-		<path location="${build.dir}/classes/base"/>
-	</path>
-	
-	<target name="clean-core">
+	<target name="clean-class">
 		<delete dir="${build.dir}/classes/core"/>
-		<delete file="${jar-core.file}"/>
+		<delete dir="${build.dir}/classes/base"/>
 	</target>
-	<target name="clean-base">
-  	<delete dir="${build.dir}/classes/base"/>
-  	<delete file="${jar-base.file}"/>
+	<target name="clean-jar">
+  	<delete file="${jar.file}"/>
   </target>
-	<target name="clean-roboguiced">
-		<delete dir="${build.dir}/classes/roboguiced"/>
-		<delete file="${jar-roboguiced.file}"/>
-	</target>
 	
-	<target name="clean" depends="clean-core, clean-base, clean-roboguiced"/>	
+	<target name="clean" depends="clean-class, clean-jar"/>	
 	
 		
 	<target name="compile-core">
@@ -94,66 +81,23 @@
 			<classpath refid="classpath-base"/>			
 		</javac>
 	</target>
-	
-	<target name="compile-roboguiced">
-		<mkdir dir="${build.dir}/classes/roboguiced"/>
-		<javac destdir="${build.dir}/classes/roboguiced" includeantruntime="false">
-			<src path="${src.dir}/roboguiced" />				
-			<classpath refid="classpath-roboguiced"/>
-		</javac>
+			
+	<target name="jar" depends="clean, compile-core, compile-base">
+		<mkdir dir="${build.dir}/jars/"/>
+		<jar destfile="${jar.file}">
+			<fileset dir="${build.dir}/classes/core"/>
+			<fileset dir="${build.dir}/classes/base"/>
+			<manifest>
+				<attribute name="Built-By" value="${user}" />    
+        <attribute name="Bundle-Name" value="${name}" />
+      	<attribute name="Bundle-Copyright" value="${copyright}" />
+      	<attribute name="Bundle-Vendor" value="${vendor}" />
+        <attribute name="Bundle-Version" value="${version}" />
+        <attribute name="Bundle-License" value="${license.url} " />
+        <attribute name="Build-DocURL" value="${docurl}" />	      
+			</manifest>			
+			<metainf dir="." includes="${license.file}"/>
+		</jar>
 	</target>
-	
-	
 		
-		
-	<target name="jar-core" depends="clean-core, compile-core">
-		<mkdir dir="${build.dir}/jars/"/>
-		<jar destfile="${jar-core.file}" basedir="${build.dir}/classes/core">
-			<manifest>
-				<attribute name="Built-By" value="${user}" />    
-        <attribute name="Bundle-Name" value="${name}" />
-      	<attribute name="Bundle-Copyright" value="${copyright}" />
-      	<attribute name="Bundle-Vendor" value="${vendor}" />
-        <attribute name="Bundle-Version" value="${version}" />
-        <attribute name="Bundle-License" value="${license.url} " />
-        <attribute name="Build-DocURL" value="${docurl}" />	      
-			</manifest>			
-			<metainf dir="." includes="${license.file}"/>
-		</jar>
-	</target>
-	<target name="jar-base" depends="clean-base, compile-base">
-		<mkdir dir="${build.dir}/jars/"/>
-		<jar destfile="${jar-base.file}" basedir="${build.dir}/classes/base">
-			<manifest>
-				<attribute name="Built-By" value="${user}" />    
-        <attribute name="Bundle-Name" value="${name}" />
-      	<attribute name="Bundle-Copyright" value="${copyright}" />
-      	<attribute name="Bundle-Vendor" value="${vendor}" />
-        <attribute name="Bundle-Version" value="${version}" />
-        <attribute name="Bundle-License" value="${license.url} " />
-        <attribute name="Build-DocURL" value="${docurl}" />	      
-			</manifest>			
-			<metainf dir="." includes="${license.file}"/>
-		</jar>
-	</target>
-	
-	<target name="jar-roboguiced" depends="clean-roboguiced, compile-roboguiced">
-		<mkdir dir="${build.dir}/jars/"/>
-		<jar destfile="${jar-roboguiced.file}" basedir="${build.dir}/classes/roboguiced">
-			<manifest>
-				<attribute name="Built-By" value="${user}" />    
-        <attribute name="Bundle-Name" value="${name}" />
-      	<attribute name="Bundle-Copyright" value="${copyright}" />
-      	<attribute name="Bundle-Vendor" value="${vendor}" />
-        <attribute name="Bundle-Version" value="${version}" />
-        <attribute name="Bundle-License" value="${license.url} " />
-        <attribute name="Build-DocURL" value="${docurl}" />	      
-			</manifest>			
-			<metainf dir="." includes="${license.file}"/>
-		</jar>
-	</target>
-	
-	
-	<target name="jars" depends="jar-core, jar-base, jar-roboguiced"/>	
-
 </project>
