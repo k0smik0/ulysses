@@ -1,0 +1,125 @@
+<project name="Ulysses" default="jars">
+	<!-- change this as your own	-->
+	
+	<property name="name" value="${ant.project.name}"/>
+	<property name="user" value="k0smik0"/>
+	<property name="vendor" value="Massimiliano Leone - k0smik0"/>
+	<property name="version" value="0.1"/>
+	<property name="copyright" value="Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net"/>
+	<property name="license.file" value="COPYING.txt"/>
+	<property name="license.url" value="http://www.gnu.org/licenses/lgpl.txt"/>
+	<property name="docurl" value="https://github.com/k0smik0/ulysses"/>
+	
+	
+	<property name="android-path" value="/data/fucina/develop/usr/apps/android-sdk/" />
+	<property name="android-sdk-target-version" value="17"/>
+		
+	<property name="main-libs-dir" value="libs"/>
+	
+		
+	<!-- don't touch below -->
+	
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />	
+	
+	<property name="jar-common.file" value="${build.dir}/jars/ulysses-common.jar" />
+	<property name="jar-roboguice.file" value="${build.dir}/jars/ulysses-roboguice.jar" />
+	
+	<path id="classpath-android">
+		<fileset dir="${android-path}/platforms/android-${android-sdk-target-version}/">
+			<include name="android*.jar"/>
+		</fileset>
+		<fileset dir="${android-path}/add-ons/addon-google_apis-google-${android-sdk-target-version}/libs/">
+			<include name="maps.jar"/>
+		</fileset>
+	</path>
+				
+	<path id="classpath-common">
+		<path refid="classpath-android"/>
+		<fileset dir="${main-libs-dir}">
+			<include name="*.jar"/>
+			<exclude name="robo*.jar"/>
+			<exclude name="*guice*.jar"/>
+		</fileset>
+	</path>	
+	<path id="classpath-roboguice">
+		<path refid="classpath-common"/>
+		<fileset dir="${main-libs-dir}">
+			<include name="*guice*.jar"/>
+			<include name="robo*.jar"/>
+		</fileset>
+		<fileset dir="${build.dir}/jars">
+			<include name="ulysses-common.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="clean-common">
+		<delete dir="${build.dir}/classes/common"/>
+	</target>
+	<target name="clean-roboguice">
+		<delete dir="${build.dir}/classes/roboguice"/>
+	</target>
+	<target name="clean-jars">
+  	<delete file="${jar-common.file}"/>
+		<delete file="${jar-robo.file}"/>
+  </target>
+	
+	<target name="clean" depends="clean-common, clean-roboguice"/>	
+	
+		
+	<target name="compile-common">
+		<mkdir dir="${build.dir}/classes/common"/>
+		<javac destdir="${build.dir}/classes/common" includeantruntime="false">
+			<src path="${src.dir}/common" />
+			<include name="**/*.java"/>
+			<classpath refid="classpath-common"/>
+		</javac>
+	</target>
+	<target name="compile-roboguice" depends="compile-common">
+		<mkdir dir="${build.dir}/classes/roboguice"/>
+		<javac destdir="${build.dir}/classes/roboguice" includeantruntime="false">
+			<src path="${src.dir}/roboguice" />
+			<include name="**/*.java"/>
+			<classpath refid="classpath-roboguice"/>			
+		</javac>
+	</target>
+			
+	<target name="jar-common" depends="compile-common">
+		<mkdir dir="${build.dir}/jars/"/>
+		<jar destfile="${jar-common.file}">
+			<fileset dir="${build.dir}/classes/common"/>
+			<manifest>
+				<attribute name="Built-By" value="${user}" />    
+        <attribute name="Bundle-Name" value="${name}" />
+      	<attribute name="Bundle-Copyright" value="${copyright}" />
+      	<attribute name="Bundle-Vendor" value="${vendor}" />
+        <attribute name="Bundle-Version" value="${version}" />
+        <attribute name="Bundle-License" value="${license.url} " />
+        <attribute name="Build-DocURL" value="${docurl}" />	      
+			</manifest>			
+			<metainf dir="." includes="${license.file}"/>
+		</jar>
+		<antcall target="clean-common"/>
+	</target>
+	
+	<target name="jar-roboguice" depends="jar-common,compile-roboguice">
+		<mkdir dir="${build.dir}/jars/"/>
+		<jar destfile="${jar-roboguice.file}">
+			<fileset dir="${build.dir}/classes/roboguice"/>
+			<manifest>
+				<attribute name="Built-By" value="${user}" />    
+        <attribute name="Bundle-Name" value="${name}" />
+      	<attribute name="Bundle-Copyright" value="${copyright}" />
+      	<attribute name="Bundle-Vendor" value="${vendor}" />
+        <attribute name="Bundle-Version" value="${version}" />
+        <attribute name="Bundle-License" value="${license.url} " />
+        <attribute name="Build-DocURL" value="${docurl}" />	      
+			</manifest>			
+			<metainf dir="." includes="${license.file}"/>
+		</jar>
+		<antcall target="clean-roboguice"/>
+	</target>
+	
+	<target name="jars" depends="clean-jars, jar-common, jar-roboguice"/>
+		
+</project>

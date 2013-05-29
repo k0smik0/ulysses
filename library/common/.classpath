@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="net/iubris/ulysses/controller/LocationNetworkAwareSearcher.java|net/iubris/ulysses/map/overlay/places/PlaceTypeActionFilter.java" kind="src" path="src/common"/>
+	<classpathentry excluding="net/iubris/ulysses/_roboguice/module/SocratesDelegateModule.java" kind="src" path="src/roboguice"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry excluding="net/iubris/ulysses/controller/delegates/networkaware/IUlyssesNetworkSearcherDelegate.java|net/iubris/ulysses/controller/delegates/locationaware/IUlyssesLocationSearcherDelegate.java|net/iubris/ulysses/controller/delegates/locationaware/UlyssesLocationSearcherDelegate.java|net/iubris/ulysses/controller/delegates/cacheaware/IUlyssesCacheSearcherDelegate.java|net/iubris/ulysses/controller/delegates/cacheaware/UlyssesCacheSearcherDelegate.java|net/iubris/ulysses/controller/IUlyssesSearcher.java|net/iubris/ulysses/controller/LocationNetworkAwareSearcher.java|net/iubris/ulysses/controller/UlyssesSearcherOLD.java|net/iubris/ulysses/controller/delegates/networkaware/UlyssesNetworkSearcherDelegate.java" kind="src" path="src/OLD"/>
+	<classpathentry excluding="net/iubris/socrates/engines/search/url/exception/" kind="src" path="src/useless"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

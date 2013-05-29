@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="searching">Searching Places</string>
+
+	<string name="exception_place_unbelievable_zero_result_status">something wrong:\nzero results\nare you in Sibery?</string>
+	<string name="exception_places_tyrannus_status">something heavy wrong by google</string>
+
+	<string name="image_view_icon_description">the place type icon</string>
+	
+	<string name="actionbar_refresh">Refresh</string>
+
+	<string name="list_menu_sort">Sort</string>
+	<string name="list_submenu_order_distance">Sort By Distance</string>
+	<string name="list_submenu_order_rating">Sort By Rating</string>
+
+	<string name="no_data">still no data</string>
+
+</resources>

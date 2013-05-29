@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Built-By: k0smik0
-Bundle-Name: Ulysses
-Bundle-Copyright: Copyleft 2012 Massimiliano Leone - iubris.net@gmail.com
-Bundle-Vendor: Massimiliano Leone - k0smik0
-Bundle-Version: 0.1
-Bundle-License: http://www.gnu.org/licenses/lgpl.txt
-Build-DocURL: https://github.com/k0smik0/ulysses
