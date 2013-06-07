@@ -8,6 +8,7 @@ import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
 import net.iubris.diane.aware.location.state.three.ThreeStateLocationAwareLocationSupplier;
 import net.iubris.diane.aware.network.exceptions.base.NoNetworkException;
 import net.iubris.diane.searcher.aware.cache.exceptions.CacheAwareSearchException;
+import net.iubris.diane.searcher.aware.exceptions.base.StillSearchException;
 import net.iubris.diane.searcher.aware.full.base.DefaultFullAwareSearcher;
 import net.iubris.diane.searcher.aware.location.exceptions.base.LocationNotSoUsefulException;
 import net.iubris.diane.searcher.aware.location.exceptions.base.LocationTooNearException;
@@ -28,7 +29,8 @@ public class UlyssesSearcher extends DefaultFullAwareSearcher<List<PlaceHere>> {
 	}
 	
 	@Override
-	public Void search(Void... v) throws 
+	public Void search(Void... v) throws
+		StillSearchException,
 		LocationTooNearException,
 		LocationNotSoUsefulException, NoNetworkException,
 		PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException

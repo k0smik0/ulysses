@@ -15,11 +15,13 @@ import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.Plac
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
 import android.content.Context;
+import android.widget.Button;
 import android.widget.Toast;
 
 final class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 
 	private UlyssesSearcher ulyssesSearcher;
+	private Button buttonList;
 	
 	@Inject
 	UsingUlyssesAsyncTask(Context context,UlyssesSearcher ulyssesSearcher) {
@@ -29,6 +31,7 @@ final class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 	
 	@Override
 	protected void onPreExecute() throws Exception {
+		buttonList.setClickable(false);
 		Toast.makeText(context, "...searching...", Toast.LENGTH_LONG).show();
 	}
 
@@ -37,8 +40,7 @@ final class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 		LocationTooNearException, LocationNotSoUsefulException,
 		NoNetworkException,
 		PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException
-		, NetworkAwareSearchException
-	{
+		, NetworkAwareSearchException {
 		ulyssesSearcher.search();
 		return ulyssesSearcher.getResult();
 	}
@@ -52,6 +54,7 @@ final class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 			sb.append(r.getPlace().getName());
 			sb.append("\n");
 		}
+		buttonList.setClickable(true);
 		Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
 	}
 	
@@ -78,6 +81,10 @@ final class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 		/*Log.d("UsingUlyssesAsyncTask", "onException("+e.getClass().getSimpleName()+"); "+e.getMessage());
 		Toast.makeText(context, "the search was successful but returned no results - are you in sibery?", Toast.LENGTH_LONG).show();*/
 		Utils.showException(e,context);
+	}
+
+	public void setButtonToHandler(Button buttonList) {
+		this.buttonList = buttonList;		
 	}
 	
 	

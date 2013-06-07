@@ -17,7 +17,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class UlyssesSampleActivity extends RoboActivity {
-
 	
 	@Inject private MockGpsLocationsInjector locationsInjector;
 	@Inject private LocationUpdater locationUpdater;
@@ -36,6 +35,8 @@ public class UlyssesSampleActivity extends RoboActivity {
 		
 		locationsInjector.setLocationInjectionInterval(1);
 		locationsInjector.startLocationsTest();
+		
+		usingUlyssesAsyncTask.setButtonToHandler(buttonList);
 
 		buttonSearch.setOnClickListener( new OnClickListener() {
 			@Override
@@ -51,6 +52,7 @@ public class UlyssesSampleActivity extends RoboActivity {
 				startActivity(intent);
 			}
 		});
+//		buttonList.setClickable(false);
 		buttonInject.setOnClickListener( new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
@@ -63,17 +65,15 @@ public class UlyssesSampleActivity extends RoboActivity {
 				}
 			}
 		});
-		
 		locationUpdater.startLocationUpdates();
 	};
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
+//		if (buttonList.isClickable()) buttonList.setClickable(false);
 		usingUlyssesAsyncTask.execute();
 	}
-	
-	
 	
 	@Override
 	protected void onStop() {

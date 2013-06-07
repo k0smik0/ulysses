@@ -1,7 +1,8 @@
 package net.iubris.ulysses_sample.activity.list;
 
-import net.iubris.ulysses.fragment.list.adapter.PlacesHereListAdapter;
-import net.iubris.ulysses.fragment.list.adapter.asynctask.AdapterPopulaterAsyncTask;
+
+
+import net.iubris.ulysses.list.adapter.PlacesHereListAdapter;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
 import net.iubris.ulysses_sample.R;
@@ -17,8 +18,8 @@ import android.widget.Toast;
 public class UlyssesSampleListActivity extends RoboListActivity {
 	
 	private PlacesHereListAdapter placesAdapter;
-	private AdapterPopulaterAsyncTask adapterPopulaterAsyncTask;
-	
+	private UlyssesSampleSearchAndAdaptePopulaterAsyncTask searchAndAdapterPopulateAsyncTask;
+	private PopulateOnResumeAsyncTask populateOnResumeAsyncTask;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,29 +35,27 @@ public class UlyssesSampleListActivity extends RoboListActivity {
 				
 		placesAdapter = new PlacesHereListAdapter(this, R.layout.list_row);
 		listView.setAdapter(placesAdapter);
-		
 		placesAdapter.setNotifyOnChange(true);
-		adapterPopulaterAsyncTask = new UlyssesSampleAdapterPopulaterAsyncTask(this, placesAdapter);
+		searchAndAdapterPopulateAsyncTask = new UlyssesSampleSearchAndAdaptePopulaterAsyncTask(this, placesAdapter);
+		populateOnResumeAsyncTask = new PopulateOnResumeAsyncTask(this, placesAdapter);
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
 		Toast.makeText(this, "onResume", Toast.LENGTH_LONG).show();
-		adapterPopulaterAsyncTask.execute();
+		populateOnResumeAsyncTask.execute();
+//		searchAndAdapterPopulateAsyncTask.execute();
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-//Ln.d("creating menu");
-		//printItems();
 		super.onCreateOptionsMenu(menu);
 		
 		menu.add(R.string.actionbar_refresh).setOnMenuItemClickListener( new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
-				adapterPopulaterAsyncTask.execute();
+				searchAndAdapterPopulateAsyncTask.execute();
 				return false;
 			}} );
 		

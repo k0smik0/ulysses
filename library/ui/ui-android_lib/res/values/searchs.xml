@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="search__searching">Searching Places</string>
+
+	<string name="search__exception_places_retrieving_status">something wrong retrieving data from google</string>
+	<string name="search__exception_place_unbelievable_zero_result_status">something wrong:\nzero results\nare you in Sibery?</string>
+	<string name="search__exception_places_tyrannus_status">something heavy wrong by google</string>
+</resources>

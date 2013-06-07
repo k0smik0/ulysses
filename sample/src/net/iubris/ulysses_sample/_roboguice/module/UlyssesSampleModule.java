@@ -6,6 +6,8 @@ import net.iubris.socrates.config.ConfigOptional;
 import net.iubris.socrates.engines.search.url.annotation.Config;
 import net.iubris.ulysses._roboguice.module.AbstractUlyssesModule;
 import net.iubris.ulysses._roboguice.module.Socrates4UlyssesModule;
+import net.iubris.ulysses._roboguice.module.UlyssesUiModule;
+import net.iubris.ulysses.searcher.aware.full.UlyssesSearcher;
 import net.iubris.ulysses_sample.config.UlyssesSampleConfigMandatory;
 import net.iubris.ulysses_sample.config.UlyssesSampleConfigOptional;
 
@@ -15,17 +17,9 @@ public class UlyssesSampleModule extends AbstractUlyssesModule {
 	@Override
 	protected void configure() {
 		super.configure();
+		install( new UlyssesUiModule() );
 		
-		/*
-		install( new AbstractHermesModule<RatafiaService,UlyssesSearcher>(){
-			@Override
-			protected Class<RatafiaService> providesHermesServiceDescendantClass() {
-				return RatafiaService.class;
-			}
-			@Override
-			protected void configure() {}
-		});
-		*/
+		bind(UlyssesSearcher.class).asEagerSingleton();
 	}
 	
 	@Override

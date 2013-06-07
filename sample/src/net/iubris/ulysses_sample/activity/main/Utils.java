@@ -8,7 +8,7 @@ public class Utils {
 
 	public static void showException(Exception exception, Context context) {
 		String exceptionMessage = getExceptionMessage(exception);
-		Log.d("UsingUlyssesAsyncTask:86", "onException("+exception.getClass().getSimpleName()+"): "+exceptionMessage);
+		Log.d("Utils:11", "onException("+exception.getClass().getSimpleName()+"): "+exceptionMessage);
 		Toast.makeText(context, exceptionMessage, Toast.LENGTH_SHORT).show();
 	}
 	/*private void showException(Exception exception,String suffix) {
