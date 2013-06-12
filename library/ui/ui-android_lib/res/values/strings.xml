@@ -8,4 +8,6 @@
 	<string name="no_data">still no data</string>
 
 	-->
+	<string name="search_hint">Search by Address</string>
+	<string name="search_label">search_label</string>
 </resources>

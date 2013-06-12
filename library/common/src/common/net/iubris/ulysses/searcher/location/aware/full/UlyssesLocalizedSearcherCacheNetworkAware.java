@@ -1,5 +1,6 @@
 package net.iubris.ulysses.searcher.location.aware.full;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,6 +23,7 @@ public class UlyssesLocalizedSearcherCacheNetworkAware extends DefaultLocalizedS
 			LocalizedSearcherCacheAwareStrictChecking<List<PlaceHere>> arg0,
 			LocalizedSearcherNetworkAwareStrictChecking<List<PlaceHere>> arg1) {
 		super(arg0, arg1);
+		result = new ArrayList<PlaceHere>(0); // Null Object Pattern
 	}
 	
 	@Override
