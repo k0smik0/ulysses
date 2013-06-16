@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content" >
+
+	<RatingBar style="?android:attr/ratingBarStyleSmall"
+			android:id="@+id/rating_bar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:isIndicator="true"
+			android:max="5"
+			android:stepSize="0.1"
+			android:numStars="5"/>
+</FrameLayout>

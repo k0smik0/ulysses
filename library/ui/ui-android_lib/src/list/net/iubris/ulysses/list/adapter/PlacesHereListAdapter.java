@@ -20,15 +20,16 @@
 package net.iubris.ulysses.list.adapter;
 
 import java.util.Comparator;
-
 import net.iubris.socrates.model.http.response.data.search.Place;
+import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.PlaceHere;
-import net.iubris.ulysses_ui.R;
+import net.iubris.ulysses.ui.PlacesUtils;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.darrenmowat.imageloader.ImageLoader;
@@ -56,18 +57,19 @@ public class PlacesHereListAdapter extends ArrayAdapter<PlaceHere> {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		
-		if (!isEmpty()) {			
+		if (!isEmpty()) {
 		
 			PlaceHolder placeHolder;
-			if(convertView == null){
+			if(convertView == null) {
 				convertView = activity.getLayoutInflater().inflate(textViewResourceId, null, false);
 
 				placeHolder = new PlaceHolder();
 				placeHolder.icon = (ImageView) convertView.findViewById(R.id.icon);
-				placeHolder.name = (TextView) convertView.findViewById(R.id.name_text_view);
-				placeHolder.distance = (TextView) convertView.findViewById(R.id.distance_text_view);
-				placeHolder.rating = (TextView) convertView.findViewById(R.id.rating_text_view);
+				
+				placeHolder.name = (TextView) convertView.findViewById(R.id.name);
+				placeHolder.address = (TextView) convertView.findViewById(R.id.address);
+				placeHolder.distance = (TextView) convertView.findViewById(R.id.distance);
+				placeHolder.rating = (RatingBar) convertView.findViewById(R.id.rating_bar);
 //				placeHolder.compass = (CompassView) convertView.findViewById(R.id.arrow);
 
 				convertView.setTag(placeHolder);
@@ -79,8 +81,13 @@ public class PlacesHereListAdapter extends ArrayAdapter<PlaceHere> {
 			final Place place = placeHere.getPlace();
 //Log.d("PlacesHereListAdapter:89",place.getName());			
 			placeHolder.name.setText( place.getName() );
-			placeHolder.distance.setText( getHumanDistance( placeHere.getDistance() ));
-			placeHolder.rating.setText( place.getRating()+"" );
+			
+			placeHolder.address.setText( PlacesUtils.getUsefulAddress(placeHere.getDetails().getFormattedAddress(), 2)); // 2 = country, city 
+			
+			placeHolder.distance.setText( PlacesUtils.getUsefulDistance( placeHere.getDistance() ));
+			
+			placeHolder.rating.setRating(place.getRating());
+//			placeHolder.rating.setText( Math.floor(place.getRating()*2*10)+"%" );
 //Log.d("PlacesHereListAdapter:93","position: "+position);
 			setImage(placeHolder.icon, place);
 			if (position == getCount()-1) activity.setProgressBarIndeterminateVisibility(false);
@@ -101,16 +108,6 @@ public class PlacesHereListAdapter extends ArrayAdapter<PlaceHere> {
 		if (position == getCount()-1) activity.setProgressBarIndeterminateVisibility(false);
 	}*/
 	
-	private String getHumanDistance(float distance) {
-		String unit = "m";
-		if (distance > 1000) {
-			distance = distance/1000;
-			unit = "km";
-		}
-		String format = String.format("%.2f", distance);
-		return format+unit;
-	}
-
 	@Override
 	public void sort(Comparator<? super PlaceHere> comparator) {
 		super.sort(comparator);
@@ -118,11 +115,11 @@ public class PlacesHereListAdapter extends ArrayAdapter<PlaceHere> {
 	}
 	
 	class PlaceHolder {		
-		//public ProgressBar progress;	
 		public ImageView icon;
 		public TextView name;
+		public TextView address;
 		public TextView distance;
-		public TextView rating;
+		public RatingBar rating;
 //		public CompassView compass;
 	}
 }

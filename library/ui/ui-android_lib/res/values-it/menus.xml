@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="actionbar_home">Home</string>
+
+	<string name="menu__refresh">Aggiorna</string>
+	<string name="menu__search">Cerca</string>
+	
+	<string name="menu__list">Lista</string>
+	<string name="menu__map">Mappa</string>
+
+	
+	<string name="menu__list_sort">Ordina</string>
+	<string name="menu__list_sort_distance">Ordina per distanza</string>
+	<string name="menu__list_sort_rating">Ordina per punteggio</string>
+</resources>

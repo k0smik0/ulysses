@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="search__searching">\.\.\.sto cercando\.\.\.</string>
+
+	<string name="search__exception_places_retrieving_status">Oops!\nerrore nella ricezione dati\nriprova</string>
+	<string name="search__exception_place_unbelievable_zero_result_status">Oops!\nNon ho trovato alcun risultato!\nSei in Siberia?!</string>
+	<string name="search__exception_places_tyrannus_status">Oops!\nL\'applicazione ha superato i limiti di quota di richieste al server,\nriprova più tardi</string>
+</resources>

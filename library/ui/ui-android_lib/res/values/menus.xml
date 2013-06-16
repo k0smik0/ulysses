@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="actionbar_home">Home</string>
+	
+	<string name="menu__call">Call</string>
 
 	<string name="menu__refresh">Refresh</string>
 	<string name="menu__search">Search</string>

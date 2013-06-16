@@ -1,0 +1,118 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/scrollable"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#ffffff">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		
+		<include
+			android:id="@+id/name_included"
+			layout="@layout/frame_name"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="2dp"
+			android:layout_marginLeft="5dp"/>
+		
+		<ImageView
+			android:id="@+id/photo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:minHeight="128dp"
+			android:minWidth="128dp"
+			android:layout_below="@id/name_included"
+			android:src="@android:drawable/ic_menu_camera" 
+			android:contentDescription="photo"/>
+		
+		<include
+			android:id="@+id/address_included"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignTop="@id/photo"			
+			android:layout_toRightOf="@id/photo"
+			android:layout_marginTop="5dp"
+			layout="@layout/frame_address" />
+		
+		<include
+			android:id="@+id/distance_included"
+			android:layout_toRightOf="@id/photo"
+			android:layout_below="@id/address_included"
+			android:layout_marginTop="5dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			layout="@layout/frame_distance" />
+
+		<include
+			android:id="@+id/ratingbar_included"
+			layout="@layout/frame_ratingbar"
+			android:layout_toRightOf="@id/photo"
+			android:layout_below="@id/distance_included"
+			android:layout_marginTop="5dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+		
+		<include
+			layout="@layout/frame_ratingtext"
+			android:layout_toRightOf="@id/ratingbar_included"
+			android:layout_alignTop="@id/ratingbar_included"
+			android:layout_marginTop="-2dp"
+			android:layout_marginLeft="5dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+
+		<Button
+			android:id="@+id/gplus"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/photo"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="10dp"
+			android:layout_marginLeft="5dp"
+			android:textIsSelectable="true"
+			android:text="@string/gplus"
+			android:layout_centerHorizontal="true"
+			android:textSize="14sp"
+			android:textStyle="italic"
+			android:textColor="#cc0000"
+			android:clickable="true" />
+		
+		<TextView
+			android:id="@+id/url"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/gplus"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="10dp"
+			android:layout_marginLeft="5dp"
+			android:layout_centerHorizontal="true"
+			android:textSize="14sp"
+			android:textStyle="italic"
+			android:textColor="#cc0000"
+			android:textIsSelectable="true"
+			android:clickable="true"
+			android:autoLink="web"/>
+		
+
+		<Gallery
+			android:id="@+id/gallery"					
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/url"/>
+	
+		<ImageSwitcher
+			android:id="@+id/image_switcher"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/gallery"/>
+		
+		<WebView
+			android:id="@+id/street_view"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/image_switcher"/>
+
+	</RelativeLayout>
+</ScrollView>

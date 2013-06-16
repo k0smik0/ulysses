@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="search__searching">Searching Places</string>
+	
+	<string name="search__exception_no_network">no connectivity, try to use cache</string>
+	<string name="search__exception_location_too_near">new location is too near to the old ones,\nusing previous result</string>
+	<string name="search__exception_location_not_so_useful">new location is not so useful than old ones,\nusing previous result</string>
 
 	<string name="search__exception_places_retrieving_status">something wrong retrieving data from google</string>
 	<string name="search__exception_place_unbelievable_zero_result_status">something wrong:\nzero results\nare you in Sibery?</string>

@@ -3,22 +3,71 @@
 	android:id="@+id/RelativeLayout"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
-	android:tag="list_row" >
+	android:tag="list_row"
+	android:focusable="false"
+	android:focusableInTouchMode="false"
+	
+	android:background="#ffffff" >
 
 	<ImageView
 		android:id="@+id/icon"
 		android:layout_width="wrap_content"
-		android:layout_height="fill_parent"
+		android:layout_height="wrap_content"
+		android:minWidth="48dp"
+		android:minHeight="48dp"
 		android:layout_marginRight="5dip"
-		android:contentDescription="the place type icon" />
+		android:contentDescription="the place type icon" />	
 
-	<LinearLayout
-		android:id="@+id/LinearLayout"
-		android:layout_width="wrap_content"
+	<!-- <LinearLayout
+		android:id="@+id/RightLinearLayout"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		android:layout_toRightOf="@id/icon">
-
+		android:layout_toRightOf="@id/icon"
+		android:layout_alignTop="@id/icon"> -->
+	
+		<include 
+			android:id="@+id/row_name_included"
+			layout="@layout/frame_name"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignTop="@id/icon"
+			android:layout_toRightOf="@id/icon"
+			/>
+		<include
+			android:id="@+id/row_address_included"
+			layout="@layout/frame_address"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/icon"
+			android:layout_below="@id/row_name_included"
+			/>
+		<include
+			android:id="@+id/row_distance_included"
+			layout="@layout/frame_distance"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/icon"
+			android:layout_below="@id/row_address_included"/>
+		
+		<include
+			android:id="@+id/row_ratingbar_included"
+			layout="@layout/frame_ratingbar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/icon"
+			android:layout_below="@id/row_distance_included" />
+		
+		<include
+			layout="@layout/frame_ratingtext"
+			android:layout_toRightOf="@id/row_ratingbar_included"
+			android:layout_alignTop="@id/row_ratingbar_included"
+			android:layout_marginTop="-2dp"
+			android:layout_marginLeft="5dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+	
+		<!-- 
 		<TextView
 			android:id="@+id/name_text_view"
 			android:layout_width="fill_parent"
@@ -26,7 +75,17 @@
 			android:ellipsize="marquee"
 			android:singleLine="true"
 			android:textIsSelectable="true"
+			android:textSize="15dp"
 			android:textStyle="bold" />
+		
+		<TextView
+			android:id="@+id/address_text_view"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:ellipsize="marquee"
+			android:singleLine="true"
+			android:textIsSelectable="true"
+			/>
 
 		<TextView
 			android:id="@+id/distance_text_view"
@@ -34,16 +93,24 @@
 			android:layout_height="wrap_content"
 			android:ellipsize="marquee"
 			android:singleLine="true"
-			android:textIsSelectable="true"
-			android:textStyle="bold" />
-
-		<TextView
-			android:id="@+id/rating_text_view"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:ellipsize="marquee"
-			android:singleLine="true"
 			android:textIsSelectable="true" />
-	</LinearLayout>
+		
+		<RatingBar
+			android:id="@+id/rating_bar"
+			android:layout_width="wrap_content"
+			android:layout_height="40dp"
+			android:layout_marginTop="-10dp"
+			android:layout_marginLeft="-60dp"
+			android:isIndicator="true"
+			android:max="5"
+			android:maxHeight="35dp"
+			android:numStars="5"
+			android:scaleX="0.5"
+			android:scaleY="0.5" />
+		-->
+		
+	<!-- </LinearLayout> -->
+
+	
 
 </RelativeLayout>

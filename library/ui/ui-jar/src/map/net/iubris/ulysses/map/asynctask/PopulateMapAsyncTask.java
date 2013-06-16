@@ -1,7 +1,9 @@
 package net.iubris.ulysses.map.asynctask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.iubris.ulysses.asynctask.UlyssesAsyncTask;
 import net.iubris.ulysses.map.LocationUtils;
@@ -30,16 +32,21 @@ public abstract class PopulateMapAsyncTask extends UlyssesAsyncTask {
 	private final List<Marker> markers;
 	private final int mapFragmentResId;
 	private Location myLocation;
+	private Map<String, PlaceHere> placeByMarkerIdMap;
 	
 	protected PopulateMapAsyncTask(Context context, GoogleMap map, int mapFragmentResId) {
 		super(context);
 		this.map = map;
 		this.mapFragmentResId = mapFragmentResId;
 		markers = new ArrayList<Marker>();
+		placeByMarkerIdMap = new HashMap<String, PlaceHere>();
 	}
 	
 	public List<Marker> getMarkers() {
 		return markers;
+	}
+	public PlaceHere findPlaceHereById(String id) {
+		return placeByMarkerIdMap.get(id);
 	}
 	
 	public void execute(Location myLocation) {
@@ -55,14 +62,20 @@ public abstract class PopulateMapAsyncTask extends UlyssesAsyncTask {
 	protected void populateOverlayFromResult(List<PlaceHere> placeHeres) {
 		Builder boundsBuilder = new LatLngBounds.Builder();
 		
-		for (PlaceHere placeHere: placeHeres) {			
+		for (PlaceHere placeHere: placeHeres) {
 			MarkerOptions mo = new MarkerOptions();
 			mo
 				.position( LocationUtils.locationToLatLng( placeHere.getPlace().getGeometry().getLocation() ) )
 				.title( placeHere.getPlace().getName() )
-				.snippet( Math.floor( placeHere.getPlace().getRating() ) +"/5" )
+				.snippet( placeHere.getPlace().getRating() +"" )
 				.icon( BitmapDescriptorFactory.fromBitmap( getSieve().find(placeHere.getPlace()) ) );
-			markers.add( map.addMarker(mo) );			
+			
+//			map.setO
+						
+			Marker marker = map.addMarker(mo);
+			markers.add( marker );
+			placeByMarkerIdMap.put(marker.getId(), placeHere);
+			
 			boundsBuilder.include(mo.getPosition());
 		}
 		
@@ -70,7 +83,6 @@ public abstract class PopulateMapAsyncTask extends UlyssesAsyncTask {
 		
 		LatLngBounds latLngBounds = boundsBuilder.build();
 		autoZoom(latLngBounds);
-
 	};
 	
 	protected void clearMarkers() {
@@ -78,6 +90,7 @@ public abstract class PopulateMapAsyncTask extends UlyssesAsyncTask {
 			m.remove();
 		}
 		markers.clear();
+		placeByMarkerIdMap.clear();
 	}
 	
 	protected abstract Sieve getSieve();
