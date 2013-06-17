@@ -10,7 +10,9 @@
 		android:singleLine="false"
 		android:textIsSelectable="true"			
 		android:textSize="16sp"
-		android:textColor="#bb0000"
+		
 		android:textStyle="bold"/>
 			
 </FrameLayout>
+
+<!-- android:textColor="#bb0000" -->

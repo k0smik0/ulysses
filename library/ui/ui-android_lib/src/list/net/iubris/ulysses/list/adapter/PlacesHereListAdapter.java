@@ -20,6 +20,7 @@
 package net.iubris.ulysses.list.adapter;
 
 import java.util.Comparator;
+
 import net.iubris.socrates.model.http.response.data.search.Place;
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.PlaceHere;

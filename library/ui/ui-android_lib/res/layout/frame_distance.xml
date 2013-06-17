@@ -8,6 +8,8 @@
 		android:layout_height="wrap_content"
 		android:ellipsize="marquee"
 		android:singleLine="true"
-		android:textColor="#bb0000"
+		
 		android:textIsSelectable="true" />
 </FrameLayout>
+
+<!-- android:textColor="#bb0000" -->

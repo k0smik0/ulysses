@@ -20,10 +20,11 @@
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/infowindow_photo"
 		android:textSize="16sp"
-		android:textColor="#bb0000"
+		
 		android:textIsSelectable="true"
-		android:textStyle="bold"
-		/>
+		android:textStyle="bold"/>
+	<!-- android:textColor="#bb0000" -->
+	
 	<include 
 		layout="@layout/frame_ratingbar"
 		android:layout_width="wrap_content"
