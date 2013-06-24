@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="label_gallery">Gallery</string>
+	<string name="label_links">Links</string>
+	<string name="label_street_view">Street View</string>
+	<string name="label_coming_soon">coming soon !</string>
+	<string name="label_no_url">Sorry, no links provided</string>	
+</resources>

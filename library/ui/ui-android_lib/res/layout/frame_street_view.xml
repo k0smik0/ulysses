@@ -1,0 +1,33 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		>
+
+		<TextView
+			android:id="@+id/url_label"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			style="@style/label"
+			android:textStyle="bold"
+			android:text="@string/label_street_view"
+			android:gravity="center" />
+		
+		<WebView
+			android:id="@+id/street_view"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+		
+		<include
+			layout="@layout/frame_coming_soon"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+	</LinearLayout>
+		
+</FrameLayout>
+
+<!-- android:background="#ffffff" -->
