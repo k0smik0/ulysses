@@ -14,7 +14,6 @@ import net.iubris.diane.searcher.location.aware.full.base.DefaultLocalizedSearch
 import net.iubris.diane.searcher.location.aware.network.LocalizedSearcherNetworkAwareStrictChecking;
 import net.iubris.ulysses.model.PlaceHere;
 import android.location.Location;
-import android.util.Log;
 
 public class UlyssesLocalizedSearcherCacheNetworkAware extends DefaultLocalizedSearcherCacheNetworkAwareStrictChecking<List<PlaceHere>> {
 
@@ -30,7 +29,7 @@ public class UlyssesLocalizedSearcherCacheNetworkAware extends DefaultLocalizedS
 	public Void search(Location... locations) throws NoNetworkException,
 			NetworkAwareSearchException {
 		try {
-			Log.d("UlyssesLocalizedSearcherCacheNetworkAware:31","location: "+locations[0]);
+//			Log.d("UlyssesLocalizedSearcherCacheNetworkAware:31","location: "+locations[0]);
 			return super.search(locations);
 		} catch (CacheTooOldException e) {
 		} catch (CacheAwareSearchException e) {}

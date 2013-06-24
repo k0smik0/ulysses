@@ -6,7 +6,6 @@ import java.util.List;
 import net.iubris.socrates.model.http.response.data.search.Place;
 import net.iubris.ulysses.ui.icons.filter.Filter;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 public class Sieve {
 
@@ -16,7 +15,7 @@ public class Sieve {
 //	@Inject
 	public Sieve(/*@DefaultBitmap*/ Bitmap defaultBitmap) {
 		this.defaultBitmap = defaultBitmap;
-Log.d("Sieve:21","constructor");
+//Log.d("Sieve:21","constructor");
 	}
 	
 	public Sieve addFilter(Filter filter) {

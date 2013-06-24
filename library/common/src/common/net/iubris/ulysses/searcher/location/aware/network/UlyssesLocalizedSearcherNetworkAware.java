@@ -19,7 +19,6 @@ import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.Plac
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
 import android.location.Location;
-import android.util.Log;
 
 public class UlyssesLocalizedSearcherNetworkAware extends AbstractLocalizedSearcherNetworkAwareStrictChecking<List<PlaceHere>> 
 {
@@ -54,7 +53,7 @@ public class UlyssesLocalizedSearcherNetworkAware extends AbstractLocalizedSearc
 	
 	@Override
 	protected void doSearch(Location location) throws PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException {
-Log.d("UlyssesLocalizedSearcherNetworkAware:54","doSearch");
+//Log.d("UlyssesLocalizedSearcherNetworkAware:54","doSearch");
 		try {
 			result = socratesDelegate.searchPlacesWithDetailsHere(location);
 		} catch (PlacesSearcherException e) {
