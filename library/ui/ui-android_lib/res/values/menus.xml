@@ -5,7 +5,7 @@
 	<string name="menu__call">Call</string>
 
 	<string name="menu__refresh">Refresh</string>
-	<string name="menu__search">Search</string>
+	<string name="menu__search">Search by address</string>
 	
 	<string name="menu__list">List</string>
 	<string name="menu__map">Map</string>

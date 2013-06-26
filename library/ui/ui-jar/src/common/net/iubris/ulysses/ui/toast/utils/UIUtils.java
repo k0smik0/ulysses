@@ -19,7 +19,10 @@
  ******************************************************************************/
 package net.iubris.ulysses.ui.toast.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.view.Gravity;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class UIUtils {
@@ -30,8 +33,13 @@ public class UIUtils {
 	 * @param message
 	 * @return Toast
 	 */
+	@SuppressLint("ShowToast")
 	public static Toast buildShortToast(Context context, String message) {
-		return Toast.makeText(context, message, Toast.LENGTH_SHORT);
+		Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+		TextView v = (TextView)toast.getView().findViewById(android.R.id.message);
+		if( v != null) v.setGravity(Gravity.CENTER);
+//		return Toast.makeText(context, message, Toast.LENGTH_SHORT);
+		return toast;
 	}
 	
 	/**
@@ -63,6 +71,44 @@ public class UIUtils {
 		UIUtils.buildShortToast(context, UIUtils.getResourceString(resourceId,context) +"\n\n"+e.getMessage()).show();
 	}*/
 	
+	/** 
+	 * Short way to build a short toast
+	 * 
+	 * @param context
+	 * @param message
+	 * @return Toast
+	 */
+	@SuppressLint("ShowToast")
+	public static Toast buildLongToast(Context context, String message) {
+		Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+		TextView v = (TextView)toast.getView().findViewById(android.R.id.message);
+		if( v != null) v.setGravity(Gravity.CENTER);
+//		return Toast.makeText(context, message, Toast.LENGTH_LONG);
+		return toast;
+	}
+	
+	/**
+	 * Short way to show a short toast
+	 * 
+	 * @param message
+	 * @param context
+	 */
+	public static void showLongToast(String message, Context context) {
+		UIUtils.buildLongToast(context, message).show();
+	}
+	/**
+	 * Short way to show a short toast
+	 * 
+	 * @param resourceId
+	 * @param context
+	 */
+	public static void showLongToast(int resourceId, Context context) {
+		UIUtils.buildLongToast(context, UIUtils.getResourceString(resourceId,context)).show();
+	}
+	
+	
+	
+	
 	/**
 	 * Short way to get a string resource
 	 * 
@@ -73,4 +119,6 @@ public class UIUtils {
 	public static String getResourceString(int resourceId, Context context) {
 		return context.getResources().getString(resourceId);
 	}
+	
+	
 }

@@ -67,11 +67,9 @@ public abstract class PopulateMapAsyncTask extends UlyssesAsyncTask {
 			mo
 				.position( LocationUtils.locationToLatLng( placeHere.getPlace().getGeometry().getLocation() ) )
 				.title( placeHere.getPlace().getName() )
-				.snippet( placeHere.getPlace().getRating() +"" )
+				.snippet( placeHere.getPlace().getRating() +"")
 				.icon( BitmapDescriptorFactory.fromBitmap( getSieve().find(placeHere.getPlace()) ) );
 			
-//			map.setO
-						
 			Marker marker = map.addMarker(mo);
 			markers.add( marker );
 			placeByMarkerIdMap.put(marker.getId(), placeHere);
