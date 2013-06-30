@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import net.iubris.diane.aware.network.exceptions.base.NoNetworkException;
+import net.iubris.diane.searcher.aware.exceptions.base.StillSearchException;
 import net.iubris.diane.searcher.aware.location.exceptions.base.LocationNotSoUsefulException;
 import net.iubris.diane.searcher.aware.location.exceptions.base.LocationTooNearException;
 import net.iubris.diane.searcher.aware.network.exceptions.NetworkAwareSearchException;
@@ -24,7 +25,7 @@ final class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 	private Button buttonList;
 	
 	@Inject
-	UsingUlyssesAsyncTask(Context context,UlyssesSearcher ulyssesSearcher) {
+	UsingUlyssesAsyncTask(Context context, UlyssesSearcher ulyssesSearcher) {
 		super(context);
 		this.ulyssesSearcher = ulyssesSearcher;
 	}
@@ -39,6 +40,7 @@ final class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 	public List<PlaceHere> call() throws 
 		LocationTooNearException, LocationNotSoUsefulException,
 		NoNetworkException,
+		StillSearchException,
 		PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException
 		, NetworkAwareSearchException {
 		ulyssesSearcher.search();
@@ -58,10 +60,14 @@ final class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 		Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
 	}
 	
-	/*@Override
+	@Override
+	protected void onException(NoNetworkException e) throws RuntimeException {
+		Utils.showException(e,context);
+	}
+	@Override
 	protected void onException(NetworkAwareSearchException e) throws RuntimeException {
-		showException(e);
-	}*/
+		Utils.showException(e,context);
+	}
 	
 	@Override
 	protected void onException(LocationTooNearException e) throws RuntimeException {
@@ -80,6 +86,15 @@ final class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 	protected void onException(PlacesUnbelievableZeroResultStatusException e) throws RuntimeException {
 		/*Log.d("UsingUlyssesAsyncTask", "onException("+e.getClass().getSimpleName()+"); "+e.getMessage());
 		Toast.makeText(context, "the search was successful but returned no results - are you in sibery?", Toast.LENGTH_LONG).show();*/
+		Utils.showException(e,context);
+	}
+	@Override
+	protected void onException(PlacesTyrannusStatusException e) throws RuntimeException {
+		Utils.showException(e,context);
+	}
+	
+	@Override
+	protected void onException(NullPointerException e) throws RuntimeException {
 		Utils.showException(e,context);
 	}
 

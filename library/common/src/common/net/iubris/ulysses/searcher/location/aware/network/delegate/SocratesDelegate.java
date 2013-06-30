@@ -71,9 +71,7 @@ public class SocratesDelegate  {
 	}*/
 
 	public List<PlaceHere> searchPlacesWithDetailsHere(Location here) throws /*LocationNullException,*/ PlacesSearcherException, DetailsRetrieverException, OverQuotaException, ZeroResultException, RequestDeniedException, InvalidRequestException {
-		
-		final List<Place> places = getPlaces(here);
-		
+		final List<Place> places = getPlaces(here);		
 //Ln.d(places.size());		
 		final List<PlaceHere> placesHere = new ArrayList<PlaceHere>( places.size() );
 		for (Place place: places) {
@@ -87,12 +85,12 @@ public class SocratesDelegate  {
 	private List<Place> getPlaces(Location location) throws PlacesSearcherException, OverQuotaException, ZeroResultException, RequestDeniedException, InvalidRequestException {
 //		if (location==null) throw new LocationNullException("null location?!");
 		final SearchResponse searchResponse = searcher.search( location );
-		final List<Place> places = searchResponse.getStatus().act(searchResponse);
+		final List<Place> places = searchResponse.getStatus().handleStatusAndGetData(searchResponse);
 		return places;
 	}
 	
 	private Details getDetails(String reference) throws DetailsRetrieverException, ZeroResultException, OverQuotaException, RequestDeniedException, InvalidRequestException {
-		final DetailsResponse placeDetailsResponse = placeDetailsRetriever.retrieveDetails( reference );
-		return placeDetailsResponse.getStatus().act( placeDetailsResponse );		
+		final DetailsResponse placeDetailsResponse = placeDetailsRetriever.retrieve( reference );
+		return placeDetailsResponse.getStatus().handleStatusAndGetData( placeDetailsResponse );		
 	}
 }

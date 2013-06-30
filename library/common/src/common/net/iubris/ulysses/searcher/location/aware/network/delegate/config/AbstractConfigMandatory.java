@@ -18,13 +18,4 @@ public abstract class AbstractConfigMandatory implements ConfigMandatory{
 	public HttpParserOutputType getOutput() {				
 		return HttpParserOutputType.json;
 	}
-	/*
-	@Override
-	public String getKey() {				
-		return "";
-	}
-	@Override
-	public String getApplicationName() {				
-		return "SocratesTest";
-	}*/
 }

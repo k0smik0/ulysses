@@ -13,6 +13,6 @@ public final class UlyssesSampleConfigMandatory extends AbstractConfigMandatory 
 
 	@Override
 	public String getApplicationName() {				
-		return "Ratafia";
+		return "Ulysses";
 	}
 }

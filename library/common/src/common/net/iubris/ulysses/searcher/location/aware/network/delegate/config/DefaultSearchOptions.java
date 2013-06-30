@@ -5,15 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.iubris.socrates.config.ConfigOptional;
+import net.iubris.socrates.config.SearchOptions;
 import net.iubris.socrates.model.http.request.url.language.Language;
 import net.iubris.socrates.model.http.request.url.parameters.optional.search.values.RankBy;
 import net.iubris.socrates.model.http.response.data.search.PlaceType;
 
-public abstract class AbstractConfigOptional implements ConfigOptional {
+public class DefaultSearchOptions implements SearchOptions {
 	protected final HashSet<PlaceType> types;
 	
-	public AbstractConfigOptional() {
+	public DefaultSearchOptions() {
 //		System.out.println("ConfigOptionalImpl: "+this.hashCode());
 		types = new HashSet<PlaceType>();
 	}
@@ -25,10 +25,10 @@ public abstract class AbstractConfigOptional implements ConfigOptional {
 	public Set<PlaceType> getTypes() {
 //		hashSet.add(PlaceType.bar);
 //		hashSet.add(PlaceType.cafe);
-		addTypes();
+//		addTypes();
 		return types;
 	}
-	protected abstract void addTypes();
+//	protected abstract void addTypes();
 
 	/**
 	 * @return Collections.emptyList()
@@ -64,6 +64,6 @@ public abstract class AbstractConfigOptional implements ConfigOptional {
 	 */
 	@Override
 	public Language getLanguage() {
-		return Language.italian;
+		return /*Language.italian*/ null;
 	}
 }

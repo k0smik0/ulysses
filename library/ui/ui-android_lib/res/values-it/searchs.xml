@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="search__searching">\.\.\.sto cercando\.\.\.</string>
+	
+	<string name="search__success">luoghi trovati!</string>
+	
+	<string name="search__exception_no_network">non ho connessione,\nprovo a cercare nella cache</string>
+	<string name="search__exception_location_too_near">la nuova posizione è troppo vicina alla precedente,\nperciò uso i risultati precedenti</string>
+	<string name="search__exception_location_not_so_useful">la nuova posizione non è così utile,\nperciò uso i risultati precedenti</string>
 
 	<string name="search__exception_places_retrieving_status">Oops!\nerrore nella ricezione dati\nriprova</string>
 	<string name="search__exception_place_unbelievable_zero_result_status">Oops!\nNon ho trovato alcun risultato!\nSei in Siberia?!</string>

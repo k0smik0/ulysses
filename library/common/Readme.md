@@ -15,9 +15,9 @@ usage (requires roboguice):
 
 us.search(); 
  
-List<PlaceHere> placesHere = us.getSearchResult();</pre>
+List<PlaceHere> placesHere = us.getResult();</pre>
 
-where PlaceHere is class storing search result and distance from geolocation used:
+where PlaceHere is a class storing search result and distance from geolocation used:
 <pre>
 private PlaceHere {
 	Place place; // google places 

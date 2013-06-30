@@ -2,6 +2,8 @@
 <resources>
 	<string name="search__searching">Searching Places</string>
 	
+	<string name="search__success">places found!</string>
+	
 	<string name="search__exception_no_network">no connectivity, try to use cache</string>
 	<string name="search__exception_location_too_near">new location is too near to the old ones,\nusing previous result</string>
 	<string name="search__exception_location_not_so_useful">new location is not so useful than old ones,\nusing previous result</string>

@@ -1,9 +1,10 @@
 package net.iubris.ulysses_sample._roboguice.module;
 
+import android.graphics.drawable.Drawable;
 import net.iubris.diane_library__test_utils._roboguice.module.DianeTestUtilModule;
 import net.iubris.socrates.config.ConfigMandatory;
-import net.iubris.socrates.config.ConfigOptional;
-import net.iubris.socrates.engines.search.url.annotation.Config;
+import net.iubris.socrates.config.SearchOptions;
+import net.iubris.ulysses._inject.progressdialog.annotations.search.ProgressDialogForSearchPlacesString;
 import net.iubris.ulysses._roboguice.module.AbstractUlyssesModule;
 import net.iubris.ulysses._roboguice.module.Socrates4UlyssesModule;
 import net.iubris.ulysses._roboguice.module.UlyssesUiModule;
@@ -17,7 +18,18 @@ public class UlyssesSampleModule extends AbstractUlyssesModule {
 	@Override
 	protected void configure() {
 		super.configure();
-		install( new UlyssesUiModule() );
+		install( new UlyssesUiModule() {
+			
+			@Override
+			protected Drawable provideDefaultDrawable() {
+				return null;
+			}
+			
+			@Override
+			protected void bind_String_AnnotatedWith_ProgressDialogForSearchPlacesString() {
+				bind(String.class).annotatedWith(ProgressDialogForSearchPlacesString.class).toInstance("Searching");
+			}
+		} );
 		
 		bind(UlyssesSearcher.class).asEagerSingleton();
 	}
@@ -43,8 +55,8 @@ public class UlyssesSampleModule extends AbstractUlyssesModule {
 				bind(ConfigMandatory.class).to(UlyssesSampleConfigMandatory.class);
 			}
 			@Override
-			protected void bindConfigOptional() {
-				bind(ConfigOptional.class).annotatedWith(Config.class).to(UlyssesSampleConfigOptional.class);
+			protected void bindSearchOptions() {
+				bind(SearchOptions.class)/*.annotatedWith(Config.class)*/.to(UlyssesSampleConfigOptional.class);
 			}
 		};
 	}

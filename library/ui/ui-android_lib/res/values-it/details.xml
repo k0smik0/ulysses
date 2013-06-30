@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
+<!-- 
+	<string name="image_view_icon_description">the place type icon</string>
+	
+	<string name="no_data">still no data</string>
+
+	-->
+	
 	<string name="label_gallery">Galleria Immagini</string>
 	<string name="label_links">Links</string>
 	<string name="label_street_view">Nei dintorni</string>
 	<string name="label_coming_soon">presto su questi schermi !</string>
 	<string name="label_no_url">Spiacente, non è stato fornito alcun link</string>
+	
+	<string name="gplus">dettagli</string>
+	<string name="reviews">recensioni</string>
+	
+	
 </resources>

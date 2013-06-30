@@ -33,7 +33,7 @@ public class UlyssesSampleActivity extends RoboActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sample_activity);
 		
-		locationsInjector.setLocationInjectionInterval(1);
+		locationsInjector.setLocationInjectionInterval(5);
 		locationsInjector.startLocationsTest();
 		
 		usingUlyssesAsyncTask.setButtonToHandler(buttonList);

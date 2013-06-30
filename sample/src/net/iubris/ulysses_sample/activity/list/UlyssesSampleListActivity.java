@@ -52,15 +52,15 @@ public class UlyssesSampleListActivity extends RoboListActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		
-		menu.add(R.string.actionbar_refresh).setOnMenuItemClickListener( new OnMenuItemClickListener() {
+		menu.add("REFRESH").setOnMenuItemClickListener( new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				searchAndAdapterPopulateAsyncTask.execute();
 				return false;
 			}} );
 		
-		final SubMenu sortSubMenu = menu.addSubMenu(R.string.list_menu_sort);
-		sortSubMenu.add(R.string.list_submenu_order_distance).setOnMenuItemClickListener( new OnMenuItemClickListener() {			
+		final SubMenu sortSubMenu = menu.addSubMenu(R.string.menu__list_sort);
+		sortSubMenu.add(R.string.menu__list_sort_distance).setOnMenuItemClickListener( new OnMenuItemClickListener() {			
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {				
 				placesAdapter.sort( new PlaceComparatorByAscendingDistance());
@@ -68,7 +68,7 @@ public class UlyssesSampleListActivity extends RoboListActivity {
 				return false;
 			}
 		});
-		sortSubMenu.add(R.string.list_submenu_order_rating).setOnMenuItemClickListener( new OnMenuItemClickListener() {			
+		sortSubMenu.add(R.string.menu__list_sort_rating).setOnMenuItemClickListener( new OnMenuItemClickListener() {			
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {				
 				placesAdapter.sort( new PlaceComparatorByDiscendingRating() );
