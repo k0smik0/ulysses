@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net .
+ * Copyleft 2013 Massimiliano Leone - massimiliano.leone@iubris.net .
  * 
- * ProgressDialogForGetPlace.java is part of 'Ulysses'.
+ * ProgressDialogForSearchPlaces.java is part of 'Ulysses'.
  * 
  * 'Ulysses' is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -14,7 +14,7 @@
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with 'Ulysses' ; if not, write to the Free Software
+ * along with 'Ulysses'; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  ******************************************************************************/
 package net.iubris.ulysses._inject.progressdialog.annotations.search;
