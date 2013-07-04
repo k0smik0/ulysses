@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -9,27 +9,44 @@
         android:id="@+id/button_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_list"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_weight="0.05"
         android:text="Search!"
-        android:textSize="48sp" />
-    
+        android:onClick="onClickSearch" />
+
+    <TextView
+        android:id="@+id/text_field_result"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="3"
+        android:gravity="left"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scrollHorizontally="false"
+        android:scrollbars="vertical"
+        android:singleLine="false"
+        android:textIsSelectable="false" />
+
     <Button
         android:id="@+id/button_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.05"
         android:text="List!"
-        android:textSize="48sp" />
+        android:onClick="onClickList" />
 
     <Button
         android:id="@+id/button_updates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button_list"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="Stop Fake Locations" />
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.05"
+        android:layout_marginTop="0dp"
+        android:text="Start Fake Locations"
+        android:onClick="onClickFakeLocations" />
 
-</RelativeLayout>
+</LinearLayout>

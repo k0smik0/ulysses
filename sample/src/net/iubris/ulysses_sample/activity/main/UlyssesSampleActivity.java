@@ -1,21 +1,24 @@
 package net.iubris.ulysses_sample.activity.main;
 
-
 import javax.inject.Inject;
 
 import net.iubris.diane_library__test_utils.injector.MockGpsLocationsInjector;
 import net.iubris.polaris.locator.updater.LocationUpdater;
 import net.iubris.ulysses_sample.R;
 import net.iubris.ulysses_sample.activity.list.UlyssesSampleListActivity;
+import net.iubris.ulysses_sample.activity.main.task.UsingUlyssesAsyncTask;
 import roboguice.activity.RoboActivity;
+import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
+@ContentView(R.layout.sample_activity)
 public class UlyssesSampleActivity extends RoboActivity {
 	
 	@Inject private MockGpsLocationsInjector locationsInjector;
@@ -27,46 +30,42 @@ public class UlyssesSampleActivity extends RoboActivity {
 	@InjectView(R.id.button_list) Button buttonList;
 	@InjectView(R.id.button_updates) Button buttonInject;
 	@Inject UsingUlyssesAsyncTask usingUlyssesAsyncTask;
+//	@Inject UsingSimpleRoboAsyncTask usingUlyssesAsyncTask;
+	
+	@InjectView(R.id.text_field_result) TextView textView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.sample_activity);
 		
 		locationsInjector.setLocationInjectionInterval(5);
-		locationsInjector.startLocationsTest();
+//		locationsInjector.startLocationsTest();
+		
+		textView.setMovementMethod(new ScrollingMovementMethod());
 		
 		usingUlyssesAsyncTask.setButtonToHandler(buttonList);
-
-		buttonSearch.setOnClickListener( new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				usingUlyssesAsyncTask.execute();
-			};
-		});
-		buttonList.setOnClickListener( new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				locationsInjector.stopLocationsTest();
-				Intent intent = new Intent(UlyssesSampleActivity.this,UlyssesSampleListActivity.class);
-				startActivity(intent);
-			}
-		});
-//		buttonList.setClickable(false);
-		buttonInject.setOnClickListener( new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				if (locationsInjector.isRunning()) {
-					locationsInjector.stopLocationsTest();
-					buttonInject.setText("Start Fake Locations");
-				} else {
-					locationsInjector.startLocationsTest();
-					buttonInject.setText("Stop Fake Locations");
-				}
-			}
-		});
+		usingUlyssesAsyncTask.setTextViewToHandler(textView);
+		
 		locationUpdater.startLocationUpdates();
 	};
+	
+	public void onClickSearch(View v) {
+		usingUlyssesAsyncTask.execute();
+	};
+	public void onClickList(View v) {
+		locationsInjector.stopLocationsTest();
+		Intent intent = new Intent(UlyssesSampleActivity.this,UlyssesSampleListActivity.class);
+		startActivity(intent);
+	}
+	public void onClickFakeLocations(View v) {
+		if (locationsInjector.isRunning()) {
+			locationsInjector.stopLocationsTest();
+			buttonInject.setText("Start Fake Locations");
+		} else {
+			locationsInjector.startLocationsTest();
+			buttonInject.setText("Stop Fake Locations");
+		}
+	}
 	
 	@Override
 	protected void onResume() {

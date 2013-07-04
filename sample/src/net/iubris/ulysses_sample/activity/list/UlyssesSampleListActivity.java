@@ -6,6 +6,8 @@ import net.iubris.ulysses.list.adapter.PlacesHereListAdapter;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
 import net.iubris.ulysses_sample.R;
+import net.iubris.ulysses_sample.activity.list.task.PopulateOnResumeAsyncTask;
+import net.iubris.ulysses_sample.activity.list.task.UlyssesSampleSearchAndAdaptePopulaterAsyncTask;
 import roboguice.activity.RoboListActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +15,6 @@ import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.SubMenu;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class UlyssesSampleListActivity extends RoboListActivity {
 	
@@ -43,7 +44,7 @@ public class UlyssesSampleListActivity extends RoboListActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Toast.makeText(this, "onResume", Toast.LENGTH_LONG).show();
+//		Toast.makeText(this, "onResume", Toast.LENGTH_LONG).show();
 		populateOnResumeAsyncTask.execute();
 //		searchAndAdapterPopulateAsyncTask.execute();
 	}

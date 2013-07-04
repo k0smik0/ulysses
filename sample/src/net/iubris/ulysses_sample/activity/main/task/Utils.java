@@ -1,14 +1,14 @@
-package net.iubris.ulysses_sample.activity.main;
+package net.iubris.ulysses_sample.activity.main.task;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 public class Utils {
 
 	public static void showException(Exception exception, Context context) {
 		String exceptionMessage = getExceptionMessage(exception);
-		Log.d("Utils:11", "onException("+exception.getClass().getSimpleName()+"): "+exceptionMessage);
+		String m = context.getClass().getSimpleName()+": onException("+exception.getClass().getSimpleName()+"): "+exceptionMessage;
+//		Log.d("Utils:11", m);
 		Toast.makeText(context, exceptionMessage, Toast.LENGTH_SHORT).show();
 	}
 	/*private void showException(Exception exception,String suffix) {

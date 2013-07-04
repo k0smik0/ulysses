@@ -1,4 +1,4 @@
-package net.iubris.ulysses_sample.activity.list;
+package net.iubris.ulysses_sample.activity.list.task;
 
 import java.util.List;
 
@@ -14,14 +14,14 @@ import net.iubris.ulysses.searcher.aware.full.UlyssesSearcher;
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesRetrievingException;
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
-import net.iubris.ulysses_sample.activity.main.Utils;
+import net.iubris.ulysses_sample.activity.main.task.Utils;
 import android.app.Activity;
 
-class UlyssesSampleSearchAndAdaptePopulaterAsyncTask extends AdapterPopulaterAsyncTask {
+public class UlyssesSampleSearchAndAdaptePopulaterAsyncTask extends AdapterPopulaterAsyncTask {
 	
 	@Inject private UlyssesSearcher ulyssesSearcher;
 	
-	UlyssesSampleSearchAndAdaptePopulaterAsyncTask(Activity context, PlacesHereListAdapter adapter) {
+	public UlyssesSampleSearchAndAdaptePopulaterAsyncTask(Activity context, PlacesHereListAdapter adapter) {
 		super(context, adapter);
 	}
 	

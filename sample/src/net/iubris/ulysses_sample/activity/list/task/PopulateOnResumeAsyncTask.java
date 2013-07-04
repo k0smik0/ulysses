@@ -1,4 +1,4 @@
-package net.iubris.ulysses_sample.activity.list;
+package net.iubris.ulysses_sample.activity.list.task;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import net.iubris.ulysses.model.PlaceHere;
 import net.iubris.ulysses.searcher.aware.full.UlyssesSearcher;
 import android.app.Activity;
 
-final class PopulateOnResumeAsyncTask extends AdapterPopulaterAsyncTask {
+public class PopulateOnResumeAsyncTask extends AdapterPopulaterAsyncTask {
 	@Inject private UlyssesSearcher ulyssesSearcher;
 
-	PopulateOnResumeAsyncTask(Activity context, PlacesHereListAdapter adapter) {
+	public PopulateOnResumeAsyncTask(Activity context, PlacesHereListAdapter adapter) {
 		super(context, adapter);
 	}
 

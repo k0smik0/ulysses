@@ -36,8 +36,6 @@ public class UlyssesSampleModule extends AbstractUlyssesModule {
 	
 	@Override
 	protected void bindLocationProvider() {
-		/*bind(LocationProvider.class).to(MockLocator.class);
-		bind(LocationUpdater.class).to(MockLocator.class);*/
 		install( new DianeTestUtilModule() );
 	};
 	
