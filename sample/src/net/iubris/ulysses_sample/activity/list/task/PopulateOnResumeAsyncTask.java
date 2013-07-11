@@ -27,9 +27,11 @@ import net.iubris.ulysses.list.adapter.PlacesHereListAdapter;
 import net.iubris.ulysses.list.adapter.asynctask.AdapterPopulaterAsyncTask;
 import net.iubris.ulysses.model.PlaceHere;
 import net.iubris.ulysses.searcher.aware.full.UlyssesSearcher;
+import net.iubris.ulysses_sample.activity.main.task.ExceptionUtils;
 import android.app.Activity;
 
 public class PopulateOnResumeAsyncTask extends AdapterPopulaterAsyncTask {
+	
 	@Inject private UlyssesSearcher ulyssesSearcher;
 
 	public PopulateOnResumeAsyncTask(Activity context, PlacesHereListAdapter adapter) {
@@ -39,5 +41,10 @@ public class PopulateOnResumeAsyncTask extends AdapterPopulaterAsyncTask {
 	@Override
 	public List<PlaceHere> call() throws Exception {
 		return ulyssesSearcher.getResult();
+	}
+	
+	@Override
+	protected void onGenericException(Exception e) throws RuntimeException {
+		ExceptionUtils.showException(e, context);		
 	}
 }

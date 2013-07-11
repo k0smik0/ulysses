@@ -53,9 +53,9 @@ Log.d("UlyssesInfowindowAdapter:33",snippet);
 		try {
 			infowindowHolder.rating.setRating( Float.parseFloat(marker.getSnippet()) );
 		} catch (NumberFormatException e) {
-			Log.d("UlyssesInfowindowAdapter:37",e.getMessage());
+//			Log.d("UlyssesInfowindowAdapter:37",e.getMessage());
 			infowindowHolder.rating.setRating(0);
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return contentsView;
 //		return infowindowHolder;

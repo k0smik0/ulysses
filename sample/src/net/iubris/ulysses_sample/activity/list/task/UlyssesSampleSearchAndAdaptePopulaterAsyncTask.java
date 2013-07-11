@@ -33,7 +33,7 @@ import net.iubris.ulysses.searcher.aware.full.UlyssesSearcher;
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesRetrievingException;
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
-import net.iubris.ulysses_sample.activity.main.task.Utils;
+import net.iubris.ulysses_sample.activity.main.task.ExceptionUtils;
 import android.app.Activity;
 
 public class UlyssesSampleSearchAndAdaptePopulaterAsyncTask extends AdapterPopulaterAsyncTask {
@@ -55,16 +55,12 @@ public class UlyssesSampleSearchAndAdaptePopulaterAsyncTask extends AdapterPopul
 	}
 	
 	@Override
-	protected void onException(LocationTooNearException e) throws RuntimeException {
-		Utils.showException(e,context);
-	}
-	@Override
-	protected void onException(LocationNotSoUsefulException e) throws RuntimeException {
-		Utils.showException(e,context);
-	}
-	@Override
 	protected void onGenericException(Exception e) throws RuntimeException {
-		Utils.showException(e,context);
+		ExceptionUtils.showException(e,context);
+	}
+	@Override
+	protected void onException(NullPointerException e) throws RuntimeException {
+		ExceptionUtils.showException(e,context);
 	}
 	
 }

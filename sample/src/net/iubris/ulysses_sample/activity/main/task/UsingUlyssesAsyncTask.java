@@ -58,9 +58,10 @@ public class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 	
 	@Override
 	protected void onPreExecute() throws Exception {
+//Debug.startMethodTracing(Environment.getExternalStorageDirectory().getPath()+"/traces/ulysses__task");
 		Toast.makeText(context, "...searching...", Toast.LENGTH_LONG).show();
 		buttonList.setClickable(false);
-		start = System.currentTimeMillis();		
+		start = System.currentTimeMillis();
 	}
 
 	@Override
@@ -81,56 +82,72 @@ public class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 		sb.append("Ulysses finds "+result.size()+" places:");
 		sb.append("\n\n");
 		for (PlaceHere r: result) {
-			sb.append(r.getPlace().getName());
+			sb.append(r.getPlace().getName()+" - "+r.getDetails().getFormattedAddress());
 			sb.append("\n");
 		}
 		long end = System.currentTimeMillis();
 		long delta = (end-start);
-		sb.append("\nin: "+delta+" ms");
+		sb.append("\n\nin: "+delta+" ms\n\n");
 		buttonList.setClickable(true);
 //		Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
 		textView.setText( textView.getText()
-				+sb.toString()+"\n\n");		
+				+sb.toString());
+//Debug.stopMethodTracing();
 	}
 	
 	@Override
 	protected void onException(NoNetworkException e) throws RuntimeException {
-		Utils.showException(e,context);
+//		ExceptionUtils.showException(e,textView);
+		ExceptionUtils.showException(e,"from cache: \n"+ulyssesSearcher.getResult(), textView,ulyssesSearcher);
 	}
 	@Override
 	protected void onException(NetworkAwareSearchException e) throws RuntimeException {
-		Utils.showException(e,context);
+		textView.setText( textView.getText()
+				+"result: "+ulyssesSearcher.getResult().size()+"\n\n");
+		ExceptionUtils.showException(e,"no result because the exception:",textView,ulyssesSearcher);
 	}
 	
 	@Override
 	protected void onException(LocationTooNearException e) throws RuntimeException {
-		Utils.showException(e,context);
+		ExceptionUtils.showException(e,textView,ulyssesSearcher);
 		buttonList.setClickable(true);
 	}
 	@Override
 	protected void onException(LocationNotSoUsefulException e) throws RuntimeException {
-		Utils.showException(e,context);
+		ExceptionUtils.showException(e,textView,ulyssesSearcher);
 		buttonList.setClickable(true);
 	}
 
 	@Override
 	protected void onException(PlacesRetrievingException e) throws RuntimeException {
-		Utils.showException(e,context);
+		ExceptionUtils.showException(e,textView,ulyssesSearcher);
 	}
 	@Override
 	protected void onException(PlacesUnbelievableZeroResultStatusException e) throws RuntimeException {
 		/*Log.d("UsingUlyssesAsyncTask", "onException("+e.getClass().getSimpleName()+"); "+e.getMessage());
 		Toast.makeText(context, "the search was successful but returned no results - are you in sibery?", Toast.LENGTH_LONG).show();*/
-		Utils.showException(e,context);
+		ExceptionUtils.showException(e,textView,ulyssesSearcher);
 	}
 	@Override
 	protected void onException(PlacesTyrannusStatusException e) throws RuntimeException {
-		Utils.showException(e,context);
+		ExceptionUtils.showException(e,textView,ulyssesSearcher);
 	}
 	
 	@Override
+	protected void onException(StillSearchException e) throws RuntimeException {
+		ExceptionUtils.showException(e,textView,ulyssesSearcher);
+	}
+	
+	
+	@Override
 	protected void onException(NullPointerException e) throws RuntimeException {
-		Utils.showException(e,context);
+		ExceptionUtils.showException(e,textView,ulyssesSearcher);
+		e.printStackTrace();
+	}
+	
+	@Override
+	protected void onGenericException(Exception e) throws RuntimeException {
+		ExceptionUtils.showException(e,textView,ulyssesSearcher);
 		e.printStackTrace();
 	}
 

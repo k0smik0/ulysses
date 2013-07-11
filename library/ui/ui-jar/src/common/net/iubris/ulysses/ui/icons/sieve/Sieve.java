@@ -41,8 +41,9 @@ public class Sieve {
 		filters.add(filter);
 		return this;
 	}
-	public void addFilters(List<Filter> filters) {
+	public Sieve addFilters(List<Filter> filters) {
 		filters.addAll(filters);
+		return this;
 	}
 
 	public Bitmap find(Place place) {

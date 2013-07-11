@@ -55,6 +55,7 @@ public class UlyssesSampleActivity extends RoboActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+//Debug.startMethodTracing(Environment.getExternalStorageDirectory().getPath()+"/traces/ulysses__startup");
 		super.onCreate(savedInstanceState);
 		
 		locationsInjector.setLocationInjectionInterval(5);
@@ -67,12 +68,19 @@ public class UlyssesSampleActivity extends RoboActivity {
 		
 		locationUpdater.startLocationUpdates();
 	};
+	@Override
+	protected void onResume() {
+		super.onResume();
+//Debug.stopMethodTracing();
+//		if (buttonList.isClickable()) buttonList.setClickable(false);
+//		usingUlyssesAsyncTask.execute();
+	}
 	
 	public void onClickSearch(View v) {
 		usingUlyssesAsyncTask.execute();
 	};
 	public void onClickList(View v) {
-		locationsInjector.stopLocationsTest();
+		stopLocationsTest();
 		Intent intent = new Intent(UlyssesSampleActivity.this,UlyssesSampleListActivity.class);
 		startActivity(intent);
 	}
@@ -86,17 +94,12 @@ public class UlyssesSampleActivity extends RoboActivity {
 		}
 	}
 	
-	@Override
-	protected void onResume() {
-		super.onResume();
-//		if (buttonList.isClickable()) buttonList.setClickable(false);
-		usingUlyssesAsyncTask.execute();
-	}
+	
 	
 	@Override
 	protected void onStop() {
 		try {
-		locationUpdater.stopLocationUpdates();
+			locationUpdater.stopLocationUpdates();
 		} catch (IllegalArgumentException e) {
 			Log.d(this.getClass().getSimpleName()+":70",e.getMessage());
 		}
@@ -105,8 +108,13 @@ public class UlyssesSampleActivity extends RoboActivity {
 	
 	@Override
 	protected void onDestroy() {
-		locationsInjector.stopLocationsTest();
+		stopLocationsTest();
 		super.onDestroy();
+	}
+	
+	private void stopLocationsTest() {
+		if (locationsInjector.isRunning())
+			locationsInjector.stopLocationsTest();
 	}
 	
 }

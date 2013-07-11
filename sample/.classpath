@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="core/|map/|net/iubris/ulysses_sample/controller/UlyssesSampleSearcher.java|net/iubris/ulysses_sample/controller/AA.java|useless/|net/iubris/ulysses_sample/activity/main/task/UsingSimpleRoboAsyncTask.java" kind="src" path="src"/>
+	<classpathentry excluding="core/|map/|net/iubris/ulysses_sample/controller/UlyssesSampleSearcher.java|net/iubris/ulysses_sample/controller/AA.java|useless/|net/iubris/ulysses_sample/activity/main/task/UsingSimpleRoboAsyncTask.java|net/iubris/ulysses_sample/activity/main/task/Utils.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry excluding="net/iubris/ulysses_sample/activity/UsingSocratesAsyncTask.java|net/iubris/ulysses_sample/controller/UlyssesSampleLocationSupplier.java" kind="src" path="src/useless"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
