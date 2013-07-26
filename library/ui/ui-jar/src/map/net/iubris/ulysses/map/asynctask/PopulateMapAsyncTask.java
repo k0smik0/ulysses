@@ -73,12 +73,13 @@ public abstract class PopulateMapAsyncTask extends UlyssesAsyncTask {
 		super.execute();
 	}
 	
-	@Override
+	/*@Override
 	protected void onSuccess(List<PlaceHere> placesHere) throws Exception {
 		populateOverlayFromResult(placesHere);
-	}
+	}*/
 	
 	protected void populateOverlayFromResult(List<PlaceHere> placeHeres) {
+		/*
 		Builder boundsBuilder = new LatLngBounds.Builder();
 		
 		for (PlaceHere placeHere: placeHeres) {
@@ -100,7 +101,45 @@ public abstract class PopulateMapAsyncTask extends UlyssesAsyncTask {
 		
 		LatLngBounds latLngBounds = boundsBuilder.build();
 		autoZoom(latLngBounds);
-	};
+		*/
+		Builder boundsBuilder = createBoundsBuilder(placeHeres);		
+		
+		buildBoundsAndZoom(boundsBuilder);
+	}
+	
+	protected void populateOverlayFromResultsIncludingMyPosition(List<PlaceHere> placeHeres) {
+		Builder boundsBuilder = createBoundsBuilder(placeHeres);
+		
+		boundsBuilder.include(LocationUtils.locationToLatLng(myLocation));
+		
+		buildBoundsAndZoom(boundsBuilder);
+	}
+	
+	private void buildBoundsAndZoom(Builder boundsBuilder) {
+		LatLngBounds latLngBounds = boundsBuilder.build();
+		autoZoom(latLngBounds);
+	}
+	
+	private Builder createBoundsBuilder(List<PlaceHere> placeHeres) {
+		Builder boundsBuilder = new LatLngBounds.Builder();
+		
+		for (PlaceHere placeHere: placeHeres) {
+			MarkerOptions mo = new MarkerOptions();
+			mo
+				.position( LocationUtils.locationToLatLng( placeHere.getPlace().getGeometry().getLocation() ) )
+				.title( placeHere.getPlace().getName() )
+				.snippet( placeHere.getPlace().getRating() +"")
+				.icon( BitmapDescriptorFactory.fromBitmap( getSieve().find(placeHere.getPlace()) ) );
+			
+			Marker marker = map.addMarker(mo);
+			markers.add( marker );
+			placeByMarkerIdMap.put(marker.getId(), placeHere);
+			
+			boundsBuilder.include(mo.getPosition());
+		}
+		
+		return boundsBuilder;
+	}
 	
 	protected void clearMarkers() {
 		for (Marker m: markers) {
