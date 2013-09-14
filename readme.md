@@ -24,3 +24,6 @@ and "PlaceHere" is wrapper for Socrates's Place type, adding geolocation for tha
 ---
 See sample, it is really easy to understand.  
 And this [video](http://www.youtube.com/watch?v=c05zFt-9Z90) show the sample at work.
+--
+and don't forget to change place api key with your own!
+
