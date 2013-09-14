@@ -32,7 +32,9 @@ public final class UlyssesSampleConfigOptional extends DefaultSearchOptions {
 	
 	@Override
 	public Set<PlaceType> getTypes() {
-		types.add(PlaceType.liquor_store);
+		//types.add(PlaceType.liqaa);
+		types.add(PlaceType.bakery);
+		//hashSet.add(PlaceType.cafff);
 		return types;
 	}
 	

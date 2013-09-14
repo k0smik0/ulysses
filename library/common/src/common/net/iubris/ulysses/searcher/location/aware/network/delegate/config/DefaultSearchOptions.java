@@ -42,8 +42,6 @@ public class DefaultSearchOptions implements SearchOptions {
 	 */
 	@Override
 	public Set<PlaceType> getTypes() {
-//		hashSet.add(PlaceType.bar);
-//		hashSet.add(PlaceType.cafe);
 //		addTypes();
 		return types;
 	}

@@ -27,7 +27,7 @@ import net.iubris.ulysses.searcher.location.aware.network.delegate.config.Abstra
 public final class UlyssesSampleConfigMandatory extends AbstractConfigMandatory {
 	@Override
 	public String getKey() {				
-		return "AIzaSyAfOlNmRr5G-4BPDd1faYsn9kvkV5ebBRk";
+		return "";		
 	}
 
 	@Override
