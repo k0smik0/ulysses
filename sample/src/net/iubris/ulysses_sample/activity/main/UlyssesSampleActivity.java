@@ -73,7 +73,7 @@ public class UlyssesSampleActivity extends RoboActivity {
 		super.onResume();
 //Debug.stopMethodTracing();
 //		if (buttonList.isClickable()) buttonList.setClickable(false);
-//		usingUlyssesAsyncTask.execute();
+		usingUlyssesAsyncTask.execute();
 	}
 	
 	public void onClickSearch(View v) {
@@ -101,7 +101,7 @@ public class UlyssesSampleActivity extends RoboActivity {
 		try {
 			locationUpdater.stopLocationUpdates();
 		} catch (IllegalArgumentException e) {
-			Log.d(this.getClass().getSimpleName()+":70",e.getMessage());
+			Log.d(this.getClass().getSimpleName()+":104",e.getMessage());
 		}
 		super.onStop();
 	}
@@ -113,8 +113,12 @@ public class UlyssesSampleActivity extends RoboActivity {
 	}
 	
 	private void stopLocationsTest() {
-		if (locationsInjector.isRunning())
-			locationsInjector.stopLocationsTest();
+		try {
+			if (locationsInjector.isRunning())
+				locationsInjector.stopLocationsTest();
+		} catch (IllegalArgumentException e) {
+			Log.d(this.getClass().getSimpleName()+":120",e.getMessage());
+		}
 	}
 	
 }

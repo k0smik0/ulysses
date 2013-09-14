@@ -22,8 +22,10 @@ package net.iubris.ulysses_sample.activity.list;
 
 
 import net.iubris.ulysses.list.adapter.PlacesHereListAdapter;
+import net.iubris.ulysses.model.PlaceHere;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
+import net.iubris.ulysses.ui.toast.utils.UIUtils;
 import net.iubris.ulysses_sample.R;
 import net.iubris.ulysses_sample.activity.list.task.PopulateOnResumeAsyncTask;
 import net.iubris.ulysses_sample.activity.list.task.UlyssesSampleSearchAndAdaptePopulaterAsyncTask;
@@ -33,6 +35,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.SubMenu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class UlyssesSampleListActivity extends RoboListActivity {
@@ -48,17 +53,69 @@ public class UlyssesSampleListActivity extends RoboListActivity {
 		
 //		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.list);
-		ListView listView = getListView();
-//		listView.setTextFilterEnabled(true);
+		final ListView listView = getListView();
+		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		listView.setTextFilterEnabled(true);
 		
 //		locationsInjector.stopLocationsTest();
 				
-		placesAdapter = new PlacesHereListAdapter(this, R.layout.list_row);
+		placesAdapter = new PlacesHereListAdapter(this, R.layout.list_row)/* {
+			
+			@Override
+			public View getView(final int position, View convertView, ViewGroup parent) {
+				
+				View view = super.getView(position, convertView, parent);
+				
+				OnClickListener ocl = new OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						PlaceHere ph = (PlaceHere) listView.getItemAtPosition(position);
+						UIUtils.showShortToast( ph.getPlace().getName(), UlyssesSampleListActivity.this);
+					}
+				};
+				
+				view.setOnClickListener(ocl);
+				return view;
+			}
+			@Override
+			public boolean areAllItemsEnabled() {
+				return true;
+			}
+			@Override
+			public boolean isEnabled(int arg0) {
+				return true;
+			}
+		}*/;
 		listView.setAdapter(placesAdapter);
 		placesAdapter.setNotifyOnChange(true);
+		
+		listView.setClickable(false);
+		listView.setOnItemClickListener( new OnItemClickListener() {			
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
+				
+//				UIUtils.showShortToast( position+" "+listView.isItemChecked(position), UlyssesSampleListActivity.this);
+
+				PlaceHere ph = (PlaceHere) listView.getItemAtPosition(position);
+				UIUtils.showShortToast( ph.getPlace().getName(), UlyssesSampleListActivity.this);
+				
+//				view.setSelected(false);
+			}			
+		});
+
 		searchAndAdapterPopulateAsyncTask = new UlyssesSampleSearchAndAdaptePopulaterAsyncTask(this, placesAdapter);
 		populateOnResumeAsyncTask = new PopulateOnResumeAsyncTask(this, placesAdapter);
 	}
+	
+	/*
+	@Override
+	protected void onListItemClick(ListView listView, View v, int position, long id) {
+		
+		UIUtils.showShortToast( position+" "+listView.isItemChecked(position), UlyssesSampleListActivity.this);
+		
+		PlaceHere ph = (PlaceHere) listView.getItemAtPosition(position);
+		UIUtils.showShortToast( ph.getPlace().getName(), UlyssesSampleListActivity.this);
+	}*/
 	
 	@Override
 	protected void onResume() {
