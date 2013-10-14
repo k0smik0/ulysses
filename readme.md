@@ -1,6 +1,6 @@
 #Ulysses 
 
-Ulyssesis a location/network-aware [Google Place](https://developers.google.com/places/documentation/) Search
+Ulysses is a location/network-aware [Google Place](https://developers.google.com/places/documentation/) Search
 
 
 Why "Ulysses" ? Because Ulysses is latin name of Homer's Odyssey protagonist: 
