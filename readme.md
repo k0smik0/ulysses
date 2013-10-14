@@ -4,10 +4,10 @@ Ulyssesis a location/network-aware [Google Place](https://developers.google.com/
 
 
 Why "Ulysses" ? Because Ulysses is latin name of Homer's Odyssey protagonist: 
-a famous navigator, explorer, curious man.<br/>
-He always knews his position, seeing stars and so on, so we could says he is "location-aware".<br/>
-And he always was aware about his means of transport, its ships: so this is "network-aware" property.<br/>
-And when he had land to any coast, in forced way or not, he always wanted to explore, searching for anything.<br/>  
+a famous navigator, explorer, curious man.  
+He always knews his position, seeing stars and so on, so we could says he is "location-aware".  
+And he always was aware about his means of transport, its ships: so this is "network-aware" property.  
+And when he had land to any coast, in forced way or not, he always wanted to explore, searching for anything.    
 
 And so Ulysses component, an android component for curious people, but (always?) awareness ;D  
 
