@@ -1,6 +1,6 @@
 #Ulysses 
 
-Ulysses is a location/network-aware [Google Place](https://developers.google.com/places/documentation/) Search
+Ulysses is a location/network-aware searcher for [Google Place](https://developers.google.com/places/documentation/)
 
 
 Why "Ulysses" ? Because Ulysses is latin name of Homer's Odyssey protagonist: 
@@ -15,10 +15,10 @@ And so Ulysses component, an android component for curious people, but (always?)
 ####Technical:
 Ulysses is an aggregation of [Diane](../../../diane) and [Socrates](../../../socrates):
 
- - from Diane inherits logics and engines for aware searching
+ - from Diane inherits logics and engines for geolocalized aware searching
  - from Socrates it uses Google Places search capability
 
-So, Ulysses is just a particular instance of Diane, with (generics) parameter type as List&lt;PlaceHere&gt;:   
+So, Ulysses is just a particular instance of Diane, with (generics) parameter type as List&lt;PlaceHere&gt;:  
 and "PlaceHere" is wrapper for Socrates's Place type, adding geolocation for that geoplace as its main field (this class structure is needed for efficient listactivity comparators)
 
 ---
