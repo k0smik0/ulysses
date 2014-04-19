@@ -21,13 +21,13 @@ package net.iubris.ulysses.list.adapter.asynctask;
 
 import java.util.List;
 
-import net.iubris.ulysses.asynctask.UIyssesSearchAsyncTask;
+import android.app.Activity;
+import net.iubris.ulysses.asynctask.UlyssesSearchAsyncTask;
 import net.iubris.ulysses.list.adapter.AdapterUtils;
 import net.iubris.ulysses.list.adapter.PlacesHereListAdapter;
 import net.iubris.ulysses.model.PlaceHere;
-import android.app.Activity;
 
-public abstract class AdapterPopulaterAsyncTask extends UIyssesSearchAsyncTask {
+public abstract class AdapterPopulaterAsyncTask extends UlyssesSearchAsyncTask {
 
 //	@InjectView(tag="loading_spinner") ProgressBar loadingSpinner;
 	protected final PlacesHereListAdapter adapter;

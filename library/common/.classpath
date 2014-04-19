@@ -6,7 +6,8 @@
 	<classpathentry excluding="net/iubris/ulysses/dao/|net/iubris/ulysses/model/" kind="src" path="src/experimental"/>
 	<classpathentry excluding="net/iubris/ulysses/controller/|net/iubris/ulysses/controller/delegates/cacheaware/|net/iubris/ulysses/controller/delegates/locationaware/|net/iubris/ulysses/controller/delegates/networkaware/" kind="src" path="src/OLD"/>
 	<classpathentry excluding="net/iubris/socrates/engines/search/url/exception/" kind="src" path="src/useless"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
