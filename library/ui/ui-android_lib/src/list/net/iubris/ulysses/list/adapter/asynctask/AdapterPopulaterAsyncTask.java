@@ -21,10 +21,7 @@ package net.iubris.ulysses.list.adapter.asynctask;
 
 import java.util.List;
 
-<<<<<<< HEAD
-=======
 import android.app.Activity;
->>>>>>> 515b77e9dbf8b0346e3a7bf88cc9ce226eff6ee7
 import net.iubris.ulysses.asynctask.UlyssesSearchAsyncTask;
 import net.iubris.ulysses.list.adapter.AdapterUtils;
 import net.iubris.ulysses.list.adapter.PlacesHereListAdapter;

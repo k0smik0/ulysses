@@ -19,8 +19,8 @@
  ******************************************************************************/
 package net.iubris.ulysses.list.adapter;
 
-import java.util.Comparator;
 import java.util.List;
+import java.util.Comparator;
 
 import net.iubris.ulysses.model.PlaceHere;
 
