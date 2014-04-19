@@ -18,17 +18,20 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
+	android:layout_width="wrap_content"
 	android:layout_height="wrap_content">
 		
 	<TextView
 		android:id="@+id/address"
-		android:layout_width="fill_parent"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:ellipsize="marquee"
 		android:singleLine="true"
 		android:textIsSelectable="true"
-		android:autoLink="map|web"/>
+		android:autoLink="map|web"
+		android:focusable="false"
+		
+		/>
 
 </FrameLayout>
 

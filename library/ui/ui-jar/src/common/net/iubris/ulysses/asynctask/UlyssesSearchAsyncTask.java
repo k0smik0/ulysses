@@ -24,7 +24,7 @@ import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.Plac
 import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
 import android.content.Context;
 
-public abstract class UIyssesSearchAsyncTask extends UlyssesAsyncTask {
+public abstract class UlyssesSearchAsyncTask extends UlyssesAsyncTask {
 
 	/*
 	@InjectResource(name = "net.iubris.ulysses_ui:string/exception_place_unbelievable_zero_result_status")
@@ -37,7 +37,7 @@ public abstract class UIyssesSearchAsyncTask extends UlyssesAsyncTask {
 	protected String retrievingException;
 	*/
 
-	protected UIyssesSearchAsyncTask(Context context) {
+	protected UlyssesSearchAsyncTask(Context context) {
 		super(context);
 	}
 
