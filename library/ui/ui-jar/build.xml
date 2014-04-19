@@ -11,10 +11,11 @@
 	<property name="docurl" value="https://github.com/k0smik0/ulysses"/>
 	
 	
-	<property name="android-path" value="/data/fucina/develop/usr/apps/android-sdk/" />
-	<property name="android-sdk-target-version" value="17"/>
+	<property name="android-path" value="/data/lab/android/adt/sdk" />
+	<property name="android-sdk-target-version" value="19"/>
 		
 	<property name="main-libs-dir" value="libs"/>
+	<property name="ant-libs-dir" value="libs_ant"/>
 			
 	<!-- don't touch below -->
 	
@@ -39,6 +40,9 @@
 	<path id="classpath-main">
 		<path refid="classpath-android"/>		
 		<fileset dir="${main-libs-dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${ant-libs-dir}">
 			<include name="*.jar"/>
 		</fileset>
 	</path>
