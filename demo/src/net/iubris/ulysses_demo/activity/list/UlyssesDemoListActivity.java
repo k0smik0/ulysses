@@ -21,14 +21,14 @@ package net.iubris.ulysses_demo.activity.list;
 
 
 
-import net.iubris.ulysses.list.adapter.PlacesHereListAdapter;
-import net.iubris.ulysses.model.PlaceHere;
-import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
-import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
+import net.iubris.ulysses.engine.model.PlaceEnhanced;
+import net.iubris.ulysses.engine.model.comparators.PlaceComparatorByAscendingDistance;
+import net.iubris.ulysses.engine.model.comparators.PlaceComparatorByDiscendingRating;
+import net.iubris.ulysses.ui.list.adapter.PlacesEnhancedListAdapter;
 import net.iubris.ulysses.ui.toast.utils.UIUtils;
+import net.iubris.ulysses_demo.R;
 import net.iubris.ulysses_demo.activity.list.task.PopulateOnResumeAsyncTask;
 import net.iubris.ulysses_demo.activity.list.task.UlyssesDemoSearchAndAdaptePopulaterAsyncTask;
-import net.iubris.ulysses_demo.R;
 import roboguice.activity.RoboListActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,7 +42,7 @@ import android.widget.ListView;
 
 public class UlyssesDemoListActivity extends RoboListActivity {
 	
-	private PlacesHereListAdapter placesAdapter;
+	private PlacesEnhancedListAdapter placesAdapter;
 	private UlyssesDemoSearchAndAdaptePopulaterAsyncTask searchAndAdapterPopulateAsyncTask;
 	private PopulateOnResumeAsyncTask populateOnResumeAsyncTask;
 
@@ -59,7 +59,7 @@ public class UlyssesDemoListActivity extends RoboListActivity {
 		
 //		locationsInjector.stopLocationsTest();
 				
-		placesAdapter = new PlacesHereListAdapter(this, R.layout.list_row)/* {
+		placesAdapter = new PlacesEnhancedListAdapter(this, R.layout.list_row)/* {
 			
 			@Override
 			public View getView(final int position, View convertView, ViewGroup parent) {
@@ -96,7 +96,7 @@ public class UlyssesDemoListActivity extends RoboListActivity {
 				
 //				UIUtils.showShortToast( position+" "+listView.isItemChecked(position), UlyssesSampleListActivity.this);
 
-				PlaceHere ph = (PlaceHere) listView.getItemAtPosition(position);
+				PlaceEnhanced ph = (PlaceEnhanced) listView.getItemAtPosition(position);
 				UIUtils.showShortToast( ph.getPlace().getName(), UlyssesDemoListActivity.this);
 				
 //				view.setSelected(false);

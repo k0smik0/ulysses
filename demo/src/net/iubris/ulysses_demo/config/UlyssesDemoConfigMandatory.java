@@ -21,7 +21,7 @@ package net.iubris.ulysses_demo.config;
 
 import javax.inject.Singleton;
 
-import net.iubris.ulysses.searcher.location.aware.network.delegate.config.AbstractConfigMandatory;
+import net.iubris.ulysses.engine.searcher.location.aware.network.delegate.config.AbstractConfigMandatory;
 
 @Singleton
 public final class UlyssesDemoConfigMandatory extends AbstractConfigMandatory {

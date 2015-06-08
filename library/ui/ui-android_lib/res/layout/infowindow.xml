@@ -28,7 +28,9 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginRight="5dp"
+	 android:layout_marginEnd="5dp"
 		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true"
 		android:layout_alignParentTop="true"
 		android:adjustViewBounds="true"
 		android:contentDescription="place image"
@@ -38,6 +40,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/infowindow_photo"
+		android:layout_toEndOf="@id/infowindow_photo"
 		android:textSize="16sp"
 		
 		android:textIsSelectable="true"
@@ -46,9 +49,11 @@
 	
 	<include 
 		layout="@layout/frame_ratingbar"
-		android:layout_width="wrap_content"
+		android:layout_width="50dp"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/title"
-		android:layout_toRightOf="@id/infowindow_photo" />
+		android:layout_toRightOf="@id/infowindow_photo"
+		android:layout_toEndOf="@id/infowindow_photo"
+		 />
 
 </RelativeLayout> 

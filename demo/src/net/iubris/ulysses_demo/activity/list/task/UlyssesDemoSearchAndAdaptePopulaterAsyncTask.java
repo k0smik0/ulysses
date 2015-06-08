@@ -26,26 +26,26 @@ import javax.inject.Inject;
 import net.iubris.diane.aware.network.exceptions.base.NoNetworkException;
 import net.iubris.diane.searcher.aware.location.exceptions.base.LocationNotSoUsefulException;
 import net.iubris.diane.searcher.aware.location.exceptions.base.LocationTooNearException;
-import net.iubris.ulysses.list.adapter.PlacesHereListAdapter;
-import net.iubris.ulysses.list.adapter.asynctask.AdapterPopulaterAsyncTask;
-import net.iubris.ulysses.model.PlaceHere;
-import net.iubris.ulysses.searcher.aware.full.UlyssesSearcher;
-import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesRetrievingException;
-import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
-import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
+import net.iubris.ulysses.engine.model.PlaceEnhanced;
+import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
+import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesRetrievingException;
+import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
+import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
+import net.iubris.ulysses.ui.list.adapter.PlacesEnhancedListAdapter;
+import net.iubris.ulysses.ui.tasks.list.aware.PopulateListAwareTask;
 import net.iubris.ulysses_demo.activity.main.task.ExceptionUtils;
 import android.app.Activity;
 
-public class UlyssesDemoSearchAndAdaptePopulaterAsyncTask extends AdapterPopulaterAsyncTask {
+public class UlyssesDemoSearchAndAdaptePopulaterAsyncTask extends /*AdapterPopulaterAsyncTask*/ PopulateListAwareTask {
 	
 	@Inject private UlyssesSearcher ulyssesSearcher;
 	
-	public UlyssesDemoSearchAndAdaptePopulaterAsyncTask(Activity context, PlacesHereListAdapter adapter) {
+	public UlyssesDemoSearchAndAdaptePopulaterAsyncTask(Activity context, PlacesEnhancedListAdapter adapter) {
 		super(context, adapter);
 	}
 	
 	@Override
-	public List<PlaceHere> call() throws LocationTooNearException,
+	public List<PlaceEnhanced> call() throws LocationTooNearException,
 			LocationNotSoUsefulException, NoNetworkException,
 			PlacesRetrievingException,
 			PlacesUnbelievableZeroResultStatusException,

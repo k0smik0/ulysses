@@ -64,6 +64,8 @@
 	
 	</LinearLayout>
 	
+	
+	<!-- old -->
 	<!--
 	<ProgressBar android:id="@+id/loading_spinner"
 		android:tag="loading_spinner"

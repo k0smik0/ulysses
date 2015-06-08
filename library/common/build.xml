@@ -10,20 +10,26 @@
 	<property name="license.url" value="http://www.gnu.org/licenses/lgpl.txt"/>
 	<property name="docurl" value="https://github.com/k0smik0/ulysses"/>
 	
+	<!-- change here with actual -->
+	<property name="android-sdk-target-version" value="22"/>
 	
-	<property name="android-path" value="/data/fucina/develop/usr/apps/android-sdk/" />
-	<property name="android-sdk-target-version" value="17"/>
-		
+	<!--don't change below-->
+	<property environment="env" />
+	<condition property="sdk.dir" value="${env.ANDROID_HOME}">
+	  <isset property="env.ANDROID_HOME" />
+	</condition>
+	<property name="android-path" value="${sdk.dir}" />
+
+			
+	<property name="libs-dir" value="libs"/>
 	<property name="main-libs-dir" value="libs"/>
-	
-		
-	<!-- don't touch below -->
+	<property name="extra-libs-dir" value="libs_extra"/>
 	
 	<property name="src.dir" value="src" />
 	<property name="build.dir" value="build" />	
 	
 	<property name="jar-common.file" value="${build.dir}/jars/ulysses-common.jar" />
-	<property name="jar-roboguice.file" value="${build.dir}/jars/ulysses-roboguice.jar" />
+	<property name="jar-roboguice.file" value="${build.dir}/jars/ulysses-roboguiced.jar" />
 	
 	<path id="classpath-android">
 		<fileset dir="${android-path}/platforms/android-${android-sdk-target-version}/">
@@ -41,12 +47,23 @@
 			<exclude name="robo*.jar"/>
 			<exclude name="*guice*.jar"/>
 		</fileset>
-	</path>	
+		<fileset dir="${extra-libs-dir}">
+			<include name="*.jar"/>
+			<exclude name="robo*.jar"/>
+			<exclude name="*guice*.jar"/>
+		</fileset>
+	</path>
+		
 	<path id="classpath-roboguice">
 		<path refid="classpath-common"/>
 		<fileset dir="${main-libs-dir}">
 			<include name="*guice*.jar"/>
 			<include name="robo*.jar"/>
+		</fileset>
+		<fileset dir="${extra-libs-dir}">
+			<include name="*.jar"/>
+			<exclude name="robo*.jar"/>
+			<exclude name="*guice*.jar"/>
 		</fileset>
 		<fileset dir="${build.dir}/jars">
 			<include name="ulysses-common.jar"/>
@@ -57,7 +74,7 @@
 		<delete dir="${build.dir}/classes/common"/>
 	</target>
 	<target name="clean-roboguice">
-		<delete dir="${build.dir}/classes/roboguice"/>
+		<delete dir="${build.dir}/classes/roboguiced"/>
 	</target>
 	<target name="clean-jars">
   	<delete file="${jar-common.file}"/>
@@ -66,6 +83,48 @@
 	
 	<target name="clean" depends="clean-common, clean-roboguice"/>	
 	
+	<target name="get-real-dependencies">
+    <!-- diane -->
+    <get dest="${libs-dir}">
+      <url url="https://github.com/k0smik0/diane/blob/master/library/common/build/jars/diane-common.jar?raw=true"/>
+      <url url="https://github.com/k0smik0/diane/blob/master/library/utils/roboguiced/build/jars/diane-roboutils.jar?raw=true"/>
+			<url url="https://github.com/k0smik0/diane/blob/master/library/utils/roboguiced/build/jars/diane-robotask.jar?raw=true"/>
+    </get>
+    <!-- polaris -->
+    <get dest="${libs-dir}">
+        <url url="https://github.com/k0smik0/polaris/blob/master/build/jars/polaris-core.jar"/>
+        <url url="https://github.com/k0smik0/polaris/blob/master/build/jars/polaris-utils.jar"/>
+    </get>
+    <!-- kusor -->
+    <get dest="${libs-dir}" >
+        <url url="https://github.com/k0smik0/kusor/blob/master/build/jars/kusor-common.jar" />
+        <url url="https://github.com/k0smik0/kusor/blob/master/build/jars/kusor-roboguiced.jar" />
+    </get>
+    <!-- mirroringexception -->
+    <get dest="${libs-dir}">
+        <url url="https://github.com/k0smik0/mirroringexception/raw/master/jars/mirroringexception.jar"/>
+    </get>
+    <!-- (robo)enhancedasynctask -->
+    <get dest="${libs-dir}">
+     <url url="https://github.com/k0smik0/enhancedsafeasynctask/blob/master/roboguiced/library/build/jars/roboenhancedasynctask.jar?raw=true"/>
+    </get>
+    <!-- socrates -->
+    <get dest="${libs-dir}">
+        <url url="https://github.com/k0smik0/socrates/blob/master/library/build/jars/socrates-base.jar?raw=true"/>
+				<url url="https://github.com/k0smik0/socrates/blob/master/library/build/jars/socrates-roboguiced.jar?raw=true"/>
+        <url url="https://github.com/k0smik0/socrates/blob/master/library/build/jars/socrates-events.jar?raw=true"/>
+        <url url="http://central.maven.org/maven2/com/google/api-client/google-api-client/1.7.0-beta/google-api-client-1.7.0-beta.jar"/>
+        <url url="http://central.maven.org/maven2/com/google/api-client/google-api-client-android2/1.7.0-beta/google-api-client-android2-1.7.0-beta.jar"/>
+        <url url="http://central.maven.org/maven2/com/google/http-client/google-http-client/1.7.0-beta/google-http-client-1.7.0-beta.jar"/>
+        <url url="http://moneydance-forecaster.googlecode.com/svn-history/r95/trunk/lib/jackson-mini-1.9.2.jar"/>
+    </get>
+    <!-- roboguice -->
+    <get dest="${libs-dir}">
+      <url url="http://dependency-shot.googlecode.com/files/javax.inject.jar"/>
+      <url url="http://central.maven.org/maven2/org/sonatype/sisu/sisu-guice/3.2.0/sisu-guice-3.2.0.jar"/>
+      <url url="http://repo1.maven.org/maven2/org/roboguice/roboguice/2.0/roboguice-2.0.jar"/>
+    </get>
+  </target>
 		
 	<target name="compile-common">
 		<mkdir dir="${build.dir}/classes/common"/>
@@ -76,9 +135,9 @@
 		</javac>
 	</target>
 	<target name="compile-roboguice" depends="compile-common">
-		<mkdir dir="${build.dir}/classes/roboguice"/>
-		<javac destdir="${build.dir}/classes/roboguice" includeantruntime="false">
-			<src path="${src.dir}/roboguice" />
+		<mkdir dir="${build.dir}/classes/roboguiced"/>
+		<javac destdir="${build.dir}/classes/roboguiced" includeantruntime="false">
+			<src path="${src.dir}/roboguiced" />
 			<include name="**/*.java"/>
 			<classpath refid="classpath-roboguice"/>			
 		</javac>
@@ -105,7 +164,7 @@
 	<target name="jar-roboguice" depends="jar-common,compile-roboguice">
 		<mkdir dir="${build.dir}/jars/"/>
 		<jar destfile="${jar-roboguice.file}">
-			<fileset dir="${build.dir}/classes/roboguice"/>
+			<fileset dir="${build.dir}/classes/roboguiced"/>
 			<manifest>
 				<attribute name="Built-By" value="${user}" />    
         <attribute name="Bundle-Name" value="${name}" />

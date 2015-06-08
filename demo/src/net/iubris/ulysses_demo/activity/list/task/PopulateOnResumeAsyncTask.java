@@ -19,29 +19,23 @@
  ******************************************************************************/
 package net.iubris.ulysses_demo.activity.list.task;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
-import net.iubris.ulysses.list.adapter.PlacesHereListAdapter;
-import net.iubris.ulysses.list.adapter.asynctask.AdapterPopulaterAsyncTask;
-import net.iubris.ulysses.model.PlaceHere;
-import net.iubris.ulysses.searcher.aware.full.UlyssesSearcher;
+import net.iubris.ulysses.ui.list.adapter.PlacesEnhancedListAdapter;
+import net.iubris.ulysses.ui.tasks.list.aware.PopulateListAwareTask;
 import net.iubris.ulysses_demo.activity.main.task.ExceptionUtils;
 import android.app.Activity;
 
-public class PopulateOnResumeAsyncTask extends AdapterPopulaterAsyncTask {
+public class PopulateOnResumeAsyncTask extends PopulateListAwareTask /*AdapterPopulaterTask*/ {
 	
-	@Inject private UlyssesSearcher ulyssesSearcher;
+//	@Inject private UlyssesSearcher ulyssesSearcher;
 
-	public PopulateOnResumeAsyncTask(Activity context, PlacesHereListAdapter adapter) {
+	public PopulateOnResumeAsyncTask(Activity context, PlacesEnhancedListAdapter adapter) {
 		super(context, adapter);
 	}
 
-	@Override
-	public List<PlaceHere> call() throws Exception {
-		return ulyssesSearcher.getResult();
-	}
+//	@Override
+//	public List<PlaceEnhanced> call() throws Exception {
+//		return ulyssesSearcher.getResult();
+//	}
 	
 	@Override
 	protected void onGenericException(Exception e) throws RuntimeException {

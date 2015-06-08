@@ -11,9 +11,16 @@
 	<property name="docurl" value="https://github.com/k0smik0/ulysses"/>
 	
 	
-	<property name="android-path" value="/data/lab/android/adt/sdk" />
-	<property name="android-sdk-target-version" value="19"/>
+	<property environment="env" />
+	<condition property="sdk.dir" value="${env.ANDROID_HOME}">
+	  <isset property="env.ANDROID_HOME" />
+	</condition>
+	<property name="android-path" value="${sdk.dir}" />
+	
+	<!-- change here with actual -->
+	<property name="android-sdk-target-version" value="22"/>
 		
+	<property name="libs-dir" value="libs"/>
 	<property name="main-libs-dir" value="libs"/>
 	<property name="ant-libs-dir" value="libs_ant"/>
 			
@@ -51,13 +58,47 @@
 		<delete dir="${build.dir}/classes/main"/>
 	</target>
 	
-	<target name="clean" depends="clean-main"/>	
+	<target name="clean" depends="clean-main"/>
+	
+	<target name="get-real-dependencies">
+	    <!-- android support -->
+	    <copy file="${android-path}//extras/android/support/v4/android-support-v4.jar" todir="${libs-dir}"/>
+    <!-- diane -->
+    <get dest="${libs-dir}">
+      <url url="https://github.com/k0smik0/diane/blob/master/library/common/build/jars/diane-common.jar?raw=true"/>
+      <url url="https://github.com/k0smik0/diane/blob/master/library/utils/roboguiced/build/jars/diane-roboutils.jar?raw=true"/>
+    </get>
+    <!-- (robo)enhancedasynctask -->
+    <get dest="${libs-dir}">
+     <url url="https://github.com/k0smik0/enhancedsafeasynctask/blob/master/roboguiced/library/build/jars/roboenhancedasynctask.jar?raw=true"/>
+    </get>
+    <!-- socrates -->
+    <get dest="${libs-dir}">
+        <url url="https://github.com/k0smik0/socrates/blob/master/library/build/jars/socrates-base.jar?raw=true"/>
+        <url url="https://github.com/k0smik0/socrates/blob/master/library/build/jars/socrates-events.jar?raw=true"/>
+				<url url="https://github.com/k0smik0/socrates/blob/master/library/build/jars/socrates-roboguiced.jar?raw=true"/>
+        <url url="http://central.maven.org/maven2/com/google/api-client/google-api-client/1.7.0-beta/google-api-client-1.7.0-beta.jar"/>
+        <url url="http://central.maven.org/maven2/com/google/api-client/google-api-client-android2/1.7.0-beta/google-api-client-android2-1.7.0-beta.jar"/>
+        <url url="http://central.maven.org/maven2/com/google/http-client/google-http-client/1.7.0-beta/google-http-client-1.7.0-beta.jar"/>
+    </get>
+    <!-- roboguice -->
+    <get dest="${libs-dir}">
+      <url url="http://dependency-shot.googlecode.com/files/javax.inject.jar"/>
+      <url url="http://central.maven.org/maven2/org/sonatype/sisu/sisu-guice/3.2.0/sisu-guice-3.2.0.jar"/>
+      <url url="http://repo1.maven.org/maven2/org/roboguice/roboguice/2.0/roboguice-2.0.jar"/>
+    </get>
+    <!-- ulysses -->
+    <get dest="${libs-dir}">
+        <url url="https://github.com/k0smik0/ulysses/blob/master/library/common/build/jars/ulysses-common.jar?raw=true"/>
+				<url url="https://github.com/k0smik0/ulysses/blob/master/library/common/build/jars/ulysses-roboguiced.jar?raw=true"/>
+    </get>
+  </target>	
 			
 	<target name="compile-main">
 		<mkdir dir="${build.dir}/classes/main"/>
 		<javac destdir="${build.dir}/classes/main" includeantruntime="false">
 			<src path="${src.dir}/common" />
-			<src path="${src.dir}/map" />
+   <src path="${src.dir}/tasks" />
 			<src path="${src.dir}/dialog" />
 			<include name="**/*.java"/>
 			<classpath refid="classpath-main"/>

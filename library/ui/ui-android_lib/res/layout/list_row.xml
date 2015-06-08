@@ -19,14 +19,15 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/RelativeLayout"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:tag="list_row"
+    android:id="@+id/RelativeLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/row_item_border"
+    android:descendantFocusability="blocksDescendants"
+    android:tag="list_row" >
+
+				android:background="@drawable/row_item_border"
 	
-	android:descendantFocusability="blocksDescendants"
-	android:background="@drawable/row_item_border"
-	>
 	 <!-- android:background="#ffffff" -->
 
 	<ImageView
@@ -39,9 +40,8 @@
 		android:contentDescription="the place type icon"
 		android:focusable="false" 
 		android:focusableInTouchMode="false"
-		android:background="@drawable/row_item_border"
-		
-		/>	
+		/>
+	<!-- android:background="@drawable/row_item_border" -->	
 
 	<!-- <LinearLayout
 		android:id="@+id/RightLinearLayout"
@@ -99,8 +99,8 @@
 			android:layout_below="@id/row_distance_included"
 			android:focusable="false"
 			android:focusableInTouchMode="false"
-			android:background="@drawable/row_item_border"
 			/>
+		<!-- android:background="@drawable/row_item_border" -->
 		
 		<include
 			layout="@layout/frame_ratingtext"
@@ -118,18 +118,20 @@
 		
 		<ImageView
 			android:id="@+id/arrow"
-			
+			android:src="@drawable/red_right_arrow"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
 			android:minWidth="48dp"
 			android:minHeight="48dp"
-			android:layout_marginRight="5dip"
-			android:contentDescription="the arrow icon"
-			android:focusable="false" 
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="5dip"			
+			android:focusable="false"
 			android:focusableInTouchMode="false"
-			android:background="@drawable/row_item_border"
-		
+			
+			android:contentDescription="right arrow"
 		/>
+		<!-- android:background="@drawable/row_item_border" -->
 		
 <!-- 		add a button with a background using xml shape providing an "right arrow" -->
 	

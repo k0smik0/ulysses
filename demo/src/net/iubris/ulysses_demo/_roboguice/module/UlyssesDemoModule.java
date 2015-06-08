@@ -19,17 +19,17 @@
  ******************************************************************************/
 package net.iubris.ulysses_demo._roboguice.module;
 
-import android.graphics.drawable.Drawable;
 import net.iubris.diane_library__test_utils._roboguice.module.DianeTestUtilModule;
 import net.iubris.socrates.config.ConfigMandatory;
 import net.iubris.socrates.config.SearchOptions;
-import net.iubris.ulysses._inject.progressdialog.annotations.search.ProgressDialogForSearchPlacesString;
-import net.iubris.ulysses._roboguice.module.AbstractUlyssesModule;
-import net.iubris.ulysses._roboguice.module.Socrates4UlyssesModule;
-import net.iubris.ulysses._roboguice.module.UlyssesUiModule;
-import net.iubris.ulysses.searcher.aware.full.UlyssesSearcher;
+import net.iubris.ulysses._di._roboguice.module.AbstractUlyssesModule;
+import net.iubris.ulysses._di._roboguice.module.SocratesToUlyssesModule;
+import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
+import net.iubris.ulysses.ui._di._roboguice.module.AbstractUlyssesUiModule;
+import net.iubris.ulysses.ui._di.progressdialog.search.annotations.ProgressDialogForSearchPlacesString;
 import net.iubris.ulysses_demo.config.UlyssesDemoConfigMandatory;
 import net.iubris.ulysses_demo.config.UlyssesDemoConfigOptional;
+import android.graphics.drawable.Drawable;
 
 public class UlyssesDemoModule extends AbstractUlyssesModule {
 	
@@ -37,7 +37,7 @@ public class UlyssesDemoModule extends AbstractUlyssesModule {
 	@Override
 	protected void configure() {
 		super.configure();
-		install( new UlyssesUiModule() {
+		install( new AbstractUlyssesUiModule() {
 			
 			@Override
 			protected Drawable provideDefaultDrawable() {
@@ -64,8 +64,8 @@ public class UlyssesDemoModule extends AbstractUlyssesModule {
 	}*/
 	
 	@Override
-	protected Socrates4UlyssesModule getSocrates4UlyssesModule() {
-		return new Socrates4UlyssesModule() {
+	protected SocratesToUlyssesModule getSocratesToUlyssesModule() {
+		return new SocratesToUlyssesModule() {
 			@Override
 			protected void bindConfigMandatory() {
 //				bind(ConfigMandatory.class).toInstance(new UlyssesSampleConfigMandatory());

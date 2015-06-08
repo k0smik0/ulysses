@@ -29,19 +29,19 @@ import net.iubris.diane.searcher.aware.location.exceptions.base.LocationNotSoUse
 import net.iubris.diane.searcher.aware.location.exceptions.base.LocationTooNearException;
 import net.iubris.diane.searcher.aware.network.exceptions.NetworkAwareSearchException;
 import net.iubris.polaris.locator.provider.LocationProvider;
-import net.iubris.ulysses.asynctask.UIyssesSearchAsyncTask;
-import net.iubris.ulysses.model.PlaceHere;
-import net.iubris.ulysses.searcher.aware.full.UlyssesSearcher;
-import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesRetrievingException;
-import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
-import net.iubris.ulysses.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
+import net.iubris.ulysses.engine.model.PlaceEnhanced;
+import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
+import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesRetrievingException;
+import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
+import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
+import net.iubris.ulysses.tasks.search.aware.SearchAwareTask;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
+public class UsingUlyssesAsyncTask extends /*UIyssesSearchAsyncTask*/ SearchAwareTask {
 
 	private final UlyssesSearcher ulyssesSearcher;
 	private Button buttonList;
@@ -65,23 +65,23 @@ public class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 	}
 
 	@Override
-	public List<PlaceHere> call() throws 
+	public List<PlaceEnhanced> call() throws 
 		LocationTooNearException, LocationNotSoUsefulException,
 		NoNetworkException,
 		StillSearchException,
 		PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException
-		, NetworkAwareSearchException {
+		/*, NetworkAwareSearchException*/ {
 		Log.d(getClass().getSimpleName()+":53",""+locationProvider.getLocation());
 		ulyssesSearcher.search();
 		return ulyssesSearcher.getResult();
 	}
 
 	@Override
-	protected void onSuccess(List<PlaceHere> result) throws RuntimeException {
+	protected void onSuccess(List<PlaceEnhanced> result) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Ulysses finds "+result.size()+" places:");
 		sb.append("\n\n");
-		for (PlaceHere r: result) {
+		for (PlaceEnhanced r: result) {
 			sb.append(r.getPlace().getName()+" - "+r.getDetails().getFormattedAddress());
 			sb.append("\n");
 		}
@@ -118,17 +118,17 @@ public class UsingUlyssesAsyncTask extends UIyssesSearchAsyncTask {
 		buttonList.setClickable(true);
 	}
 
-	@Override
+//	@Override
 	protected void onException(PlacesRetrievingException e) throws RuntimeException {
 		ExceptionUtils.showException(e,textView,ulyssesSearcher);
 	}
-	@Override
+//	@Override
 	protected void onException(PlacesUnbelievableZeroResultStatusException e) throws RuntimeException {
 		/*Log.d("UsingUlyssesAsyncTask", "onException("+e.getClass().getSimpleName()+"); "+e.getMessage());
 		Toast.makeText(context, "the search was successful but returned no results - are you in sibery?", Toast.LENGTH_LONG).show();*/
 		ExceptionUtils.showException(e,textView,ulyssesSearcher);
 	}
-	@Override
+//	@Override
 	protected void onException(PlacesTyrannusStatusException e) throws RuntimeException {
 		ExceptionUtils.showException(e,textView,ulyssesSearcher);
 	}

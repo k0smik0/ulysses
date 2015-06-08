@@ -25,7 +25,7 @@ import java.util.Set;
 import javax.inject.Singleton;
 
 import net.iubris.socrates.model.http.response.data.search.PlaceType;
-import net.iubris.ulysses.searcher.location.aware.network.delegate.config.DefaultSearchOptions;
+import net.iubris.ulysses.engine.searcher.location.aware.network.delegate.config.DefaultSearchOptions;
 
 @Singleton
 public final class UlyssesDemoConfigOptional extends DefaultSearchOptions {

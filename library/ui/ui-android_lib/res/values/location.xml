@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="location_retrieving">retrieving geolocation</string>
+	<string name="location_null_all_wrong">Oops! Something was wrong ;/\n
+		Unable to retrieve geolocation.\n\n
+		Try to start Google Maps App and let it find you!\n
+		Then, come back here ;)</string>
+	<string name="location_accuracy_shallow_nor_gps">There is low accuracy for your position..\nCould you enable GPS receiver\.\.\.</string>
+	<string name="location_null_enable_gps">Not possible to use network triangulation.\nnCould you enable GPS receiver?</string>
+</resources>

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/list"/>
-	<classpathentry kind="src" path="src/maps"/>
+	<classpathentry kind="src" path="src/map"/>
 	<classpathentry kind="src" path="src/details"/>
+	<classpathentry kind="src" path="src/dialog"/>
+	<classpathentry kind="src" path="src/toast"/>
+	<classpathentry kind="src" path="src/tasks/common"/>
+	<classpathentry kind="src" path="src/tasks/map"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry excluding="net/iubris/voyager/_roboguice/providers/ProgressDialogForSearchPlacesStringProvider.java" kind="src" path="src/roboguice"/>
+	<classpathentry excluding="net/iubris/ulysses/search/tasks/SearchAwareTask.java|net/iubris/ulysses/search/tasks/SearchByAddressTask.java|net/iubris/ulysses/search/tasks/SearchUtils.java|net/iubris/ulysses/search/tasks/|net/iubris/ulysses/search/" kind="src" path="src/from_ratafia_voyager_useless"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="lib" path="libs_extra/imageloader.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

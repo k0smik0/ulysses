@@ -21,6 +21,8 @@
 <resources>
 	<string name="search__searching">\.\.\.sto cercando\.\.\.</string>
 	
+	<string name="search__searching_address">sto cercando il tuo indirizzo</string>
+	
 	<string name="search__success">luoghi trovati!</string>
 	
 	<string name="search__exception_no_network">non ho connessione,\nprovo a cercare nella cache</string>

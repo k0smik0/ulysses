@@ -1,0 +1,53 @@
+<project name="Ulysses-ui-libs" default="get-real-dependencies">
+	<!-- change this as your own	-->
+	
+	<property name="name" value="${ant.project.name}"/>
+	<property name="user" value="k0smik0"/>
+	<property name="vendor" value="Massimiliano Leone - k0smik0"/>
+	<property name="version" value="0.1"/>
+	<property name="copyright" value="Copyleft 2012 Massimiliano Leone - massimiliano.leone@iubris.net"/>
+	<property name="license.file" value="COPYING.txt"/>
+	<property name="license.url" value="http://www.gnu.org/licenses/lgpl.txt"/>
+	<property name="docurl" value="https://github.com/k0smik0/ulysses"/>
+	
+	
+	<property environment="env" />
+	<condition property="sdk.dir" value="${env.ANDROID_HOME}">
+	  <isset property="env.ANDROID_HOME" />
+	</condition>
+	<property name="android-path" value="${sdk.dir}" />
+	
+	<!-- change here with actual -->
+	<property name="android-sdk-target-version" value="22"/>
+		
+	<property name="libs-dir" value="libs"/>
+	<property name="ant-libs-dir" value="libs_ant"/>
+			
+	<target name="get-real-dependencies">
+    <!-- diane -->
+    <get dest="${libs-dir}">
+      <url url="https://github.com/k0smik0/diane/blob/master/library/common/build/jars/diane-common.jar?raw=true"/>
+      <url url="https://github.com/k0smik0/diane/blob/master/library/task/roboguiced/build/jars/diane-robotask.jar?raw=true"/>
+    </get>
+    <!-- (robo)enhancedasynctask -->
+    <get dest="${libs-dir}">
+     <url url="https://github.com/k0smik0/enhancedsafeasynctask/blob/master/roboguiced/library/build/jars/roboenhancedasynctask.jar?raw=true"/>
+    </get>
+    <!-- socrates -->
+    <get dest="${libs-dir}">
+        <url url="https://github.com/k0smik0/socrates/blob/master/library/build/jars/socrates-core.jar?raw=true"/>
+    </get>
+    <!-- roboguice -->
+    <get dest="${libs-dir}">
+      <url url="http://dependency-shot.googlecode.com/files/javax.inject.jar"/>
+      <url url="http://central.maven.org/maven2/org/sonatype/sisu/sisu-guice/3.2.0/sisu-guice-3.2.0.jar"/>
+      <url url="http://repo1.maven.org/maven2/org/roboguice/roboguice/2.0/roboguice-2.0.jar"/>
+    </get>
+    <!-- ulysses -->
+    <get dest="${libs-dir}">
+        <url url="https://github.com/k0smik0/ulysses/blob/master/library/common/build/jars/ulysses-common.jar?raw=true"/>
+        <url url="https://github.com/k0smik0/ulysses/blob/master/library/ui/ui-jar/build/jar/ulysses-ui.jar?raw=true"/>
+    </get>
+  </target>	
+	
+</project>

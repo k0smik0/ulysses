@@ -19,7 +19,7 @@
  ******************************************************************************/
 package net.iubris.ulysses_demo.activity.main.task;
 
-import net.iubris.ulysses.searcher.aware.full.UlyssesSearcher;
+import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
 import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;

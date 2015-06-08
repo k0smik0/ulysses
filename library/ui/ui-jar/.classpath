@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="net/iubris/ulysses/loader/UlyssesLoader.java|net/iubris/ulysses/asynctask/SearcherCallable.java|net/iubris/ulysses/asynctask/ActivityStarter.java|net/iubris/ulysses/asynctask/RoboUlyssesSearchAsyncTaskUseResults.java|net/iubris/ulysses/asynctask/UlyssesRoboAsyncTaskSearchAndStartingActivity.java|net/iubris/ulysses/asynctask/UIyssesSearchAsyncTask_old.java|net/iubris/ulysses/_inject/list/adapter/annotation/ListRowResource.java|net/iubris/ulysses/_inject/list/adapter/provider/ListRowResourceProvider.java|net/iubris/ulysses/_inject/map/overlay/places/PlaceTypeActionsMapProvider.java" kind="src" path="src/common"/>
-	<classpathentry excluding="net/iubris/ulysses/map/overlay/places/PlaceTypeActionFilter.java|net/iubris/ulysses/map/overlay/places/PlaceTypeAction.java|net/iubris/ulysses/map/overlay/places/base/DefaultPlaceTypeAction.java" kind="src" path="src/map"/>
+	<classpathentry kind="src" path="src/common/icons"/>
+	<classpathentry kind="src" path="src/common/toast"/>
+	<classpathentry kind="src" path="src/common/activity"/>
+	<classpathentry kind="src" path="src/tasks/base"/>
+	<classpathentry kind="src" path="src/tasks/list"/>
+	<classpathentry kind="src" path="src/tasks/map"/>
 	<classpathentry kind="src" path="src/dialog"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry excluding="net/iubris/ulysses/ui/_di/_roboguice/module/AbstractUlyssesUiModule.java" kind="src" path="src/useless"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
