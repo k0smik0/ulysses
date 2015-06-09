@@ -22,8 +22,6 @@ package net.iubris.ulysses_demo.config;
 
 import java.util.Set;
 
-import javax.inject.Singleton;
-
 import net.iubris.socrates.model.http.response.data.search.PlaceType;
 import net.iubris.ulysses.engine.searcher.location.aware.network.delegate.config.DefaultSearchOptions;
 

@@ -19,6 +19,7 @@
  ******************************************************************************/
 package net.iubris.ulysses.ui.tasks.map.aware;
 
+
 import java.util.List;
 
 import javax.inject.Inject;
