@@ -21,7 +21,9 @@ package net.iubris.ulysses.ui.tasks.map.localized;
 
 
 
+
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

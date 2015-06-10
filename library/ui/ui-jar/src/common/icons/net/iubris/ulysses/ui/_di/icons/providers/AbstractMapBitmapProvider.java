@@ -19,12 +19,12 @@
  ******************************************************************************/
 package net.iubris.ulysses.ui._di.icons.providers;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 abstract public class AbstractMapBitmapProvider implements Provider<Bitmap> {
 	

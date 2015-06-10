@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import roboguice.util.Ln;
 import net.iubris.ulysses.engine.model.PlaceEnhanced;
 import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
 import net.iubris.ulysses.ui.tasks.list._base.AbstractPopulateListAsyncTask;
+import roboguice.util.Ln;
 import android.app.Activity;
 import android.widget.ArrayAdapter;
 

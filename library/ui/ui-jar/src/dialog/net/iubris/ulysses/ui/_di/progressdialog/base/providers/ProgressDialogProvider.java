@@ -20,12 +20,12 @@
 package net.iubris.ulysses.ui._di.progressdialog.base.providers;
 
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import roboguice.inject.ContextSingleton;
 import android.app.ProgressDialog;
 import android.content.Context;
-
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 @ContextSingleton
 public class ProgressDialogProvider implements /*ContextScoped*/Provider<ProgressDialog> {

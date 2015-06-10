@@ -19,11 +19,11 @@
  ******************************************************************************/
 package net.iubris.ulysses.ui._di.progressdialog.search.providers;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import roboguice.inject.ContextSingleton;
 import android.content.res.Resources;
-
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 @ContextSingleton
 public abstract class AbstractProgressDialogForSearchPlacesStringProvider implements Provider<String> {
