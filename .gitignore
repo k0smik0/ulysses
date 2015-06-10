@@ -1,3 +1,27 @@
 **/bin/*
 **gen/*
 **/libs/*jar
+
+# old gitignore
+#**/NO*/*
+#**/OLD/*
+#**/bin/*
+#**/gen/*
+#library/common/bin
+#library/common/gen
+#library/common/jars
+#library/common/no_libs
+#library/common/src/OLD
+#library/common/src/useless
+#library/ui/ui-android_lib/bin
+#library/ui/ui-android_lib/gen
+#library/ui/ui-jar/NO
+#library/ui/ui-jar/bin
+#library/ui/ui-jar/gen
+#library/ui/ui-jar/libs/to_restore
+#library/ui/ui-jar/no_libs
+#library/ui/ui-jar/src/useless
+#sample/libs/no
+sample/src/useless
+sample/src_no
+sample/traces
