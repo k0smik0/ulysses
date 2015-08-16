@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/core/model"/>
+	<classpathentry kind="src" path="src/core/engine"/>
+	<classpathentry kind="src" path="src/core/roboguice-module"/>
+	<classpathentry kind="src" path="src/core/tasks-roboguiced"/>
+	<classpathentry kind="src" path="src/core/misc"/>
+	<classpathentry kind="src" path="src/persist"/>
+	<classpathentry kind="src" path="src/persisters/sql/ormdroid"/>
+	<classpathentry excluding="net/iubris/ulysses/engine/persist/sql/ormlite/OrmlitePersister.java|net/iubris/ulysses/engine/persist/sql/ormlite/DatabaseConfigUtil.java|net/iubris/ulysses/engine/persist/sql/ormlite/UlyssesDatabaseHelper.java" kind="src" path="src/persisters/sql/ormlite"/>
+	<classpathentry excluding="net/iubris/ulysses/persist/sql/storm/" kind="src" path="src/persisters/sql/storm"/>
+	<classpathentry kind="src" path="src/ui/activity"/>
+	<classpathentry kind="src" path="src/ui/fragment"/>
+	<classpathentry kind="src" path="src/ui/tasks/common"/>
+	<classpathentry kind="src" path="src/ui/tasks/search"/>
+	<classpathentry kind="src" path="src/ui/tasks/populate/base"/>
+	<classpathentry kind="src" path="src/ui/tasks/populate/list"/>
+	<classpathentry kind="src" path="src/ui/tasks/populate/map"/>
+	<classpathentry kind="src" path="src/ui/adapters/details"/>
+	<classpathentry excluding="net/iubris/ulysses/ui/list/adapter/ListFragmentRecyclerViewAdapter.java" kind="src" path="src/ui/adapters/list"/>
+	<classpathentry kind="src" path="src/ui/adapters/map"/>
+	<classpathentry kind="src" path="src/ui/icons"/>
+	<classpathentry kind="src" path="src/ui/utils/toast"/>
+	<classpathentry kind="src" path="src/ui/dialog"/>
+	<classpathentry kind="src" path="src/ui/roboguice"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry excluding="net/iubris/ulysses/ui/gallery/ImageViewFactory.java|net/iubris/ulysses/ui/gallery/ImageAdapter.java" kind="src" path="NO"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry excluding="net/iubris/ulysses/search/tasks/SearchAwareTask.java|net/iubris/ulysses/search/tasks/SearchByAddressTask.java|net/iubris/ulysses/search/tasks/SearchUtils.java|net/iubris/ulysses/search/tasks/|net/iubris/ulysses/search/" kind="src" path="src/from_ratafia_voyager_useless"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

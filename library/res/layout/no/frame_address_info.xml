@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyleft 2013 Massimiliano Leone - massimiliano.leone@iubris.net .
+  
+  frame_line.xml is part of 'Voyager'.
+  
+  'Voyager' is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation; either version 3 of the License, or
+  (at your option) any later version.
+  
+  'Voyager' is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
+  
+  You should have received a copy of the GNU Lesser General Public License
+  along with 'Voyager'; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ProgressBar
+        android:id="@+id/progress_bar_address"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/progress_anticlockwise"
+        android:minHeight="200dp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/address_label"
+        style="@style/Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/address_label"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/address_info"
+        style="@style/Info"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="0dp"
+        android:lines="4"
+        android:maxWidth="150dp"
+        android:minHeight="0dp" 
+        android:visibility="gone"/>
+
+	<!-- android:layout_marginTop="20dp" -->
+</FrameLayout>

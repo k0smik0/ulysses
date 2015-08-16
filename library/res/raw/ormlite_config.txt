@@ -1,0 +1,64 @@
+#
+# generated on 2015/08/14 11:14:56
+#
+# --table-start--
+dataClass=net.iubris.ulysses.engine.model.Place
+tableName=places
+# --table-fields-start--
+# --field-start--
+fieldName=id
+dataPersister=LONG
+generatedId=true
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=placeId
+# --field-end--
+# --field-start--
+fieldName=location
+dataPersister=SERIALIZABLE
+# --field-end--
+# --field-start--
+fieldName=iconUrl
+# --field-end--
+# --field-start--
+fieldName=rating
+# --field-end--
+# --field-start--
+fieldName=types
+dataPersister=SERIALIZABLE
+# --field-end--
+# --field-start--
+fieldName=vicinity
+# --field-end--
+# --field-start--
+fieldName=photosUrls
+dataPersister=SERIALIZABLE
+# --field-end--
+# --field-start--
+fieldName=permanentlyClosed
+# --field-end--
+# --field-start--
+fieldName=formattedAddress
+# --field-end--
+# --field-start--
+fieldName=internationalPhoneNumber
+# --field-end--
+# --field-start--
+fieldName=reviewsCount
+# --field-end--
+# --field-start--
+fieldName=website
+# --field-end--
+# --field-start--
+fieldName=distance
+# --field-end--
+# --field-start--
+fieldName=plusUrl
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################

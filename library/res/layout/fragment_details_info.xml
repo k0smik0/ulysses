@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/name_included"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="2dp"
+        layout="@layout/frame_name" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="photo"
+            android:minHeight="96dp"
+            android:minWidth="96dp"
+            android:src="@android:drawable/ic_menu_camera" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <include
+                android:id="@+id/address_included"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                layout="@layout/frame_address" />
+
+            <include
+                android:id="@+id/distance_included"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                layout="@layout/frame_distance" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <include
+                    android:id="@+id/ratingbar_included"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="0.7"
+                    layout="@layout/frame_ratingbar" />
+
+                <Button
+                    android:id="@+id/gplus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.2"
+                    android:text="@string/gplus"
+                    
+                    android:textSize="16sp"
+                    android:textStyle="italic|bold" />
+            </LinearLayout>
+            <!-- android:textColor="#ffffff"
+                    android:background="#aa0000" -->
+
+            <include
+                android:id="@+id/ratingtext_included"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="-0dp"
+                layout="@layout/frame_ratingtext" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/frame_line_post_info_included"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        layout="@layout/frame_line" />
+
+    <include
+        android:id="@+id/url_included"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        layout="@layout/frame_url" />
+
+    <include
+        android:id="@+id/frame_line_post_url_included"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        layout="@layout/frame_line" />
+
+</LinearLayout>
