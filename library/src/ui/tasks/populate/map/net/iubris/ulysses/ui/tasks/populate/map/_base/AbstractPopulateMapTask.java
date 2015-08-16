@@ -23,12 +23,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import roboguice.util.Ln;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.tasks._base.AbstractUlyssesTask;
 import net.iubris.ulysses.ui.icons.sieve.Sieve;
 import net.iubris.ulysses.ui.map.marker.infowindow.UlyssesInfowindowAdapter;
 import net.iubris.ulysses.ui.tasks.populate.map._utils.LocationUtils;
+import roboguice.util.Ln;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;

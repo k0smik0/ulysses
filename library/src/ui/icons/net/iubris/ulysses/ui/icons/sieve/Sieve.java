@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import roboguice.util.Ln;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.ui.icons.filter.Filter;
+import roboguice.util.Ln;
 import android.graphics.Bitmap;
 
 //@Singleton

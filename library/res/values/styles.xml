@@ -32,5 +32,9 @@
 		<item name="android:background">#ffffff</item>
 		<item name="android:background">@null</item>
 	</style> -->
+	<style name="Tab">
+	    <item name="android:background">#aa0000</item>
+	    <item name="android:textColor">#ffffff</item>
+	</style>
 	
 </resources>

@@ -8,6 +8,8 @@ google-http-client-extensions-android2-1.6.0-beta.jar
 google-preconditions.jar
 jackson-mini-1.9.2.jar
 roboenhancedasynctask.jar
+roboguice.jar
+ormdroid.jar
 socrates-core.jar
 socrates-roboguiced.jar
 universal-image-loader.jar

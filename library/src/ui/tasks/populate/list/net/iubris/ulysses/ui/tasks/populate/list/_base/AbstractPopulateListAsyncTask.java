@@ -22,11 +22,11 @@ package net.iubris.ulysses.ui.tasks.populate.list._base;
 
 import java.util.List;
 
-import roboguice.util.Ln;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
 import net.iubris.ulysses.tasks._base.AbstractUlyssesTask;
 import net.iubris.ulysses.ui.tasks.populate.list.adapter.utils.AdapterUtils;
+import roboguice.util.Ln;
 import android.app.Activity;
 import android.location.Location;
 import android.widget.ArrayAdapter;

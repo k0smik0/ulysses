@@ -2,7 +2,6 @@ package net.iubris.ulysses.engine.searcher.location.aware.network.delegate;
 
 import java.util.List;
 
-import android.location.Location;
 import net.iubris.socrates.engines.details.exception.DetailsRetrieverException;
 import net.iubris.socrates.engines.search.exception.PlacesSearcherException;
 import net.iubris.socrates.model.http.response.data.details.Details;
@@ -14,6 +13,7 @@ import net.iubris.socrates.model.http.response.exceptions.RequestDeniedException
 import net.iubris.socrates.model.http.response.exceptions.UnknowErrorException;
 import net.iubris.socrates.model.http.response.exceptions.ZeroResultException;
 import net.iubris.ulysses.model.Place;
+import android.location.Location;
 
 public interface SocratesDelegate {
 	List<Place> searchGooglePlacesWithDetailsHere(final Location locationHere) throws /*LocationNullException,*/ PlacesSearcherException, DetailsRetrieverException, OverQuotaException, ZeroResultException, RequestDeniedException, InvalidRequestException, NotFoundException, UnknowErrorException;

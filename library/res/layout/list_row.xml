@@ -18,17 +18,16 @@
   along with 'Ulysses'; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/RelativeLayout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/row_item_border"
     android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal"
     android:tag="list_row" >
 
     <!-- android:background="@drawable/row_item_border" -->
-
-
     <!-- android:background="#ffffff" -->
 
     <ImageView
@@ -43,154 +42,98 @@
         android:minWidth="48dp" />
     <!-- android:background="@drawable/row_item_border" -->
 
-
-    <!--
-  <LinearLayout
-		android:id="@+id/RightLinearLayout"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:layout_toRightOf="@id/icon"
-		android:layout_alignTop="@id/icon">
-    -->
-
-    <include
-        android:id="@+id/row_name_included"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/icon"
-        android:layout_toRightOf="@id/icon"
-        layout="@layout/frame_name"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:minWidth="10dp" />
+        android:orientation="vertical" >
 
-    <include
-        android:id="@+id/row_address_included"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/row_name_included"
-        android:layout_toRightOf="@id/icon"
-        layout="@layout/frame_address"
-        android:minWidth="10dp" />
+        <include
+            android:id="@+id/row_name_included"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            layout="@layout/frame_name"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:minWidth="10dp" />
 
-    <include
-        android:id="@+id/row_distance_included"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/row_address_included"
-        android:layout_toRightOf="@id/icon"
-        layout="@layout/frame_distance"
-        android:background="@drawable/row_item_border"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:minWidth="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
 
-    <include
-        android:id="@+id/row_ratingbar_included"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/row_distance_included"
-        android:layout_toRightOf="@id/icon"
-        layout="@layout/frame_ratingbar"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:minWidth="10dp" />
-    <!-- android:background="@drawable/row_item_border" -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:orientation="vertical" >
 
-    <include
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/row_ratingbar_included"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="-2dp"
-        android:layout_toRightOf="@id/row_ratingbar_included"
-        layout="@layout/frame_ratingtext"
-        android:background="@drawable/row_item_border"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:minWidth="10dp" />
+                <include
+                    android:id="@+id/row_address_included"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/frame_address"
+                    android:minWidth="10dp" />
 
-    <!--
-  <ImageView
-			android:id="@+id/arrow"
-			android:src="@drawable/red_right_arrow"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
-			android:minWidth="48dp"
-			android:minHeight="48dp"
-			android:layout_alignParentRight="true"
-			android:layout_marginRight="5dip"			
-			android:focusable="false"
-			android:focusableInTouchMode="false"
-			android:contentDescription="right arrow"
-		/>
-    -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
 
-    <ImageButton
-        android:id="@+id/button_list_to_map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="5dip"
-        android:contentDescription="right arrow"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:minHeight="48dp"
-        android:minWidth="48dp"
-        android:src="@android:drawable/ic_dialog_map" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <include
+                            android:id="@+id/row_ratingbar_included"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            layout="@layout/frame_ratingbar"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:minWidth="10dp" />
+                        <!-- android:background="@drawable/row_item_border" -->
+
+                        <include
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="-2dp"
+                            layout="@layout/frame_ratingtext"
+                            android:background="@drawable/row_item_border"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:minWidth="10dp" />
+                    </LinearLayout>
+
+                    <include
+                        android:id="@+id/row_distance_included"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        layout="@layout/frame_distance"
+                        android:background="@drawable/row_item_border"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:minWidth="10dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/button_list_to_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="5dip"
+                android:contentDescription="right arrow"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:minHeight="48dp"
+                android:minWidth="48dp"
+                android:src="@android:drawable/ic_dialog_map" />
+        </LinearLayout>
+    </LinearLayout>
 
     <!-- android:background="@drawable/row_item_border" -->
 
-
-    <!-- add a button with a background using xml shape providing an "right arrow" -->
-
-
-    <!--
-		<TextView
-			android:id="@+id/name_text_view"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:ellipsize="marquee"
-			android:singleLine="true"
-			android:textIsSelectable="true"
-			android:textSize="15dp"
-			android:textStyle="bold" />
-		
-		<TextView
-			android:id="@+id/address_text_view"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:ellipsize="marquee"
-			android:singleLine="true"
-			android:textIsSelectable="true"
-			/>
-
-		<TextView
-			android:id="@+id/distance_text_view"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:ellipsize="marquee"
-			android:singleLine="true"
-			android:textIsSelectable="true" />
-		
-		<RatingBar
-			android:id="@+id/rating_bar"
-			android:layout_width="wrap_content"
-			android:layout_height="40dp"
-			android:layout_marginTop="-10dp"
-			android:layout_marginLeft="-60dp"
-			android:isIndicator="true"
-			android:max="5"
-			android:maxHeight="35dp"
-			android:numStars="5"
-			android:scaleX="0.5"
-			android:scaleY="0.5" />
-    -->
-
-
-    <!-- </LinearLayout> -->
-
-</RelativeLayout>
+</LinearLayout>

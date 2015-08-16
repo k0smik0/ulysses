@@ -23,10 +23,10 @@ import in.flashbulb.coloredratingbar.ColoredRatingBar;
 
 import java.util.Comparator;
 
-import net.iubris.apollus.ui.map.MarkerShowable;
-import net.iubris.apollus.ui.tabspager.selectable.FragmentSelectable;
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.Place;
+import net.iubris.ulysses.ui.fragments.map.MarkerShowable;
+import net.iubris.ulysses.ui.fragments.tabspager.selectable.FragmentSelectable;
 import net.iubris.ulysses.utils.misc.PlacesUtils;
 import android.app.Activity;
 import android.util.Log;
@@ -42,7 +42,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 //import com.darrenmowat.imageloader.ImageLoader;
 
-public class PlacesListAdapter extends ArrayAdapter<Place> {
+public class PlacesListAdapter
+//<
+////extendingUlyssesMapFragment extends UlyssesMapFragment<ListFragmentMarkerable,MarkerShowableMapFragment>,
+////eFS extends Fragment & FragmentSelectable, 
+//ListFragmentMarkerable extends ListFragment & Markerable & Updatable, 
+//MarkerShowableMapFragment extends SupportMapFragment & MarkerShowable & Updatable>
+extends ArrayAdapter<Place> {
 
 	private final Activity activity;
 	private final int textViewResourceId;

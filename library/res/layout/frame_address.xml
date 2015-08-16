@@ -30,8 +30,7 @@
 		android:textIsSelectable="true"
 		android:autoLink="map|web"
 		android:focusable="false"
-		
-		/>
+		android:text="address"/>
 
 </FrameLayout>
 

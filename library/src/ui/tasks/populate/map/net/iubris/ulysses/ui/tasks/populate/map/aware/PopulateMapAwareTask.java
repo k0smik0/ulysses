@@ -23,9 +23,7 @@ package net.iubris.ulysses.ui.tasks.populate.map.aware;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-import roboguice.util.Ln;
 import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.ui.icons.sieve.Sieve;
@@ -33,6 +31,7 @@ import net.iubris.ulysses.ui.tasks.populate.map._base.AbstractPopulateMapTask;
 import net.iubris.ulysses.ui.tasks.populate.map._base.exceptions.LocationNullException;
 import net.iubris.ulysses.ui.tasks.populate.map._utils.LocationUtils;
 import net.iubris.ulysses.ui.toast.utils.UIUtils;
+import roboguice.util.Ln;
 import android.app.Activity;
 import android.location.Location;
 import android.support.v4.app.Fragment;

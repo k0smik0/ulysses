@@ -29,7 +29,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -110,7 +109,7 @@ public class DefaultSocratesDelegate implements SocratesDelegate  {
 		Ln.d("using parallel");
 		ExecutorService fixedThreadPool = Executors.newFixedThreadPool(16);
 		List<Callable<Void>> drs = new ArrayList<Callable<Void>>();
-		final AtomicInteger counter = new AtomicInteger();
+//		final AtomicInteger counter = new AtomicInteger();
 //		final CountDownLatch latch = new CountDownLatch(googlePlaces.size());
 		for (final GooglePlace googlePlace: googlePlaces) {
 			
@@ -118,7 +117,7 @@ public class DefaultSocratesDelegate implements SocratesDelegate  {
 				@Override
 				public Void call() {
 //					Ln.d("details for: "+googlePlace.getName()+" ("+counter.incrementAndGet()+") ...");
-					int c = counter.get();
+//					int c = counter.get();
 					try {
 					Details details = getDetails( googlePlace.getPlaceId() );
 					
