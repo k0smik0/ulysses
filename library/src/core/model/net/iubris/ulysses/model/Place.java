@@ -22,9 +22,11 @@ package net.iubris.ulysses.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 //import roboguice.util.Ln;
 import net.iubris.socrates.model.http.response.data.details.Details;
@@ -43,7 +45,7 @@ import com.roscopeco.ormdroid.Entity;
 public class Place extends Entity implements Serializable, Comparable<Place> {
 	
 	private static final long serialVersionUID = 8907278452980472496L;
-	private static final double UNREACHABLE_DISTANCE = 1000000000000L; // 10E12 m
+	public static final double UNREACHABLE_DISTANCE = 1000000000000L; // 10E12 m
 	
 //	@Id 
 //	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -100,7 +102,7 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	
 //	@Column
 	
-	private double distance;
+	private double distance = UNREACHABLE_DISTANCE;
 //	@Column
 	
 	private String plusUrl;
@@ -235,15 +237,10 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 
 	public Set<String> getTypes() {
 //		return types;
-		return destringifySet(typesAsString);
+		return destringifyToSet(typesAsString);
 	}
-	protected Set<String> destringifySet(String dataAsString) {
-//		Ln.d(dataAsString);
-		String[] split = dataAsString.split(SEPARATOR);
-//		Ln.d(split.length);
-		List<String> asList = Arrays.asList(split);
-//		Ln.d(asList.size());
-		Set<String> hashSet = new HashSet<String>( asList );
+	protected Set<String> destringifyToSet(String dataAsString) {
+		Set<String> hashSet = new HashSet<String>( destringifyToList(dataAsString) );
 //		Ln.d(hashSet.size());
 		return hashSet;
 	}
@@ -252,18 +249,18 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 		this.typesAsString = stringify(types);
 //		this.types = types;
 	}
-	protected String stringify(Set<String> data) {
-		if (data==null)
-			return "";
-		
-		StringBuilder sb = new StringBuilder();
-		for (String string : data) {
-			sb.append(string).append(SEPARATOR);
-		}
-		if (data.size()>0)
-			sb.deleteCharAt(sb.length()-1); //delete last separator
-		return sb.toString();
-	}
+//	protected String stringify(Set<String> data) {
+//		if (data==null)
+//			return "";
+//		
+//		StringBuilder sb = new StringBuilder();
+//		for (String string : data) {
+//			sb.append(string).append(SEPARATOR);
+//		}
+//		if (data.size()>0)
+//			sb.deleteCharAt(sb.length()-1); //delete last separator
+//		return sb.toString();
+//	}
 	
 
 	public String getVicinity() {
@@ -274,10 +271,12 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	}
 
 	public List<String> getPhotosUrls() {
-		return destringify(photosUrlsAsString);
+		return destringifyToList(photosUrlsAsString);
 //		return photosUrls;
 	}
-	protected List<String> destringify(String dataAsString) {
+	protected List<String> destringifyToList(String dataAsString) {
+		if (dataAsString.isEmpty())
+			return null;
 		String[] split = dataAsString.split(SEPARATOR);
 		return Arrays.asList(split);
 	}
@@ -285,7 +284,7 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	public void setPhotosUrls(List<String> photosUrls) {
 		this.photosUrlsAsString = stringify( photosUrls );
 	}
-	protected String stringify(List<String> data) {
+	protected String stringify(Collection<String> data) {
 		if (data==null)
 			return "";
 		

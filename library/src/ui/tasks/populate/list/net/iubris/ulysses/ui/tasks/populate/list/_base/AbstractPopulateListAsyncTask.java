@@ -20,13 +20,14 @@
 package net.iubris.ulysses.ui.tasks.populate.list._base;
 
 
+
 import java.util.List;
 
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
 import net.iubris.ulysses.tasks._base.AbstractUlyssesTask;
 import net.iubris.ulysses.ui.tasks.populate.list.adapter.utils.AdapterUtils;
-import roboguice.util.Ln;
+//import roboguice.util.Ln;
 import android.app.Activity;
 import android.location.Location;
 import android.widget.ArrayAdapter;
@@ -63,9 +64,10 @@ public abstract class AbstractPopulateListAsyncTask extends AbstractUlyssesTask 
 		((Activity) context).setProgressBarIndeterminateVisibility(false);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void execute(Location location) {
 		this.location = location;
-		Ln.d("using location: "+location);
+//		Ln.d("using location: "+location);
 		super.execute();
 	}
 	

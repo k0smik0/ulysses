@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="net.iubris.ratafia.ui.list.activity.ResultsActivity" >
+    android:orientation="vertical">
+     <!-- tools:context="net.iubris.ratafia.ui.list.activity.ResultsActivity" -->
 
     <!-- in master was commented -->
 
     <net.iubris.ulysses.ui.fragments.tabspager.sliding.SlidingTabLayout
         android:id="@+id/sliding_tabs"
-        style="@style/Tab"
+        style="@style/Tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -18,7 +18,6 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1"
-        android:background="#00000000" />
+        android:layout_weight="1"/>
 
 </LinearLayout>

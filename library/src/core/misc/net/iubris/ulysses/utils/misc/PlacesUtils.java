@@ -55,7 +55,7 @@ public class PlacesUtils {
 		String unit = "m";
 //		String format = String.format(Locale.US, "%.0f", distance);
 		String format = String.format(Locale.getDefault(), "%.0f", distance);
-		return format+unit;
+		return format+" "+unit;
 //		return Math.floor(distance-0.5d)+unit;
 	}
 }

@@ -27,8 +27,9 @@ import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.tasks._base.AbstractUlyssesTask;
 import net.iubris.ulysses.ui.icons.sieve.Sieve;
 import net.iubris.ulysses.ui.map.marker.infowindow.UlyssesInfowindowAdapter;
+import net.iubris.ulysses.ui.tasks.populate.map._base.exceptions.LocationNullException;
 import net.iubris.ulysses.ui.tasks.populate.map._utils.LocationUtils;
-import roboguice.util.Ln;
+import net.iubris.ulysses.ui.toast.utils.UIUtils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -39,6 +40,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -54,40 +56,33 @@ public abstract class AbstractPopulateMapTask extends AbstractUlyssesTask implem
 
 	protected static int LATLNG_BOUNDS_PADDING = 23;
 	protected final GoogleMap map;
-//	protected final List<Marker> markers;
 	protected final Fragment mapFragment;
 	protected final Map<String, Place> placeByMarkerIdMap;
 	protected final Map<String, Marker> markerByPlaceIdMap;
 	protected final Activity activity;
 	
 	
-//	@Inject private MarkerBitmapProvider markerBitmapProvider;
-	
-	/*@Inject */private final Sieve sieve;
+	private final Sieve sieve;
+	private LatLngBounds latLngBounds;
 	
 	
 	protected AbstractPopulateMapTask(Activity activity, GoogleMap map, Fragment mapFragment, Sieve sieve) {
 		super(activity);
 		this.activity = activity;
 		this.map = map;
-		Ln.d("map: "+map);
+//		Ln.d("map: "+map);
 		this.mapFragment = mapFragment;
 		this.sieve = sieve;
 		this.placeByMarkerIdMap = new HashMap<String, Place>();
 		this.markerByPlaceIdMap = new HashMap<String, Marker>();
 	}
 	
-	/*@Override
-	public List<Marker> getMarkers() {
-		return markers;
-	}*/
 	@Override
 	public Place findPlaceByMarkerId(String id) {
 		return placeByMarkerIdMap.get(id);
 	}
 	@Override
 	public Marker findMarkerByPlaceEnhancedId(String id) {
-//		Log.d("AbstractPopulateMapTask",""+markerByPlaceIdMap);
 		return markerByPlaceIdMap.get(id);
 	}
 	
@@ -107,7 +102,6 @@ public abstract class AbstractPopulateMapTask extends AbstractUlyssesTask implem
 			Bitmap bitmap = sieve.find(place);
 			
 			LatLng locationToLatLng = LocationUtils.locationToLatLng( place.getLocation() );
-			Ln.d(locationToLatLng);
 			String placeName = place.getPlaceName();
 			
 			markerOptions.position( locationToLatLng )
@@ -117,14 +111,11 @@ public abstract class AbstractPopulateMapTask extends AbstractUlyssesTask implem
 			if (bitmap!=null)
 				markerOptions.icon( BitmapDescriptorFactory.fromBitmap( bitmap ) );
 			
-//			markerOptions.visible(false);
-//			Ln.d("markerOptions: "+markerOptions);
 			Marker marker = map.addMarker(markerOptions);
 //			dropPinEffect( marker, new LatLngInterpolator.Linear() );
 //					try { Thread.sleep(200); } catch (InterruptedException e) {}
 			
 			placeByMarkerIdMap.put(marker.getId(), place);
-//			Log.d("AbstractPopulateMapTask","putting "+placeHere.getPlace().getPlaceId());
 			markerByPlaceIdMap.put( place.getPlaceId(), marker);
 			
 			boundsBuilder.include(markerOptions.getPosition());
@@ -133,9 +124,8 @@ public abstract class AbstractPopulateMapTask extends AbstractUlyssesTask implem
 		return boundsBuilder;
 	}
 	protected void buildBoundsAndZoom(Builder boundsBuilder) {
-		LatLngBounds latLngBounds = boundsBuilder.build();
-//		map.animateCamera( CameraUpdateFactory.newLatLngZoom(latLngBounds.getCenter(), 8));
-		autoZoom(latLngBounds);
+		latLngBounds = boundsBuilder.build();
+		map.setOnMapLoadedCallback(onMapLoadedCallback);
 	}
 
 	/*private void dropPinEffect(final Marker marker, final LatLngInterpolator latLngInterpolator) {
@@ -186,34 +176,44 @@ public abstract class AbstractPopulateMapTask extends AbstractUlyssesTask implem
 	
 	protected void autoZoom(final LatLngBounds latLngBounds) {
 		final View mapView = mapFragment.getView();
-		if (mapView.getViewTreeObserver().isAlive()) {
-			mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-				@SuppressWarnings("deprecation")
-				@SuppressLint("NewApi") // We check which build version we are using.
-				@Override
-				public void onGlobalLayout() {
-					if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-						mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-					} else {
-						mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this); 
-					}
-					
-//					map.animateCamera(CameraUpdateFactory.zoomTo(21.0f));
-					map.animateCamera(
-							CameraUpdateFactory.newLatLngBounds(latLngBounds, LATLNG_BOUNDS_PADDING)
-							, new GoogleMap.CancelableCallback() {
-								@Override
-								public void onFinish() {
-//									map.animateCamera(CameraUpdateFactory.zoomTo(21f));
+		if ((mapView.getWidth() > 0) && (mapView.getHeight()>0)) {
+			if (mapView.getViewTreeObserver().isAlive()) {
+				mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+					@SuppressWarnings("deprecation")
+					@SuppressLint("NewApi") // We check which build version we are using.
+					@Override
+					public void onGlobalLayout() {
+						if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+							mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+						} else {
+							mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this); 
+						}
+						
+	//					map.animateCamera(CameraUpdateFactory.zoomTo(21.0f));
+						
+						map.animateCamera(
+								CameraUpdateFactory.newLatLngBounds(latLngBounds, LATLNG_BOUNDS_PADDING)
+								, new GoogleMap.CancelableCallback() {
+									@Override
+									public void onFinish() {
+	//									map.animateCamera(CameraUpdateFactory.zoomTo(21f));
+									}
+									@Override
+									public void onCancel() {}
 								}
-								@Override
-								public void onCancel() {}
-							}
-							);
-				}
-			});
+								);
+					}
+				});
+			}
 		}
 	}
+	
+	OnMapLoadedCallback onMapLoadedCallback = new OnMapLoadedCallback() {
+		@Override
+		public void onMapLoaded() {
+			autoZoom(latLngBounds);
+		}
+	};
 	
 	@Override
 	protected void onSuccess(List<Place> places) throws Exception {
@@ -225,5 +225,10 @@ public abstract class AbstractPopulateMapTask extends AbstractUlyssesTask implem
 		activity.setProgressBarVisibility(false);
 		
 		map.setInfoWindowAdapter( new UlyssesInfowindowAdapter(activity) );
+	}
+	
+	protected void onException(LocationNullException arg0) throws RuntimeException {
+		UIUtils.showShortToast("location null", context);
+		super.onException(arg0);
 	}
 }

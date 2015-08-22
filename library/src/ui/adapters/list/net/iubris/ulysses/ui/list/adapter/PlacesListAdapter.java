@@ -25,10 +25,12 @@ import java.util.Comparator;
 
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.Place;
+import net.iubris.ulysses.search.utils.Buffer;
 import net.iubris.ulysses.ui.fragments.map.MarkerShowable;
 import net.iubris.ulysses.ui.fragments.tabspager.selectable.FragmentSelectable;
 import net.iubris.ulysses.utils.misc.PlacesUtils;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,27 +44,31 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 //import com.darrenmowat.imageloader.ImageLoader;
 
-public class PlacesListAdapter
-//<
-////extendingUlyssesMapFragment extends UlyssesMapFragment<ListFragmentMarkerable,MarkerShowableMapFragment>,
-////eFS extends Fragment & FragmentSelectable, 
-//ListFragmentMarkerable extends ListFragment & Markerable & Updatable, 
-//MarkerShowableMapFragment extends SupportMapFragment & MarkerShowable & Updatable>
-extends ArrayAdapter<Place> {
+public class PlacesListAdapter extends ArrayAdapter<Place> {
 
 	private final Activity activity;
 	private final int textViewResourceId;
-	private ImageLoader imageLoader;
-	private MarkerShowable markerShowable;
-//	private AQuery aQuery;
-	private FragmentSelectable fragmentSelectable;
+	private final ImageLoader imageLoader;
 
-	public PlacesListAdapter(Activity activity, int textViewResourceId, 
-			Comparator<Place>... comparators) {
+	private final MarkerShowable markerShowable;
+	private final FragmentSelectable fragmentSelectable;
+	
+	private final Buffer buffer;
+	private final Class<? extends Activity> detailsActivityClass;
+
+	public PlacesListAdapter(Activity activity, int textViewResourceId,
+			MarkerShowable markerShowable, FragmentSelectable fragmentSelectable,
+			Class<? extends Activity> detailsActivityClass,
+			Buffer buffer 
+			/*,Comparator<Place>... comparators*/) {
 		super(activity, textViewResourceId);
 		
 		this.activity = activity;
 		this.textViewResourceId = textViewResourceId;
+		this.markerShowable = markerShowable;
+		this.fragmentSelectable = fragmentSelectable;
+		this.detailsActivityClass = detailsActivityClass;
+		this.buffer = buffer;
 //		this.aQuery = new AQuery(activity);
 		this.imageLoader = ImageLoader.getInstance();
 //		activity.setProgressBarIndeterminateVisibility(true);
@@ -110,13 +116,24 @@ extends ArrayAdapter<Place> {
 			
 			placeHolder.address.setText( PlacesUtils.getUsefulAddress(place.getFormattedAddress(), 2)); // 2 = country, city 
 			
-			placeHolder.distance.setText( PlacesUtils.getFormattedDistance( place.getDistance() ));
+			double distance = place.getDistance();
+			if (distance!=Place.UNREACHABLE_DISTANCE && distance!=0)
+				placeHolder.distance.setText( PlacesUtils.getFormattedDistance( distance ));
+			else
+				placeHolder.distance.setVisibility(View.GONE);
 			
-			placeHolder.ratingBar.setRating(place.getRating());
+			float rating = place.getRating();
+			if (rating>0) {
+				placeHolder.ratingBar.setRating( rating );
+				placeHolder.ratingBar.setVisibility(View.VISIBLE);
+			} else 
+				placeHolder.ratingBar.setVisibility(View.GONE);
 //			placeHolder.rating.setText( Math.floor(place.getRating()*2*10)+"%" );
 //Log.d("PlacesHereListAdapter:93","position: "+position);
 			setImage(placeHolder.icon, place);
 			if (position == getCount()-1) activity.setProgressBarIndeterminateVisibility(false);
+			
+			setOnClickListener(place, placeHolder.name, placeHolder.address, placeHolder.distance, placeHolder.ratingBar, placeHolder.icon);
 		}
 		return convertView;
 	}
@@ -124,6 +141,21 @@ extends ArrayAdapter<Place> {
 	protected void setImage(ImageView icon, Place placeEnhanced) {
 //		imageLoader.setImage(place.getIcon().toString(), icon, activity);
 		imageLoader.displayImage(placeEnhanced.getIcon().toString(), icon);
+	}
+	
+	private void setOnClickListener(final Place place, View... views) {
+		for (View view : views) {
+			view.setOnClickListener( new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					handleClick(place);
+				}
+			});
+		}
+	}
+	private void handleClick(Place place) {
+		buffer.set(place);
+		activity.startActivity( new Intent(activity, detailsActivityClass));
 	}
 	
 	/*
@@ -135,10 +167,10 @@ extends ArrayAdapter<Place> {
 		if (position == getCount()-1) activity.setProgressBarIndeterminateVisibility(false);
 	}*/
 	
-	public void setMarkerShowable(MarkerShowable markerShowable, FragmentSelectable fragmentSelectable) {
-		this.markerShowable = markerShowable;
-		this.fragmentSelectable = fragmentSelectable;
-	}
+//	public void setMarkerShowable(MarkerShowable markerShowable, FragmentSelectable fragmentSelectable) {
+//		this.markerShowable = markerShowable;
+//		this.fragmentSelectable = fragmentSelectable;
+//	}
 	
 	@Override
 	public void sort(Comparator<? super Place> comparator) {

@@ -25,13 +25,13 @@ package net.iubris.ulysses.ui.tasks.populate.map.localized;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import net.iubris.ulysses.engine.searcher.location.aware.full.UlyssesLocalizedSearcher;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.ui.icons.sieve.Sieve;
 import net.iubris.ulysses.ui.tasks.populate.map._base.AbstractPopulateMapTask;
 import net.iubris.ulysses.ui.tasks.populate.map.aware.PopulateMapAwareTask;
+import roboguice.util.Ln;
 import android.app.Activity;
 import android.location.Location;
 import android.support.v4.app.Fragment;
@@ -43,7 +43,6 @@ import com.google.android.gms.maps.GoogleMap;
  * task class for populate map with localized search result (= by address, not including own position)
  *
  */
-@Singleton
 public class PopulateMapLocalizedTask extends AbstractPopulateMapTask {
 
 	public PopulateMapLocalizedTask(Activity activity, GoogleMap map, Fragment mapFragment, Sieve sieve) {
@@ -52,21 +51,29 @@ public class PopulateMapLocalizedTask extends AbstractPopulateMapTask {
 
 	@Inject private UlyssesLocalizedSearcher ulyssesLocalizedSearcher;
 	
-//	private Location myLocation;
-	
 	/**
 	 * this method exists just for compatibility with sibling {@link PopulateMapAwareTask}<br/>
 	 * instead, use {@link #execute()}
 	 * @param dummyLocation {@link Location}: is really unused
 	 */
-	@Deprecated
+	@SuppressWarnings("deprecation")
+	//	@Deprecated
 	@Override
 	public void execute(Location dummyLocation) {
+		super.execute();
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void execute() {
+		Ln.d("calling "+this);
 		super.execute();
 	}
 
 	@Override
 	public List<Place> call() {
-		return ulyssesLocalizedSearcher.getResult();
+		List<Place> result = ulyssesLocalizedSearcher.getResult();
+		Ln.d(result.size());
+		return result;
 	}
 }

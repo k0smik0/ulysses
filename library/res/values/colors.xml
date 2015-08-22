@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="searchview_text_color">#ffffffff</string>
+    <string name="searchview_hint_color">#ffffffff</string>
+</resources>

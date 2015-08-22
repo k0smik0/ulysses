@@ -73,6 +73,7 @@ public class UiSearchLocalizedTask extends SearchLocalizedTask {
 		eventuallyShowSearchWaitingUi();
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onSuccess(List<Place> t) throws Exception {
 		super.onSuccess(t);

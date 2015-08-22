@@ -65,6 +65,7 @@ public class SearchLocalizedTask extends RoboSearchLocalizedAsyncTask<DefaultUly
 		super(context);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void execute(String address) throws SearchException {
 		if (address==null)
 			throw new SearchException("search address can not be null");

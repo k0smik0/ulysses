@@ -55,7 +55,8 @@ public class AdapterUtils {
 	private static void clearAndPopulate(ArrayAdapter<Place> adapterToPopulate, Collection<Place> populatingList, Location locationHere) {
 		adapterToPopulate.clear();
 		for (Place place: populatingList) {
-			place.setDistance( Place.distance(place, locationHere) );
+			if (locationHere!=null)
+				place.setDistance( Place.distance(place, locationHere) );
 			adapterToPopulate.add(place);
 		}
 	}

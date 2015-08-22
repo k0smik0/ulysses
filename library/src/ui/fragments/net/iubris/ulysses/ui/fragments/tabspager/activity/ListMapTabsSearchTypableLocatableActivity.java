@@ -1,7 +1,5 @@
 package net.iubris.ulysses.ui.fragments.tabspager.activity;
 
-
-//import net.iubris.apollus.R;
 import net.iubris.ulysses.search.intentable.SearchTypable;
 import net.iubris.ulysses.ui.activity._base.Locatable;
 import net.iubris.ulysses.ui.fragments._base.Updatable;
@@ -11,6 +9,7 @@ import net.iubris.ulysses.ui.fragments.tabspager.TabsPagerAdapter;
 import net.iubris.ulysses.ui.fragments.tabspager.selectable.FragmentSelectableViewPager;
 import net.iubris.ulysses.ui.fragments.tabspager.sliding.SlidingTabLayout;
 import roboguice.activity.RoboFragmentActivity;
+import roboguice.util.Ln;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -44,6 +43,8 @@ implements SearchTypable, Locatable {
 	@Override
 	protected void onStart() {
 		super.onStart();
+		
+		Ln.d("onStart");
 
 		FragmentManager fm = getSupportFragmentManager();
 		

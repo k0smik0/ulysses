@@ -24,14 +24,29 @@ import java.util.Comparator;
 import net.iubris.ulysses.model.Place;
 
 public class PlaceComparatorByDiscendingRating implements Comparator<Place> {	
+	
+	private boolean hasRating = false;
+	
 	@Override
 	public int compare(Place placeHere1, Place placeHere2) {
 		final float rating1 = placeHere1.getRating();
 		final float rating2 = placeHere2.getRating();
+		
+		if (rating1>0 || rating2>0) {
+//			Ln.d("ratingable!");
+			hasRating = true;
+		}
 	
 		if (rating1 < rating2 ) return 1;
 		if (rating1 > rating2 ) return -1;
 		return 0;
-	}	
-}
+	}
+	
+	public void resetRatingExistenceChecker() {
+		hasRating = false;
+	}
 
+	public boolean isExistingRating() {
+		return hasRating;
+	}
+}

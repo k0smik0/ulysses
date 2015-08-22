@@ -31,6 +31,7 @@
 
 	
 	<string name="menu__list_sort">Sort</string>
+	<string name="menu__list_sort_name">Sort By Name</string>
 	<string name="menu__list_sort_distance">Sort By Distance</string>
 	<string name="menu__list_sort_rating">Sort By Rating</string>
 </resources>

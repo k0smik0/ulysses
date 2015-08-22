@@ -17,32 +17,39 @@
  * along with 'Ratafia'; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  ******************************************************************************/
-package net.iubris.voyager.activity.menu;
+package net.iubris.ulysses.ui.utils.menu;
 
 
-
-
-import java.util.Comparator;
-
+import net.iubris.ulysses.model.Location;
 import net.iubris.ulysses.R;
+import net.iubris.ulysses.model.Place;
+import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingAlphabetic;
+import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
+import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
+import net.iubris.ulysses.ui.activity.details.StreetViewPanoramaActivity;
+import net.iubris.ulysses.ui.intentable.IntentUtils;
 import net.iubris.ulysses.ui.intentable.Refreshable;
 import net.iubris.ulysses.ui.intentable.Searchable;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnActionExpandListener;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.SubMenu;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.TextView;
 
 
-public class MenuUtilsLegacy {
+public class MenuUtils {
 	
 	@SuppressLint("NewApi")
 	public static MenuItem addSearch(Menu menu, final Searchable searchable, final Activity activity) {
@@ -59,11 +66,13 @@ public class MenuUtilsLegacy {
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			SearchView searchView = new SearchView(activity);
+//			changeSearchTextColor(searchView);
+			
 			menuItem
-			.setIcon(R.drawable.ic_action_search_white)
-//			.setActionView(R.layout.collapsible_edittext)
-			.setActionView(searchView)
-			.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT| MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+				.setIcon(R.drawable.ic_action_search_white)
+	//			.setActionView(R.layout.collapsible_edittext)
+				.setActionView(searchView)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT| MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 			
 			SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
 //			SearchView searchView = (SearchView) menuItem.getActionView();
@@ -86,23 +95,36 @@ public class MenuUtilsLegacy {
 			});
 		} else {
 			menuItem
-			.setIcon(android.R.drawable.ic_menu_search)
-			.setOnMenuItemClickListener( new OnMenuItemClickListener() {
-				@Override
-				public boolean onMenuItemClick(MenuItem item) {
-//Log.d("MenuUtilsLegacy:64","onMenuItemClick");
-					
-					activity.onSearchRequested();
-					return false;
-				}
-			});
+				.setIcon(android.R.drawable.ic_menu_search)
+				.setOnMenuItemClickListener( new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+	//Log.d("MenuUtilsLegacy:64","onMenuItemClick");
+						activity.onSearchRequested();
+						return false;
+					}
+				});
 		}
 		return menuItem;
 	}
-//	@SuppressLint("NewApi")
-//	public static <RA extends Fragment & Searchable> MenuItem addSearch(Menu menu, Activity activity, RA fragment) {
-//		
-//	}
+	@SuppressLint("NewApi")
+	private static void changeSearchTextColor(SearchView searchView) {
+//		searchView.setQueryHint("Type something...");
+		Resources resources = searchView.getContext().getResources();
+        int searchPlateId = resources.getIdentifier("android:id/search_plate", null, null);
+        View searchPlate = searchView.findViewById(searchPlateId);
+        if (searchPlate!=null) {
+//            searchPlate.setBackgroundColor(Color.DKGRAY);
+            int searchTextId = resources.getIdentifier("android:id/search_src_text", null, null);
+            TextView searchText = (TextView) searchPlate.findViewById(searchTextId);
+            if (searchText!=null) {
+//            	int color = resources.getString(R.string.searchview_text_color);
+//	            searchText.setTextColor(color);
+//	            searchText.setHintTextColor(Color.WHITE);
+            }
+        }
+	}
+
 	
 	@SuppressLint({ "NewApi", "InlinedApi" })
 	public static <SA extends Activity & Searchable> MenuItem addSimpleSearch(Menu menu, final SA searchableActivity) {
@@ -160,27 +182,65 @@ public class MenuUtilsLegacy {
 		}
 	}*/
 		
-		@SuppressLint("NewApi")
-		public static void addRefresh(Menu menu, final Refreshable refreshable) {
-			MenuItem menuItem = menu.add(R.string.menu__refresh);
-			
+	@SuppressLint("NewApi")
+	public static void addRefresh(Menu menu, final Refreshable refreshable) {
+		MenuItem menuItem = menu.add(R.string.menu__refresh);
+		
+		menuItem
+			.setOnMenuItemClickListener( new OnMenuItemClickListener() {			
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {				
+					refreshable.refresh();				
+					return false;
+				}
+			});
+		
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 			menuItem
-				.setOnMenuItemClickListener( new OnMenuItemClickListener() {			
+				.setIcon(R.drawable.ic_action_refresh_white)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		else
+			menuItem
+				.setIcon(android.R.drawable.ic_menu_rotate);
+	}
+	
+	@SuppressLint("NewApi")
+	public static void addPanorama(Menu menu, final Location location, final Activity activity) {
+		MenuItem menuItem = menu.add("Panorama");
+		menuItem.setOnMenuItemClickListener( new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				
+				Intent intent = new Intent();
+		    	intent.putExtra("location", location);
+		    	intent.setClass(activity, StreetViewPanoramaActivity.class);
+		    	activity.startActivity(intent);
+				
+				return false;
+			}
+		});
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		
+		menuItem.setIcon(R.drawable.ic_action_maps_pin_drop);
+	}
+	
+	@SuppressLint("NewApi")
+	public static void addCall(Menu menu, final String internationalPhoneNumber, final Activity activity) {
+		MenuItem menuItem = menu.add(R.string.menu__call).setOnMenuItemClickListener(
+				new OnMenuItemClickListener() {
 					@Override
-					public boolean onMenuItemClick(MenuItem item) {				
-						refreshable.refresh();				
+					public boolean onMenuItemClick(MenuItem item) {
+						IntentUtils.call(internationalPhoneNumber, activity);
 						return false;
 					}
 				});
-			
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-				menuItem
-					.setIcon(R.drawable.ic_action_refresh_white)
-					.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-			else
-				menuItem
-					.setIcon(android.R.drawable.ic_menu_rotate);
-		}
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			menuItem
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		
+		menuItem.setIcon(R.drawable.ic_action_maps_local_phone);
+	}
 	
 
 	
@@ -200,7 +260,11 @@ public class MenuUtilsLegacy {
 			public static <T, AscendingByDistanceComparator extends Comparator<T>, DiscendingByRatingComparator extends Comparator<T>> void addSort(Menu menu, Context context, final ArrayAdapter<T> placesAdapter, final AscendingByDistanceComparator ascendingByDistanceComparator, final DiscendingByRatingComparator discendingByRatingComparator) {}
 		}*/
 		@SuppressLint("NewApi")
-		public static <T, AscendingByDistanceComparator extends Comparator<T>, DiscendingByRatingComparator extends Comparator<T>> void addSort(Menu menu, Context context, final ArrayAdapter<T> placesAdapter, final AscendingByDistanceComparator ascendingByDistanceComparator, final DiscendingByRatingComparator discendingByRatingComparator) {			
+		public static /*<T, AscendingByDistanceComparator extends Comparator<T>, 
+			DiscendingByRatingComparator extends Comparator<T>>*/ 
+		void addSort(Menu menu, Context context, final ArrayAdapter<Place> placesAdapter, 
+				final PlaceComparatorByAscendingDistance ascendingByDistanceComparator, 
+				final PlaceComparatorByDiscendingRating discendingByRatingComparator) {			
 			SubMenu sortSubMenu = menu.addSubMenu(0, Menu.NONE, 0, R.string.menu__list_sort);
 
 			MenuItem sortMenuItem = sortSubMenu.getItem();
@@ -210,6 +274,16 @@ public class MenuUtilsLegacy {
 			if (Build.VERSION.SDK_INT > 10) {
 				sortMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 			}
+			
+			sortSubMenu.add( context.getResources().getString(R.string.menu__list_sort_name) )
+				.setOnMenuItemClickListener( new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							placesAdapter.sort( new PlaceComparatorByAscendingAlphabetic() );
+							return false;
+						}
+				})
+				.setIcon(android.R.drawable.ic_menu_sort_by_size);
 
 			sortSubMenu.add( context.getResources().getString(R.string.menu__list_sort_distance) )
 				.setOnMenuItemClickListener( new OnMenuItemClickListener() {
@@ -221,15 +295,16 @@ public class MenuUtilsLegacy {
 				})
 				.setIcon(android.R.drawable.ic_menu_sort_by_size);
 			
-			sortSubMenu.add( context.getResources().getString(R.string.menu__list_sort_rating) )
-				.setOnMenuItemClickListener( new OnMenuItemClickListener() {
-					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						placesAdapter.sort( discendingByRatingComparator );
-						return false;
-					}
-				})
-				.setIcon(android.R.drawable.star_off);
+			if (discendingByRatingComparator.isExistingRating())
+				sortSubMenu.add( context.getResources().getString(R.string.menu__list_sort_rating) )
+					.setOnMenuItemClickListener( new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							placesAdapter.sort( discendingByRatingComparator );
+							return false;
+						}
+					})
+					.setIcon(android.R.drawable.star_off);
 		}
 	}
 	

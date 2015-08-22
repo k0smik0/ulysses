@@ -21,29 +21,56 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-    <LinearLayout
+    <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:id="@+id/layout_streetviewpanorama"
+        android:visibility="visible" > -->
 
-        <TextView
+        <!-- <TextView
             android:id="@+id/url_label"
             style="@style/label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/label_street_view" />
+            android:text="@string/label_street_view" /> -->
 
-        <WebView
+        <!-- <View
             android:id="@+id/street_view"
             android:layout_width="match_parent"
-            android:layout_height="256dp" />
+            android:layout_height="256dp" /> -->
+        
+        <!-- <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Click for StreetViewPanorama"
+            android:id="@+id/button_get_panorama"
+            android:visibility="visible"/> -->
+        
+        <!-- <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/layout_panorama"
+            android:visibility="visible">
+            </LinearLayout> -->
+            <!-- class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment" -->
+            <!-- class="net.iubris.ulysses.ui.fragments.details.UlyssesStreetViewPanoramaFragment" -->
+				        <fragment
+								        class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment"
+												    android:layout_width="match_parent"
+												    android:layout_height="match_parent"
+												    android:minHeight="256dp"
+												    android:id="@+id/fragment_streetviewpanorama"/>
+        
 
         <!-- <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/frame_no_photo" /> -->
-    </LinearLayout>
+    <!-- </LinearLayout> -->
     
    
 

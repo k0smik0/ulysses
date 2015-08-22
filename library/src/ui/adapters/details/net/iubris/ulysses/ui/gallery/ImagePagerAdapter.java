@@ -1,9 +1,8 @@
 package net.iubris.ulysses.ui.gallery;
 
-import java.util.List;
 
+import java.util.List;
 import net.iubris.ulysses.R;
-import roboguice.util.Ln;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
@@ -46,9 +45,6 @@ public class ImagePagerAdapter extends PagerAdapter {
 				.considerExifParams(true)
 				.displayer(new FadeInBitmapDisplayer(300))
 				.build();
-		
-		
-//		picasso = Picasso.with(context);
 	}
 
 	@Override
@@ -63,7 +59,7 @@ public class ImagePagerAdapter extends PagerAdapter {
 
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
-		Ln.d("ImagePagerAdapter:instantiateItem");
+//		Ln.d("ImagePagerAdapter:instantiateItem");
 		View imageLayout = inflater.inflate(R.layout.frame_item_pager_image, container, false);
 //		assert imageLayout != null;
 		final ImageView imageView = (ImageView) imageLayout.findViewById(R.id.gallery_image_view);
@@ -103,8 +99,8 @@ public class ImagePagerAdapter extends PagerAdapter {
 
 			@Override
 			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-				Ln.d("completed: "+imageUri);
-				Ln.d(loadedImage);
+//				Ln.d("completed: "+imageUri);
+//				Ln.d(loadedImage);
 				spinner.setVisibility(View.GONE);
 				ImageLoader.getInstance().displayImage(imageUri, imageView);
 			}

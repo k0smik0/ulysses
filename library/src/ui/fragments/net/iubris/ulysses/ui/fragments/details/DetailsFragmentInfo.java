@@ -6,17 +6,14 @@ import java.util.List;
 
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.Place;
-import net.iubris.ulysses.ui.intentable.IntentUtils;
+import net.iubris.ulysses.ui.utils.menu.MenuUtils;
 import net.iubris.ulysses.utils.misc.PlacesUtils;
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -25,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+//import roboguice.util.Ln;
 
 public class DetailsFragmentInfo extends DetailsFragmentBase {
 	
@@ -48,12 +46,6 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-	}
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-//		this.activity = activity;
 	}
 
 	@Override
@@ -82,8 +74,11 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 		name.setText( place.getPlaceName() );
 		
 		List<String> photosUrl = place.getPhotosUrls();
-		if (photosUrl!=null && photosUrl.size()>0)
-			ImageLoader.getInstance().displayImage( photosUrl.get(0), photo);
+		if (photosUrl!=null && photosUrl.size()>0) {
+			String photoUrl = photosUrl.get(0);
+			
+			ImageLoader.getInstance().displayImage( photoUrl, photo);
+		}
 
 		address.setText(PlacesUtils.getUsefulAddress(place.getFormattedAddress(), 2)); // 2 = country, city
 
@@ -121,13 +116,6 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-		menu.add(R.string.menu__call).setOnMenuItemClickListener(
-			new OnMenuItemClickListener() {
-				@Override
-				public boolean onMenuItemClick(MenuItem item) {
-					IntentUtils.call(internationalPhoneNumber, getActivity());
-					return false;
-				}
-			});
+		MenuUtils.addCall(menu, internationalPhoneNumber, getActivity());
 	}
 }

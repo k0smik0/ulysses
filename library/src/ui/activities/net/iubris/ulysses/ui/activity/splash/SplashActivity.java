@@ -19,10 +19,13 @@
  ******************************************************************************/
 package net.iubris.ulysses.ui.activity.splash;
 
+import java.util.concurrent.CountDownLatch;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 /**
  * heavy inspired to RoboSplashActivity (from RoboGuice): as default, show a splash image for 500ms,<br/>
@@ -32,143 +35,80 @@ import android.os.Bundle;
  * really in post_boot.
  * @author Massimiliano Leone - k0smik0
  */
-abstract public class SplashActivity
-//<HA extends HermesClient<C, HS>, HS extends IHermesService<C>,C>
-//</*A extends Activity,*/ HS extends Service & ContainerService<C>,C>
-extends Activity {
+abstract public class SplashActivity extends Activity {
 	
 	public static String ACTION_POST_SPLASH = "action_post_splash";
 	
-//	private HermesSplashDelegate<A,HS,C> splashActivityDelegate;
 	
 	/**
 	 * milliseconds
 	 */
-	protected int minDisplayMs = 500;
+	protected int minDisplayMs = 700;
 
-	
-	
+
+	private Application application;
+
+
+	private CountDownLatch countDownLatch;
+
+
+	private int countDown;
+
 	/**
 	 * ispired by robosplashactivity
 	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(getLayoutResID());
 		super.onCreate(savedInstanceState);
 		
-		
-		// old
-		/*
-		splashActivityDelegate = getDelegate();
-		
-Log.d("HermesSplashActivity:47",""+splashActivityDelegate);
-		
-//		new SplashThread<A,HS,C>(this, splashActivityDelegate, wait).start();
-		
-		splashActivityDelegate.startService();
-		splashActivityDelegate.doOtherStuff();
-		splashActivityDelegate.startMainActivity();
-		try {
-			Thread.sleep(wait);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		finish();
-		*/
-		
-		
-//		setContentView(getLayoutResID());
-		
-		final Application application = getApplication();
-		
-		final long start = System.currentTimeMillis();
-		
-		
+		application = getApplication();
 		
 		new Thread(){
 			public void run() {
-				doOtherStuffinBackground(application);
-				final long duration = System.currentTimeMillis() - start;
-//Log.d("HermesSplashActivity:92","duration: "+duration);
-				if (duration < minDisplayMs) {
-//Log.d("HermesSplashActivity:94","sleeping still: "+(minDisplayMs-duration));					
-					try {
-						Thread.sleep(minDisplayMs - duration);
-					} catch (InterruptedException e) {
-						Thread.interrupted();
-//Log.d("HermesSplashActivity:100","interrupted");
-					}
+				wrapperStuffInBackground(application);
+				try {
+					countDownLatch.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				
-//				startHermesService(); // we execute after sleep
-				
-				startMainActivity();
-				finish();				
 			};
 		}.start();
-
 		
-	}
-	/*@Override
-	protected void onResume() {
-		super.onResume();
+		doOtherStuffInForeground(application);
 		
-		final Application app = getApplication();
-		startHermesService();
-		final long start = System.currentTimeMillis();
-		new Thread(){
+		if (countDown==0)
+			startMainActivity();
+		else new Handler().postDelayed(new Runnable() {
+			@Override
 			public void run() {
-				doOtherStuffinBackground(app);
-//				pause();
-				final long duration = System.currentTimeMillis() - start;
-Log.d("HermesSplashActivity:92","duration: "+duration);
-				if (duration < minDisplayMs) {
-Log.d("HermesSplashActivity:94","sleeping still: "+(minDisplayMs-duration));					
-					try {
-						Thread.sleep(minDisplayMs - duration);
-					} catch (InterruptedException e) {
-						Thread.interrupted();
-Log.d("HermesSplashActivity:100","interrupted");
-					}
-				}
-			};
-		}.run();
-
-		startMainActivity();
-		finish();
-	}*/
-	
-	/*private void pause() {
-		final long duration = System.currentTimeMillis() - start;
-		if (duration < minDisplayMs) {
-			try {
-				Thread.sleep(minDisplayMs - duration);
-			} catch (InterruptedException e) {
-				Thread.interrupted();
+				startMainActivity();
 			}
-		}
-	}*/
+		}, minDisplayMs);
+	}
 	
-//	protected abstract HermesSplashDelegate<A,HS,C> getDelegate();
-	
-	
-	
-	// ex hermes zone
-//	public void startHermesService() {		
-//		startService( new Intent(this, getServiceToStart()) );
-//	}
-	
-	public void startMainActivity() {
+	protected void startMainActivity() {
 		final Intent startIntent = new Intent(this,getActivityToStart());
 		startIntent.setAction(SplashActivity.ACTION_POST_SPLASH);
 		startIntent.setFlags(getLauncherModeForMainActivity());
 		startActivity(startIntent);
+		finish();
 	}
 
+	private void wrapperStuffInBackground(Application application) {
+		countDownLatch = new CountDownLatch(1);
+		countDown = 1;
+		doOtherStuffinBackground(application);
+		countDownLatch.countDown();
+		countDown = 0;
+	}
 	/**
 	 * use this to start some stuff in background
 	 * @param application
 	 */
-	public void doOtherStuffinBackground(Application application) {}
+	protected void doOtherStuffinBackground(Application application) {}
+	
+	protected void doOtherStuffInForeground(Application application) {}
 	
 	/**
 	 * provide your splash layout 
@@ -184,26 +124,4 @@ Log.d("HermesSplashActivity:100","interrupted");
 	 * @return
 	 */
 	protected abstract Class<? extends Activity> getActivityToStart();
-	
-	
-	
-	/**
-	 * from RoboSplashActivity
-	 * @param app
-	 */	
-	/*
-	@Override
-	public void doOtherStuffInBackground() {
-		//startServiceInBackground();
-	}
-	
-	public void startServiceInBackground() {		
-		startService( new Intent(this, splashActivityDelegate.getServiceToStart()) );
-	}
-	
-	public void startMainActivity() {
-		final Intent startIntent = new Intent(this,splashActivityDelegate.getActivityToStart());
-		startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(startIntent);
-	}*/
 }

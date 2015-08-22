@@ -3,10 +3,9 @@ package net.iubris.ulysses.ui.fragments.map;
 
 
 import javax.inject.Inject;
-
-import net.iubris.ratafia.ui.activity.details.Buffer;
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.Place;
+import net.iubris.ulysses.search.utils.Buffer;
 import net.iubris.ulysses.ui.fragments._base.Titleable;
 import net.iubris.ulysses.ui.fragments._base.Updatable;
 import net.iubris.ulysses.ui.fragments.list.Markerable;
@@ -14,11 +13,10 @@ import net.iubris.ulysses.ui.fragments.tabspager.activity.ListMapTabsSearchTypab
 import net.iubris.ulysses.ui.icons.sieve.Sieve;
 import net.iubris.ulysses.ui.tasks._base.SearchType;
 import net.iubris.ulysses.ui.tasks.populate.map._base.MapTasksMap;
+import net.iubris.ulysses.ui.tasks.populate.map._base.PopulateMapTask;
 import net.iubris.ulysses.ui.tasks.populate.map.aware.PopulateMapAwareTask;
 import net.iubris.ulysses.ui.tasks.populate.map.localized.PopulateMapLocalizedTask;
 import roboguice.RoboGuice;
-import roboguice.util.Ln;
-//import roboguice.util.Ln;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
@@ -49,18 +47,14 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 	
 	private GoogleMap map;
 	private ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment> activity;
-//	private Activity activityContext;
 
 	@Inject private Buffer buffer;
 	@Inject private Sieve sieve;
 	@Inject private MapTasksMap populateMapTasksMap;
 
 	private boolean wasDestroyed = true;
-//	protected Location location;
 	
-	public UlyssesMapFragment() {
-//		ratafiaListFragment.setTitle( resources.getString(R.string.fragment_list_title) );
-	}
+	public UlyssesMapFragment() {}
 	
 	
 
@@ -68,49 +62,36 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 		@Override
 		public void onMapReady(GoogleMap googleMap) {
 			map = googleMap;
-			Ln.d(map);
 			googleMap.setMyLocationEnabled(true);
 			googleMap.getUiSettings().setMapToolbarEnabled(true);
 			
 			initTasksAndClickListener(map);
 			
-			Location location = getLocation();
-//			Ln.d("location: "+location);
-			if (location!=null) { // need this for onResume, if screen off etc etc
-				zoomOnFirstFix(googleMap, location );
-				
-				Ln.d("searchType "+activity.getSearchType());
-				
-	//			String searchActionString = activityContext.getIntent().getAction();
-				// TODO restore
-				populateMapTasksMap.getTask( activity.getSearchType() ).execute( location );
+			SearchType searchType = activity.getSearchType();
+//			Ln.d(searchType);
+			PopulateMapTask task = populateMapTasksMap.getTask( searchType );
+//			Ln.d(task);
+			if (searchType.equals(SearchType.AWARE)) {
+				Location location = getLocation();
+				if (location!=null) { // need this for onResume, if screen off etc etc
+					zoomOnFirstFix(googleMap, location );
+					task.execute( location );
+				}
+			} else {
+				task.execute();
 			}
 		}
 		private void zoomOnFirstFix(GoogleMap googleMap, Location location) {
 			googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 15f));
 		}
 	};
-//	private SearchType searchType;
-	
-	/*private final OnInfoWindowClickListener onInfoWindowClickListener = new OnInfoWindowClickListener() {
-		@Override
-		public void onInfoWindowClick(Marker marker) {
-			Place placeHere = populateMapTasksMap.getTask(
-					searchTypable.getSearchType()
-					).findPlaceEnhancedById(marker.getId());
-			buffer.set(placeHere);
-			startActivity( new Intent(activityContext, RatafiaDetailsActivity.class) );
-		}
-	};*/
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-//		this.activityContext = activity;
 		this.activity = (ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment>) activity;
-//		this.location = ((Locatable)activity).getLocation();
-//		Ln.d(location);
 	}
 	
 	@Override
@@ -119,23 +100,15 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 		RoboGuice.getInjector(activity).injectMembersWithoutViews(this);
 	}
 	
-	// called when fragment is represented
-//	@Override
-//	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		return super.onCreateView(inflater, container, savedInstanceState);
-//	}
-	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		RoboGuice.getInjector(activity).injectViewMembers(this);
-//		initTasksAndClickListener();
 	}
 	
 	@Override
 	public void onStart() {
 		super.onStart();
-//		updateData();
 		getMapAsync(onMapReadyCallback);
 	}
 	
@@ -155,21 +128,23 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 	
 	private void initTasksAndClickListener(GoogleMap googleMap) {
 		if (wasDestroyed) {
-			populateMapTasksMap.putTask(SearchType.AWARE, new PopulateMapAwareTask(activity, googleMap, this, sieve) );
-			populateMapTasksMap.putTask(SearchType.LOCALIZED, new PopulateMapLocalizedTask(activity, googleMap, this, sieve) );
+			populateMapTasksMap.putTask(SearchType.AWARE, 		new PopulateMapAwareTask(activity, googleMap, this, sieve) );
+			populateMapTasksMap.putTask(SearchType.LOCALIZED, 	new PopulateMapLocalizedTask(activity, googleMap, this, sieve) );
 
 			googleMap.setOnInfoWindowClickListener( 
-//					onInfoWindowClickListener 
 					new OnInfoWindowClickListener() {
 						@Override
 						public void onInfoWindowClick(Marker marker) {
-							Place place = populateMapTasksMap.getTask( activity.getSearchType() ).
-									findPlaceByMarkerId(marker.getId());
+							SearchType searchType = activity.getSearchType();
+//							Ln.d(searchType);
+							PopulateMapTask task = populateMapTasksMap.getTask( searchType );
+//							Ln.d(task);
+							String id = marker.getId();
+							Place place = task.findPlaceByMarkerId(id);
 							handleClickForDetails(place);
 						}
 					}
 					);
-//			Ln.d("populated");
 			wasDestroyed = false;
 		}
 	}
@@ -182,37 +157,28 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 	}
 	protected abstract Class<? extends Activity> getDetailsActivityClass();
 	
-	/*private Class<?> retrieveDetailsActivityClass(String detailsActivity) {
-		try {
-			Class<?> detailsActivityClass = Class.forName(detailsActivity);
-			return detailsActivityClass;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}*/
 	protected Location getLocation() {
-//		Ln.d("getLocation: "+location);
 		return activity.getLocation();
 	}
 	
 	
 	public static <extendingUlyssesMapFragment extends UlyssesMapFragment<ListFragmentMarkerable,MarkerShowableMapFragment>, 
-		ListFragmentMarkerable extends ListFragment & Markerable & Updatable, 
-		MarkerShowableMapFragment extends SupportMapFragment & MarkerShowable & Updatable> 
-	extendingUlyssesMapFragment getInstance(FragmentManager fragmentManager, Class<extendingUlyssesMapFragment> clazz) {
-		extendingUlyssesMapFragment f = (extendingUlyssesMapFragment) fragmentManager.findFragmentByTag("android:switcher:"+R.id.viewpager+":"+getIndex() );
-        if (f==null) {
-        	try {
-				f = clazz.newInstance();
-			} catch (java.lang.InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
-        }
-        return f;
-	}
+			ListFragmentMarkerable extends ListFragment & Markerable & Updatable, 
+			MarkerShowableMapFragment extends SupportMapFragment & MarkerShowable & Updatable> 
+		extendingUlyssesMapFragment getInstance(FragmentManager fragmentManager, Class<extendingUlyssesMapFragment> clazz) {
+			@SuppressWarnings("unchecked")
+			extendingUlyssesMapFragment f = (extendingUlyssesMapFragment) fragmentManager.findFragmentByTag("android:switcher:"+R.id.viewpager+":"+getIndex() );
+	        if (f==null) {
+	        	try {
+					f = clazz.newInstance();
+				} catch (java.lang.InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
+	        }
+	        return f;
+		}
 	private static int getIndex() {
 		return INDEX;
 	}
@@ -222,7 +188,11 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 		CancelableCallback cancellableCallback = new CancelableCallback() {
 			@Override
 			public void onFinish() {
-				populateMapTasksMap.getTask( activity.getSearchType() ).execute(location);
+				SearchType searchType = activity.getSearchType();
+//				Ln.d(searchType);
+				PopulateMapTask task = populateMapTasksMap.getTask( searchType );
+//				Ln.d(task);
+				task.execute(location);
 			}
 			@Override
 			public void onCancel() {}
@@ -233,7 +203,6 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 	@Override
 	public void showMarker(String id) {
 		if (map!=null) {
-//			Ln.d(id);
 			final Marker marker = populateMapTasksMap.getTask( activity.getSearchType() ).findMarkerByPlaceEnhancedId(id);
 			marker.showInfoWindow();
 			final LatLng position = marker.getPosition();
@@ -269,25 +238,13 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 	public void updateData() {
 		// clear markers and (re)populate
 		if (map!=null) {
-//			Ln.d("updating data in map");
 			Location location = getLocation();
-//			Ln.d("location: "+location);
 			zoomOnFirstFixAndPopulate( map, location );
 		}
-//		Ln.d("map: "+map);
 	}
 
 	@Override
 	public String getTitle() {
 		return TITLE;
 	}
-
-	/*public void setSearchType(SearchType searchType) {
-		this.searchType = searchType;
-	}
-
-	@Override
-	public SearchType getSearchType() {
-		return searchType;
-	}*/
 }

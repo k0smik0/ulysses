@@ -3,14 +3,12 @@ package net.iubris.ulysses.ui.fragments.list;
 
 import javax.inject.Inject;
 
-import com.google.android.gms.maps.SupportMapFragment;
-
-import net.iubris.ratafia.ui.activity.details.Buffer;
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.intentable.IntentUtils;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
+import net.iubris.ulysses.search.utils.Buffer;
 import net.iubris.ulysses.ui.fragments._base.Titleable;
 import net.iubris.ulysses.ui.fragments._base.Updatable;
 import net.iubris.ulysses.ui.fragments.map.MarkerShowable;
@@ -25,11 +23,13 @@ import net.iubris.ulysses.ui.tasks.populate.list._base.ListTasksMap;
 import net.iubris.ulysses.ui.tasks.populate.list.aware.PopulateListAwareTask;
 import net.iubris.ulysses.ui.tasks.populate.list.localized.PopulateListLocalizedTask;
 import net.iubris.ulysses.ui.toast.utils.UIUtils;
-import net.iubris.voyager.activity.menu.MenuUtilsLegacy;
+import net.iubris.ulysses.ui.utils.menu.MenuUtils;
 import roboguice.fragment.RoboListFragment;
 import roboguice.util.Ln;
+//import roboguice.util.Ln;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -47,6 +47,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.SupportMapFragment;
+
 //@ContentView(R.layout.list)
 public abstract class UlyssesListFragment
 <
@@ -62,7 +64,6 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 	private PlacesListAdapter placesAdapter;
 	
 	private final PlaceComparatorByAscendingDistance placeComparatorByAscendingDistance = new PlaceComparatorByAscendingDistance();
-//	PlaceComparatorByAscendingDistance ComparatorByAscendingDistance = new PlaceComparatorByAscendingDistance();
 	private final PlaceComparatorByDiscendingRating placeComparatorByDiscendingRating = new PlaceComparatorByDiscendingRating();
 	
 	@Inject private ListTasksMap listTasksMap;
@@ -73,25 +74,45 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 
 	private MarkerShowable markerShowable;
 	private FragmentSelectable fragmentSelectable;
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public void onAttach(Activity activity) {
-//		activity.requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		super.onAttach(activity);
-		this.activity = (ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment>) activity;
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		this.activity = (ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment>) context;
+//		Ln.d(activity);
 	}
+	
+//	@SuppressWarnings("deprecation")
+//	@Override
+//	public void onAttach(Activity activity) {
+//		super.onAttach(activity);
+//		this.activity = (ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment>) activity;
+//		Ln.d(activity);
+//	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		Ln.d("onCreate");
-		Ln.d(this.hashCode());
 		setRetainInstance(true);
         setHasOptionsMenu(true);
-        placesAdapter = buildPlaceAdapter();
+        placesAdapter = buildPlaceAdapter( getDetailsActivityClass() );
         
         listTasksMap.putTask(SearchType.AWARE, new PopulateListAwareTask(activity, placesAdapter));
 		listTasksMap.putTask(SearchType.LOCALIZED, new PopulateListLocalizedTask(activity, placesAdapter));
+	}
+	private PlacesListAdapter buildPlaceAdapter(Class<? extends Activity> clazz) {
+		PlacesListAdapter placesEnhancedListAdapter = new PlacesListAdapter(activity, R.layout.list_row, 
+				markerShowable, fragmentSelectable, clazz, buffer) {
+			@Override
+			protected void setImage(ImageView icon, Place url) {
+				Bitmap bitmap = sieve.find(url);
+				icon.setImageBitmap( bitmap );
+			}
+		};
+//		placesEnhancedListAdapter.setMarkerShowable(markerShowable, fragmentSelectable);
+		placesEnhancedListAdapter.setNotifyOnChange(true);
+		return placesEnhancedListAdapter;
 	}
 	
 	@SuppressLint("InflateParams")
@@ -152,12 +173,12 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		MenuUtilsLegacy.addRefresh(menu, this);
-		MenuUtilsLegacy.List.addSort(menu, activity, placesAdapter, 
+		MenuUtils.addSearch(menu, this, activity);
+		MenuUtils.addRefresh(menu, this);
+		MenuUtils.List.addSort(menu, activity, placesAdapter, 
 				placeComparatorByAscendingDistance, 
 				placeComparatorByDiscendingRating
 		);
-		MenuUtilsLegacy.addSearch(menu, this, activity);
 	}
 	
 	
@@ -174,6 +195,7 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 	
 	@Override
 	public void updateData() {
+		Ln.d("getting location...");
 		Location location = activity.getLocation();
 		Ln.d("using location: "+location);
 		listTasksMap.getTask( activity.getSearchType() ).execute(location);
@@ -190,23 +212,6 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 		listView.setOnItemLongClickListener( buildOnLongClickListener() );
 	}
 	
-	@SuppressWarnings("unchecked")
-	private PlacesListAdapter buildPlaceAdapter() {
-		PlacesListAdapter placesEnhancedListAdapter = new PlacesListAdapter(activity, 
-				R.layout.list_row,
-				placeComparatorByAscendingDistance,
-				placeComparatorByDiscendingRating) {
-			@Override
-			protected void setImage(ImageView icon, Place url) {
-				Bitmap bitmap = sieve.find(url);
-				icon.setImageBitmap( bitmap );
-			}
-		};
-		placesEnhancedListAdapter.setMarkerShowable(markerShowable, fragmentSelectable);
-		placesEnhancedListAdapter.setNotifyOnChange(true);
-		return placesEnhancedListAdapter;
-	}
-	
 	private OnItemClickListener buildOnItemClickListener(final ListView listView) {
 		return new OnItemClickListener() {
 			@Override
@@ -218,9 +223,9 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 	}
 	protected void handleClick(Place place) {
 		buffer.set(place);
-		startActivity( new Intent(activity, getDetailsActivityClass()));
+		startActivity( new Intent(activity, getDetailsActivityClass()) );
 	}
-	protected abstract Class<?> getDetailsActivityClass();
+	protected abstract Class<? extends Activity> getDetailsActivityClass();
 	
 	private OnItemLongClickListener buildOnLongClickListener(){
 		return new OnItemLongClickListener() {
@@ -251,6 +256,7 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 	ListFragmentMarkerable extends ListFragment & Markerable & Updatable, 
 	MarkerShowableMapFragment extends SupportMapFragment & MarkerShowable & Updatable>
 	extendingUlyssesListFragment getInstance(FragmentManager fragmentManager, Class<extendingUlyssesListFragment> clazz) {
+		@SuppressWarnings("unchecked")
 		extendingUlyssesListFragment extendingUlyssesListFragment = (extendingUlyssesListFragment) fragmentManager.findFragmentByTag("android:switcher:"+R.id.viewpager+":"+getIndex() );
         if (extendingUlyssesListFragment==null) {
         	try {

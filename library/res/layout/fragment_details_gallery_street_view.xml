@@ -27,11 +27,19 @@
         android:layout_height="256dp"
         android:background="@drawable/border_blue"/>
 
-    <include
+    <!-- <include
         android:id="@+id/frame_line_post_gallery_included"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/frame_line" />
+        layout="@layout/frame_line" /> -->
+    
+    <!-- <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Click for StreetViewPanorama"
+            android:id="@+id/button_get_panorama"
+            android:visibility="visible"/>
 
     <include
         android:id="@+id/street_view_included"
@@ -39,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         layout="@layout/frame_street_view"
-        android:background="@drawable/border_blue" />
+        android:background="@drawable/border_blue"
+        android:visibility="visible" /> -->
 
 </LinearLayout>

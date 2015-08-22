@@ -29,7 +29,7 @@
 	-->
 	
 	<string name="label_gallery">Galleria Immagini</string>
-	<string name="label_links">Links</string>
+	<string name="label_links">Sito Web</string>
 	<string name="label_street_view">Nei dintorni</string>
 	<string name="label_no_photo">presto su questi schermi !</string>
 	<string name="label_no_url">Spiacente, non è stato fornito alcun link</string>

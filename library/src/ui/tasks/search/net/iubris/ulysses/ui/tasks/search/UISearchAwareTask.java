@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import roboguice.util.Ln;
 import net.iubris.diane.aware.cache.exceptions.CacheStateException;
 import net.iubris.diane.aware.cache.exceptions.base.CacheEmptyException;
 import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
@@ -191,13 +192,22 @@ public class UISearchAwareTask extends SearchAwareTask {
 ////		searchUtils.handleException(search__exception_generic, e);
 //	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
-	protected void onSuccess(List<Place> t) throws Exception {
-		super.onSuccess(t);
+	protected void onSuccess(List<Place> places) throws Exception {
+		super.onSuccess(places);
 		if (ulyssesSearcher.isFoundByCache())
 			eventuallyNotifyIsFoundByCache();
 		
 		eventuallyCancelSearchWaitingUi();
+		
+		for (Place place : places) {
+			List<String> photosUrls = place.getPhotosUrls();
+			if (photosUrls!=null && photosUrls.size() > 1) {
+				Ln.d(place.getPlaceName()+" has multiple photos:");
+				Ln.d(photosUrls.toArray());
+			}
+		}
 	}
 	
 	protected void eventuallyNotifyIsFoundByCache() {}

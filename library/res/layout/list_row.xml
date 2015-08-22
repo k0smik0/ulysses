@@ -1,25 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyleft 2013 Massimiliano Leone - massimiliano.leone@iubris.net .
+  Copyleft GPL 2013 Massimiliano Leone - massimiliano.leone@iubris.net .
   
   list_row.xml is part of 'Ulysses'.
-  
-  'Ulysses' is free software; you can redistribute it and/or modify
-  it under the terms of the GNU Lesser General Public License as published by
-  the Free Software Foundation; either version 3 of the License, or
-  (at your option) any later version.
-  
-  'Ulysses' is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Lesser General Public License for more details.
-  
-  You should have received a copy of the GNU Lesser General Public License
-  along with 'Ulysses'; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout"
+    android:id="@+id/list_row_linear_layout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/row_item_border"
@@ -34,12 +20,13 @@
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginRight="5dip"
         android:contentDescription="the place type icon"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:minHeight="48dp"
-        android:minWidth="48dp" />
+        android:minHeight="64dp"
+        android:minWidth="64dp" />
     <!-- android:background="@drawable/row_item_border" -->
 
     <LinearLayout
@@ -83,7 +70,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:orientation="vertical"
+                        android:layout_marginRight="10dp" >
 
                         <include
                             android:id="@+id/row_ratingbar_included"
@@ -101,7 +89,6 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="-2dp"
                             layout="@layout/frame_ratingtext"
-                            android:background="@drawable/row_item_border"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
                             android:minWidth="10dp" />
@@ -112,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         layout="@layout/frame_distance"
-                        android:background="@drawable/row_item_border"
+                        style="@style/DistanceStyle"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:minWidth="10dp" />
@@ -123,13 +110,13 @@
                 android:id="@+id/button_list_to_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
+                android:layout_gravity="center_horizontal|top"
                 android:layout_marginRight="5dip"
                 android:contentDescription="right arrow"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:minHeight="48dp"
-                android:minWidth="48dp"
+                android:minHeight="20dp"
+                android:minWidth="20dp"
                 android:src="@android:drawable/ic_dialog_map" />
         </LinearLayout>
     </LinearLayout>

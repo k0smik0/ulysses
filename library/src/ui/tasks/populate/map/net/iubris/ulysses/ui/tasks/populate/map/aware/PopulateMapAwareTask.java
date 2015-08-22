@@ -20,9 +20,10 @@
 package net.iubris.ulysses.ui.tasks.populate.map.aware;
 
 
-import java.util.List;
 
 import javax.inject.Inject;
+
+import java.util.List;
 
 import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
 import net.iubris.ulysses.model.Place;
@@ -31,7 +32,6 @@ import net.iubris.ulysses.ui.tasks.populate.map._base.AbstractPopulateMapTask;
 import net.iubris.ulysses.ui.tasks.populate.map._base.exceptions.LocationNullException;
 import net.iubris.ulysses.ui.tasks.populate.map._utils.LocationUtils;
 import net.iubris.ulysses.ui.toast.utils.UIUtils;
-import roboguice.util.Ln;
 import android.app.Activity;
 import android.location.Location;
 import android.support.v4.app.Fragment;
@@ -51,12 +51,12 @@ public class PopulateMapAwareTask extends AbstractPopulateMapTask {
 	
 	public PopulateMapAwareTask(Activity activity,
 			GoogleMap map, 
-//			int mapFragmentResId,
 			Fragment mapFragment,
 			Sieve sieve) {
 		super(activity, map, mapFragment, sieve);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void execute(Location myLocation) {
 //		if (myLocation==null) throw new LocationNullException();
@@ -68,7 +68,6 @@ public class PopulateMapAwareTask extends AbstractPopulateMapTask {
 	public List<Place> call() throws LocationNullException {
 		if (myLocation==null) throw new LocationNullException();
 		List<Place> result = ulyssesSearcher.getResult();
-		Ln.d("result: "+result.size());
 		return result;
 	}
 	

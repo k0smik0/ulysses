@@ -57,7 +57,7 @@ import roboguice.util.Ln;
 import android.location.Location;
 
 @Singleton
-public class DefaultSocratesDelegate implements SocratesDelegate  {
+public class DefaultSocratesDelegate implements SocratesDelegate {
 	
 	private static final int MAX_PHOTO_WIDTH = 256;
 	private final Searcher searcher;
@@ -91,7 +91,7 @@ public class DefaultSocratesDelegate implements SocratesDelegate  {
 	@Override
 	public List<Place> searchGooglePlacesWithDetailsHere(final Location locationHere) throws /*LocationNullException,*/ PlacesSearcherException, DetailsRetrieverException, OverQuotaException, ZeroResultException, RequestDeniedException, InvalidRequestException, NotFoundException, UnknowErrorException {
 		final List<GooglePlace> googlePlaces = getGooglePlaces(locationHere);
-		Ln.d("googlePlaces: "+googlePlaces.size());
+//		Ln.d("googlePlaces: "+googlePlaces.size());
 		final List<Place> places = new CopyOnWriteArrayList<Place>();
 		
 //		return detailsSequential(places, placesHere, locationHere);
@@ -106,7 +106,7 @@ public class DefaultSocratesDelegate implements SocratesDelegate  {
 		return placesHere;
 	}*/
 	private List<Place> detailsParallel(List<GooglePlace> googlePlaces, final List<Place> places, final Location locationHere) throws DetailsRetrieverException, ZeroResultException, OverQuotaException, RequestDeniedException, InvalidRequestException, NotFoundException, UnknowErrorException {
-		Ln.d("using parallel");
+//		Ln.d("using parallel");
 		ExecutorService fixedThreadPool = Executors.newFixedThreadPool(16);
 		List<Callable<Void>> drs = new ArrayList<Callable<Void>>();
 //		final AtomicInteger counter = new AtomicInteger();
@@ -146,8 +146,9 @@ public class DefaultSocratesDelegate implements SocratesDelegate  {
 //					placesHere.add( new PlaceEnhanced(place, locationHere, details) );
 //					Ln.d("details for: "+place.getName()+"("+c+") ok.");
 //					Ln.d("places contains "+place.getName()+" ? "+places.contains(place));
-					boolean added = places.add( place );
-					Ln.d("details for: "+place.getPlaceName()+" added: " +added);
+//					boolean added = 
+							places.add( place );
+//					Ln.d("details for: "+place.getPlaceName()+" added: " +added);
 					
 //					latch.countDown();
 					} catch (Exception e) {
@@ -171,7 +172,7 @@ public class DefaultSocratesDelegate implements SocratesDelegate  {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Ln.d("places: "+places.size());
+//		Ln.d("places: "+places.size());
 		return places;
 	}
 	/*interface DetailsRunnable {
@@ -181,11 +182,11 @@ public class DefaultSocratesDelegate implements SocratesDelegate  {
 	@Override
 	public List<GooglePlace> getGooglePlaces(Location location) throws PlacesSearcherException, OverQuotaException, ZeroResultException, RequestDeniedException, InvalidRequestException, UnknowErrorException {
 //		if (location==null) throw new LocationNullException("null location?!");
-		Ln.d( searcher.getRequestUrl().toString() );
+//		Ln.d( searcher.getRequestUrl().toString() );
 		final SearchResponse searchResponse = searcher.search( location.getLatitude(), location.getLongitude() );
 		final List<GooglePlace> googlePlaces = searchResponse.getStatus().handleStatusAndGetData(searchResponse);
 		
-		Ln.d("google places: "+googlePlaces.size());
+//		Ln.d("google places: "+googlePlaces.size());
 		
 //		return new Arr<GooglePlace>( googlePlaces );
 		return googlePlaces;
@@ -232,10 +233,10 @@ public class DefaultSocratesDelegate implements SocratesDelegate  {
 	}
 	private String uriToString(URI uri) throws MalformedURLException {
 		if (uri!=null) {
-			Ln.d(uri.toURL());
+//			Ln.d(uri.toURL());
 			return uri.toURL().toString();
 		}
-		Ln.d("uri null!");
+//		Ln.d("uri null!");
 		return "";
 	}
 }
