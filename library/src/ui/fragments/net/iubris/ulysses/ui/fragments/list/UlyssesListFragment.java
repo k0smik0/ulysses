@@ -163,17 +163,15 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 		setupListView( getListView() );
 	}
 	
-	
 	@Override
 	public void onStart() {
 		super.onStart();
 		updateData();
 	}
 	
-	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		MenuUtils.addSearch(menu, this, activity);
+//		MenuUtils.addSearch(menu, this, activity);
 		MenuUtils.addRefresh(menu, this);
 		MenuUtils.List.addSort(menu, activity, placesAdapter, 
 				placeComparatorByAscendingDistance, 

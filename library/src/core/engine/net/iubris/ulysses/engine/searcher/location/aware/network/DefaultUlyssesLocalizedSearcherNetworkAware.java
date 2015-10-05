@@ -56,9 +56,7 @@ implements UlyssesLocalizedSearcherNetworkAware {
 	
 	@Inject
 	public DefaultUlyssesLocalizedSearcherNetworkAware(CheckerStateNetworkAware checkerStateNetworkAware, 
-			SocratesDelegate socratesDelegate
-			,Persister persister
-			) {
+			SocratesDelegate socratesDelegate, Persister persister) {
 		super(checkerStateNetworkAware);
 		this.socratesDelegate = socratesDelegate;
 		this.persister = persister;

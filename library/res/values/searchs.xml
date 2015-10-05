@@ -16,6 +16,6 @@
 	<string name="search__exception_place_unbelievable_zero_result_status">something wrong:\nzero results\nare you in Sibery?</string>
 	<string name="search__exception_places_tyrannus_status">something heavy wrong by google</string>
 	
-	<string name="search__exception_geocoder_unable_to_parse">Sorry, unable to retrieve your street address\nAnyway, you can start a search!</string>
+   <string name="search__exception_geocoder_unable_to_parse">Sorry,\nunable to retrieve your street address.\nAnyway, you can start a search!</string>
 	<string name="search__exception_generic">Sorry, sometimes something is wrong</string>
 </resources>

@@ -40,8 +40,7 @@ implements UlyssesLocalizedSearcherCacheAware {
 	private List<Place> result;
 
 	@Inject
-	public DefaultUlyssesLocalizedSearcherCacheAware(ThreeStateCacheAware arg0 
-			,Persister persister) {
+	public DefaultUlyssesLocalizedSearcherCacheAware(ThreeStateCacheAware arg0, Persister persister) {
 		super(arg0);
 		this.persister = persister;
 //		Log.d("UlyssesLocalizedSearcherCacheAware", "ComplexPreferencesPersister: "+complexPreferencesPersister);
@@ -55,14 +54,10 @@ implements UlyssesLocalizedSearcherCacheAware {
 	@Override
 	protected void doSearch(Location location) throws CacheAwareSearchException {
 		List<Place> found = persister.searchPlaces(location);
+		result = found;
 		if (found.size() < 20)
-			throw new CacheAwareSearchException("not so many results, trying network");
-		
-		result = 
-				persister.searchPlaces(location);
+			throw new CacheAwareSearchException("results < 20, you should try network searching");
 //			new HashList<Place>();
 //		Log.d("UlyssesLocalizedSearcherCacheAware", "found some results from cache? "+result.size());
 	}
-	
-	
 }

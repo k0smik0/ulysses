@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import roboguice.util.Ln;
 import net.iubris.diane.aware.cache.exceptions.CacheStateException;
 import net.iubris.diane.aware.cache.exceptions.base.CacheEmptyException;
 import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
@@ -27,7 +26,9 @@ import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.goog
 import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.tasks.search.aware.SearchAwareTask;
+import net.iubris.ulysses.tasks.search.aware.exceptions.ZeroResultException;
 import net.iubris.ulysses.ui._di.progressdialog.search.annotations.ProgressDialogForSearchPlaces;
+import roboguice.util.Ln;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.res.Resources;
@@ -49,41 +50,14 @@ public class UISearchAwareTask extends SearchAwareTask {
 	protected final String search__exception_places_tyrannus_status;
 	protected final String search__exception_generic;
 	
-//	@Inject protected Connector<VoyagerService,VoyagerSearcher> connector;
 
 	@Inject @ProgressDialogForSearchPlaces protected ProgressDialog progressDialog;
 	
 	
-//	@InjectView(R.id.button_list) protected Button buttonList;
-//	@InjectView(R.id.button_map) protected Button buttonMap;
-	
-//	protected final Button buttonList;
-//	protected final Button buttonMap;
-	
-//	@InjectView(R.anim.fade_in)
-//	private 
-//	final 
-//	Animation fadeIn;
-//	@InjectView(R.anim.fade_out)
-//	private 
-//	final 
-//	Animation fadeOut;
-
-//	protected final SearchUtils searchUtils;
-
-//	private final Animation[] animations;
-	
-	protected UISearchAwareTask(Activity activity/*, SearchUtils searchUtils*//*, Button buttonList, Button buttonMap*/) {
+	protected UISearchAwareTask(Activity activity) {
 		super(activity, Executors.newSingleThreadExecutor());
 		
-//		this.buttonList = buttonList;
-//		this.buttonMap = buttonMap;
-		
-		
-		
-		resources = 
-//			RoboGuice.getInjector(context).getInstance(Resources.class);
-				activity.getResources();
+		resources = activity.getResources();
 		search__success = resources.getString(R.string.search__success);
 		
 		search__exception_location_too_near = resources.getString(R.string.search__exception_location_too_near);
@@ -94,19 +68,6 @@ public class UISearchAwareTask extends SearchAwareTask {
 		search__exception_place_unbelievable_zero_result_status = resources.getString(R.string.search__exception_place_unbelievable_zero_result_status);
 		search__exception_places_tyrannus_status = resources.getString(R.string.search__exception_places_tyrannus_status);
 		search__exception_generic = resources.getString(R.string.search__exception_generic);
-		
-//		animations = SearchUtils.getAnimations(context);
-//		fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-//		fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out);
-		
-//		buttonList = (Button) context.findViewById(R.id.button_list);
-//		buttonMap = (Button) context.findViewById(R.id.button_map);
-		
-//Log.d("AbstractSearchTask:82",context+"\n"+progressDialog+"\n"+fadeIn+"\n"+connector+"\n"+buttonList);
-		
-//		this.searchUtils = 
-////				new SearchUtils(context/*, buttonList, buttonMap,*/ /*fadeIn, fadeOut,*/ progressDialog);
-//				searchUtils;
 	}
 	
 	
@@ -116,90 +77,25 @@ public class UISearchAwareTask extends SearchAwareTask {
 	@Override
 	protected void onPreExecute() throws Exception {
 		eventuallyShowSearchWaitingUi();
-//		searchUtils.hideButtons();
 	}
 	
 	
-	
-	
-//	@Override
-//	protected void onException(LocationTooNearException e) throws RuntimeException {
-////		handleExceptionAndProposeSomeResult(search__exception_location_too_near,e);
-//		searchUtils.handleResult(search__exception_location_too_near, searchAction);
-//	}
-//	@Override
-//	protected void onException(LocationNotSoUsefulException e) throws RuntimeException {
-////		handleExceptionAndProposeSomeResult(search__exception_location_not_so_useful,e);
-//		searchUtils.handleResult(search__exception_location_not_so_useful, searchAction);
-//	}
-//	
-//	@Override
-//	protected void onException(NoNetworkException arg0) throws RuntimeException {
-//		super.onException(arg0);
-//	}
-//	
-//	// no more hermesable
-//	/*protected void onException(ControllerUnavailableException e) throws RuntimeException {
-//		progressDialog.cancel();
-//		UIUtils.showShortToast(R.string.exception__controller_unavailable, context);
-//	}*/
-//	/**
-//	 * calls super method, then calls {@link #eventuallyShowErrorMessage(String)} passing 'search__exception_places_retrieving_status'
-//	 */
-//	@Override
-//	protected void onException(PlacesRetrievingException e) throws RuntimeException {
-//		super.onException(e);
-//		eventuallyShowErrorMessage(search__exception_places_retrieving_status);
-////		UIUtils.showShortToast(search__exception_places_retrieving_status, context);
-////		ExceptionUtils.showShortlyException(e,context);
-//		
-////		searchUtils.handleException(search__exception_places_retrieving_status, e);
-//	}
-//	/**
-//	 * calls super method, then calls {@link #eventuallyShowErrorMessage(String)} passing 'search__exception_place_unbelievable_zero_result_status'
-//	 */
-//	@Override
-//	protected void onException(PlacesUnbelievableZeroResultStatusException e) throws RuntimeException {
-//		super.onException(e);
-//		eventuallyShowErrorMessage(search__exception_place_unbelievable_zero_result_status);
-////		UIUtils.showShortToast(search__exception_place_unbelievable_zero_result_status, context);
-////		ExceptionUtils.showShortlyException(e,context);
-//		
-////		searchUtils.handleException(search__exception_place_unbelievable_zero_result_status, e);
-//	}
-//	/**
-//	 * calls super method, then calls {@link #eventuallyShowErrorMessage(String)} passing 'search__exception_places_tyrannus_status'
-//	 */
-//	@Override
-//	protected void onException(PlacesTyrannusStatusException e) throws RuntimeException {
-//		super.onException(e);
-//		eventuallyShowErrorMessage(search__exception_places_tyrannus_status);
-////		UIUtils.showShortToast(search__exception_places_tyrannus_status, context);
-////		ExceptionUtils.showShortlyException(e,context);
-//		
-////		searchUtils.handleException(search__exception_places_tyrannus_status, e);
-//	}
-//	
-//	/**
-//	 * calls super method, then calls {@link #eventuallyShowErrorMessage(String)} passing 'search__exception_generic'
-//	 */
-//	@Override
-//	protected void onGenericException(Exception e) throws RuntimeException {
-//		super.onGenericException(e);
-//		eventuallyShowErrorMessage(search__exception_generic);
-////		ExceptionUtils.showShortlyException(e,context);
-//		
-////		searchUtils.handleException(search__exception_generic, e);
-//	}
-	
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onSuccess(List<Place> places) throws Exception {
-		super.onSuccess(places);
+		doOnSuccess(places);
+	}
+	
+	protected void doOnSuccess(List<Place> places) {
 		if (ulyssesSearcher.isFoundByCache())
 			eventuallyNotifyIsFoundByCache();
 		
 		eventuallyCancelSearchWaitingUi();
+		
+		printPhotosDetailsForDebug(places);
+	}
+	private void printPhotosDetailsForDebug(List<Place> places) {
+		if (places==null)
+			return;
 		
 		for (Place place : places) {
 			List<String> photosUrls = place.getPhotosUrls();
@@ -211,6 +107,10 @@ public class UISearchAwareTask extends SearchAwareTask {
 	}
 	
 	protected void eventuallyNotifyIsFoundByCache() {}
+	
+	protected void onException(ZeroResultException e) {
+		eventuallyCancelSearchWaitingUi();
+	}
 	
 	/**
 	 * default: {@link ProgressDialog#show()}
@@ -228,57 +128,15 @@ public class UISearchAwareTask extends SearchAwareTask {
 	}
 	
 	/**
-	 * do nothing
+	 * default: do nothing
 	 */
 	protected void eventuallyShowErrorMessage(String errorMessage, Exception e) {}
 	/**
-	 * do nothing
+	 * default: do nothing
 	 */
 	protected void eventuallyShowSuccessMessage(String successMessage, List<Place> result) {}
 	
 	
-	
-	
-	
-	
-	/*
-	 * socrates zone
-	 */
-	/**
-	 * handle Socrates's search exception
-	 * default implementation executes {@link #eventuallyCancelSearchWaitingUi}, then
-	 * {@link #eventuallyShowErrorMessage(String)} passing 'search__exception_places_retrieving_status'
-	 */
-	protected void onException(PlacesRetrievingException e) throws RuntimeException {
-		eventuallyCancelSearchWaitingUi();
-		eventuallyShowErrorMessage(search__exception_places_retrieving_status, e);
-	}
-	/**
-	 * handle Socrates's search exception
-	 * default implementation executes {@link #eventuallyCancelSearchWaitingUi}, then
-	 * {@link #eventuallyShowErrorMessage(String)} passing 'search__exception_place_unbelievable_zero_result_status'
-	 */
-	protected void onException(PlacesUnbelievableZeroResultStatusException e) throws RuntimeException {
-		eventuallyCancelSearchWaitingUi();
-		eventuallyShowErrorMessage(search__exception_place_unbelievable_zero_result_status, e);
-	}
-	/**
-	 * handle Socrates's search exception
-	 * default implementation executes {@link #eventuallyCancelSearchWaitingUi}, then
-	 * {@link #eventuallyShowErrorMessage(String)} passing 'search__exception_places_tyrannus_status'
-	 */
-	protected void onException(PlacesTyrannusStatusException e) throws RuntimeException {
-		eventuallyCancelSearchWaitingUi();
-		eventuallyShowErrorMessage(search__exception_places_tyrannus_status, e);
-	}
-//	protected void onException(PlacesRetrievingException e) throws RuntimeException {
-//		eventuallyCancelSearchWaitingUi();
-//		eventuallyShowErrorMessage(search__exception_places_retrieving_status, e);
-//	}
-	
-	/*
-	 * end socrates zone
-	 */
 	
 	/**
 	 * default: executes {@link #eventuallyCancelSearchWaitingUi}
@@ -398,4 +256,40 @@ public class UISearchAwareTask extends SearchAwareTask {
 		eventuallyCancelSearchWaitingUi();
 		eventuallyShowErrorMessage(search__exception_generic, e);
 	}
+	
+	
+	
+	/*
+	 * socrates zone
+	 */
+	/**
+	 * handle Socrates's search exception
+	 * default implementation executes {@link #eventuallyCancelSearchWaitingUi}, then
+	 * {@link #eventuallyShowErrorMessage(String)} passing 'search__exception_places_retrieving_status'
+	 */
+	protected void onException(PlacesRetrievingException e) throws RuntimeException {
+		eventuallyCancelSearchWaitingUi();
+		eventuallyShowErrorMessage(search__exception_places_retrieving_status, e);
+	}
+	/**
+	 * handle Socrates's search exception
+	 * default implementation executes {@link #eventuallyCancelSearchWaitingUi}, then
+	 * {@link #eventuallyShowErrorMessage(String)} passing 'search__exception_place_unbelievable_zero_result_status'
+	 */
+	protected void onException(PlacesUnbelievableZeroResultStatusException e) throws RuntimeException {
+		eventuallyCancelSearchWaitingUi();
+		eventuallyShowErrorMessage(search__exception_place_unbelievable_zero_result_status, e);
+	}
+	/**
+	 * handle Socrates's search exception
+	 * default implementation executes {@link #eventuallyCancelSearchWaitingUi}, then
+	 * {@link #eventuallyShowErrorMessage(String)} passing 'search__exception_places_tyrannus_status'
+	 */
+	protected void onException(PlacesTyrannusStatusException e) throws RuntimeException {
+		eventuallyCancelSearchWaitingUi();
+		eventuallyShowErrorMessage(search__exception_places_tyrannus_status, e);
+	}	
+	/*
+	 * end socrates zone
+	 */
 }

@@ -93,6 +93,7 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 				placeHolder.address = (TextView) convertView.findViewById(R.id.address);
 				placeHolder.distance = (TextView) convertView.findViewById(R.id.distance);
 				placeHolder.ratingBar = (ColoredRatingBar) convertView.findViewById(R.id.rating_bar);
+				placeHolder.ratingText = (TextView) convertView.findViewById(R.id.rating_text);
 //				placeHolder.compass = (CompassView) convertView.findViewById(R.id.arrow);
 				
 				placeHolder.buttonToMap = (ImageButton) convertView.findViewById(R.id.button_list_to_map);
@@ -124,10 +125,15 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 			
 			float rating = place.getRating();
 			if (rating>0) {
-				placeHolder.ratingBar.setRating( rating );
 				placeHolder.ratingBar.setVisibility(View.VISIBLE);
-			} else 
+				placeHolder.ratingBar.setRating( rating );
+				placeHolder.ratingText.setVisibility(View.VISIBLE);
+				placeHolder.ratingText.setText( "("+place.getReviewsCount()+")" );
+			} else { 
 				placeHolder.ratingBar.setVisibility(View.GONE);
+				placeHolder.ratingText.setVisibility(View.GONE);
+				placeHolder.ratingText.setText( "" );
+			}
 //			placeHolder.rating.setText( Math.floor(place.getRating()*2*10)+"%" );
 //Log.d("PlacesHereListAdapter:93","position: "+position);
 			setImage(placeHolder.icon, place);
@@ -179,6 +185,7 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 	}
 	
 	class PlaceHolder {		
+		public TextView ratingText;
 		public ImageButton buttonToMap;
 		public ImageView icon;
 		public TextView name;

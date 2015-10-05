@@ -23,7 +23,7 @@ package net.iubris.ulysses_demo.activity.main;
 import javax.inject.Inject;
 
 import net.iubris.diane_library__test_utils.injector.MockGpsLocationsInjector;
-import net.iubris.polaris.locator.updater.LocationUpdater;
+import net.iubris.polaris.locator.core.updater.LocationUpdater;
 import net.iubris.ulysses_demo.R;
 import net.iubris.ulysses_demo.activity.list.UlyssesDemoListActivity;
 import net.iubris.ulysses_demo.activity.main.task.UsingUlyssesAsyncTask;

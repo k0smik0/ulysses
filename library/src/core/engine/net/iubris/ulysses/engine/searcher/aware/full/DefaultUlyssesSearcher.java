@@ -25,6 +25,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import roboguice.util.Ln;
 import net.iubris.diane.aware.cache.exceptions.base.CacheEmptyException;
 import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
 import net.iubris.diane.aware.location.state.three.ThreeStateLocationAwareLocationSupplier;
@@ -50,8 +51,7 @@ implements UlyssesSearcher {
 	@Inject
 	public DefaultUlyssesSearcher(ThreeStateLocationAwareLocationSupplier locationAwareSupplier,
 //			LocalizedSearcherCacheNetworkAwareStrictChecking<Set<PlaceEnhanced>> localizedSearcher
-			UlyssesLocalizedSearcher localizedSearcher
-			) {
+			UlyssesLocalizedSearcher localizedSearcher) {
 		super(locationAwareSupplier, localizedSearcher);
 		List<Place> res = new ArrayList<Place>(0); // NullObject pattern
 		setResult(res);		
@@ -66,7 +66,11 @@ implements UlyssesSearcher {
 		PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException
 		/*, NetworkAwareSearchException*/ {
 		try {
-			return super.search();
+			super.search();
+			
+			List<Place> result = getResult();
+			Ln.d("search completed; result: "+result);
+			
 			// exceptions below are never throwed here, so we get away from method signature
 		} catch (CacheTooOldException e) {
 			Log.d("UlyssesSearcher:39",e.getMessage());

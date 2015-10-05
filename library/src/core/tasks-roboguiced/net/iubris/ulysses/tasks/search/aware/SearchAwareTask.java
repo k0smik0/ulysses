@@ -11,6 +11,7 @@ import java.util.concurrent.Executor;
 import javax.inject.Inject;
 
 import net.iubris.diane.aware.cache.exceptions.base.CacheEmptyException;
+import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
 import net.iubris.diane.aware.network.exceptions.base.NoNetworkException;
 import net.iubris.diane.searcher.aware.cache.exceptions.CacheAwareSearchException;
 import net.iubris.diane.searcher.aware.exceptions.base.StillSearchException;
@@ -24,6 +25,7 @@ import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.goog
 import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
 import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
 import net.iubris.ulysses.model.Place;
+import net.iubris.ulysses.tasks.search.aware.exceptions.ZeroResultException;
 import android.content.Context;
 import android.os.Handler;
 
@@ -57,13 +59,21 @@ public class SearchAwareTask extends RoboSearchAwareAsyncTask<DefaultUlyssesSear
 	 * @throws NoNetworkException 
 	 * @throws LocationNotSoUsefulException 
 	 * @throws LocationTooNearException 
+	 * @throws ZeroResultException 
 	 */
 	@Override
 	public List<Place> call() throws LocationTooNearException, LocationNotSoUsefulException, 
-	NoNetworkException, 
-	PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException, 
-	StillSearchException, CacheEmptyException, CacheAwareSearchException {
+		NoNetworkException, CacheTooOldException, CacheEmptyException, CacheAwareSearchException,
+		PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException, 
+		StillSearchException, ZeroResultException {
 		ulyssesSearcher.search();
+		List<Place> result = ulyssesSearcher.getResult();
+		
+		if (result.size() == 0)
+			throw new ZeroResultException();
+		
 		return ulyssesSearcher.getResult();
 	}
+	
+	
 }

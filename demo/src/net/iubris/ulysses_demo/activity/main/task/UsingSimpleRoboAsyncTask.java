@@ -23,14 +23,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import net.iubris.ulysses.engine.model.PlaceEnhanced;
 import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
+import net.iubris.ulysses.model.Place;
 import roboguice.util.RoboAsyncTask;
 import android.content.Context;
 import android.widget.Button;
 import android.widget.Toast;
 
-final class UsingSimpleRoboAsyncTask extends RoboAsyncTask<List<PlaceEnhanced>> {
+final class UsingSimpleRoboAsyncTask extends RoboAsyncTask<List<Place>> {
 
 	private UlyssesSearcher ulyssesSearcher;
 	private Button buttonList;
@@ -50,7 +50,7 @@ final class UsingSimpleRoboAsyncTask extends RoboAsyncTask<List<PlaceEnhanced>> 
 	}
 
 	@Override
-	public List<PlaceEnhanced> call() throws 
+	public List<Place> call() throws 
 		/*LocationTooNearException, LocationNotSoUsefulException,
 		NoNetworkException,
 		StillSearchException,
@@ -61,12 +61,12 @@ final class UsingSimpleRoboAsyncTask extends RoboAsyncTask<List<PlaceEnhanced>> 
 	}
 
 	@Override
-	protected void onSuccess(List<PlaceEnhanced> result) throws RuntimeException {
+	protected void onSuccess(List<Place> result) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Ulysses finds "+result.size()+" places:");
 		sb.append("\n\n");
-		for (PlaceEnhanced r: result) {
-			sb.append(r.getPlace().getName());
+		for (Place r: result) {
+			sb.append(r.getPlaceName());
 			sb.append("\n");
 		}
 		long end = System.currentTimeMillis();

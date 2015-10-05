@@ -25,6 +25,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import roboguice.util.Ln;
 import net.iubris.diane.aware.cache.exceptions.base.CacheEmptyException;
 import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
 import net.iubris.diane.aware.cache.states.three.ThreeStateCacheAware;
@@ -36,6 +37,7 @@ import net.iubris.ulysses.engine.searcher.location.aware.cache.UlyssesLocalizedS
 import net.iubris.ulysses.engine.searcher.location.aware.network.UlyssesLocalizedSearcherNetworkAware;
 import net.iubris.ulysses.model.Place;
 import android.location.Location;
+import android.util.Log;
 
 
 /**
@@ -63,19 +65,16 @@ implements UlyssesLocalizedSearcher {
 			NetworkAwareSearchException, CacheEmptyException {
 		try {
 //			Log.d("UlyssesLocalizedSearcherCacheNetworkAware:31","location: "+locations[0]);
-			return super.search(locations);
+			super.search(locations);
+			
+			List<Place> result = getResult();
+			Ln.d("result: "+result);
+			
 		} catch (CacheTooOldException e) {
-		} catch (CacheAwareSearchException e) {}
+			Log.d("DefaultUlyssesLocalizedSearcher:74", e.getMessage() );
+		} catch (CacheAwareSearchException e) {
+			Log.d("DefaultUlyssesLocalizedSearcher:76", e.getMessage() );
+		}
 		return null;
 	}
-	
-	/*@Override
-	public List<PlaceEnhanced> getResult() {
-		return filterResult( super.getResult() );
-	}*/
-	
-	/*private List<PlaceEnhanced> filterResult(List<PlaceEnhanced> result) {
-		return ResultFilter.filterPlaces(result);
-	}*/
-
 }

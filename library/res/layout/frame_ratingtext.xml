@@ -26,7 +26,7 @@
 		android:id="@+id/rating_text"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textIsSelectable="true"
+		android:textIsSelectable="false"
 		style="@style/RatingTextStyle"
 		android:textSize="14sp"/>
 

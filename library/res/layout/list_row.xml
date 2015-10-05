@@ -11,7 +11,8 @@
     android:background="@drawable/row_item_border"
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
-    android:tag="list_row" >
+    android:tag="list_row" 
+    >
 
     <!-- android:background="@drawable/row_item_border" -->
     <!-- android:background="#ffffff" -->
@@ -60,17 +61,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     layout="@layout/frame_address"
-                    android:minWidth="10dp" />
+                    android:minWidth="1dp" />
 
-                <LinearLayout
+                <!-- <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="vertical" > -->
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         android:layout_marginRight="10dp" >
 
                         <include
@@ -80,18 +81,19 @@
                             layout="@layout/frame_ratingbar"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:minWidth="10dp" />
+                            android:minWidth="10dp" 
+                            android:visibility="gone"/>
                         <!-- android:background="@drawable/row_item_border" -->
 
                         <include
+                            layout="@layout/frame_ratingtext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="-2dp"
-                            layout="@layout/frame_ratingtext"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:minWidth="10dp" />
+                            android:visibility="gone"/>
                     </LinearLayout>
 
                     <include
@@ -103,7 +105,7 @@
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:minWidth="10dp" />
-                </LinearLayout>
+                <!-- </LinearLayout> -->
             </LinearLayout>
 
             <ImageButton

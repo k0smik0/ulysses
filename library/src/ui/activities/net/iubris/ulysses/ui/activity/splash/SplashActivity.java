@@ -19,11 +19,11 @@
  ******************************************************************************/
 package net.iubris.ulysses.ui.activity.splash;
 
-import java.util.concurrent.CountDownLatch;
-
+import roboguice.util.Ln;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -43,25 +43,25 @@ abstract public class SplashActivity extends Activity {
 	/**
 	 * milliseconds
 	 */
-	protected int minDisplayMs = 700;
+	protected int minDisplayMilliseconds = 700;
 
 
 	private Application application;
 
 
-	private CountDownLatch countDownLatch;
-
-
-	private int countDown;
+//	private CountDownLatch countDownLatch;
+//	private int countDown;
 
 	/**
 	 * ispired by robosplashactivity
 	 */
-	@Override
+	/*@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(getLayoutResID());
+		Log.d("SplashActivity",""+getLayoutResID());
 		super.onCreate(savedInstanceState);
 		
+		long start = System.currentTimeMillis();
 		application = getApplication();
 		
 		new Thread(){
@@ -79,12 +79,63 @@ abstract public class SplashActivity extends Activity {
 		
 		if (countDown==0)
 			startMainActivity();
-		else new Handler().postDelayed(new Runnable() {
+		else {
+			long stop = System.currentTimeMillis();
+			long delta = stop - start;
+			Ln.d("delta: "+delta);
+			long remaining =  (minDisplayMilliseconds-delta);
+			Ln.d("remaining: "+remaining);
+			new Handler().postDelayed(
+				new Runnable() {
+					@Override
+					public void run() {
+						startMainActivity();
+					}
+				},
+				remaining);
+		}
+	}*/
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		setContentView(getLayoutResID());
+//		Log.d("SplashActivity",""+getLayoutResID());
+		super.onCreate(savedInstanceState);
+		
+		final long start = System.currentTimeMillis();
+		application = getApplication();
+		
+		new AsyncTask<Void, Void, Void>() {
 			@Override
-			public void run() {
-				startMainActivity();
+			protected void onPreExecute() {
+				new Handler().post( new Runnable() {
+					@Override
+					public void run() {
+						doOtherStuffInForeground(application);
+					}
+				});
 			}
-		}, minDisplayMs);
+			@Override
+			protected Void doInBackground(Void... params) {
+				doOtherStuffinBackground(application);
+				return null;
+			}
+			@Override
+			protected void onPostExecute(Void result) {
+				long stop = System.currentTimeMillis();
+				long delta = stop - start;
+				Ln.d("delta: "+delta);
+				long remaining =  (minDisplayMilliseconds-delta);
+				Ln.d("remaining: "+remaining);
+				
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						startMainActivity();						
+					}
+				}, remaining);
+			}
+		}.execute();
 	}
 	
 	protected void startMainActivity() {
@@ -95,19 +146,23 @@ abstract public class SplashActivity extends Activity {
 		finish();
 	}
 
-	private void wrapperStuffInBackground(Application application) {
+	/*private void wrapperStuffInBackground(Application application) {
 		countDownLatch = new CountDownLatch(1);
 		countDown = 1;
 		doOtherStuffinBackground(application);
 		countDownLatch.countDown();
 		countDown = 0;
-	}
+	}*/
 	/**
 	 * use this to start some stuff in background
 	 * @param application
 	 */
 	protected void doOtherStuffinBackground(Application application) {}
 	
+	/**
+	 * use this to start some stuff in foreground
+	 * @param application
+	 */
 	protected void doOtherStuffInForeground(Application application) {}
 	
 	/**

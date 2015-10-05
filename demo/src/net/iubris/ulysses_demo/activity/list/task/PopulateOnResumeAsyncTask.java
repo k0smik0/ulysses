@@ -19,8 +19,8 @@
  ******************************************************************************/
 package net.iubris.ulysses_demo.activity.list.task;
 
-import net.iubris.ulysses.ui.list.adapter.PlacesEnhancedListAdapter;
-import net.iubris.ulysses.ui.tasks.list.aware.PopulateListAwareTask;
+import net.iubris.ulysses.ui.list.adapter.PlacesListAdapter;
+import net.iubris.ulysses.ui.tasks.populate.list.aware.PopulateListAwareTask;
 import net.iubris.ulysses_demo.activity.main.task.ExceptionUtils;
 import android.app.Activity;
 
@@ -28,7 +28,7 @@ public class PopulateOnResumeAsyncTask extends PopulateListAwareTask /*AdapterPo
 	
 //	@Inject private UlyssesSearcher ulyssesSearcher;
 
-	public PopulateOnResumeAsyncTask(Activity context, PlacesEnhancedListAdapter adapter) {
+	public PopulateOnResumeAsyncTask(Activity context, PlacesListAdapter adapter) {
 		super(context, adapter);
 	}
 

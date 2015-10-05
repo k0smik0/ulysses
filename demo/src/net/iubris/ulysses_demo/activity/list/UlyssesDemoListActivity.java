@@ -21,14 +21,18 @@ package net.iubris.ulysses_demo.activity.list;
 
 
 
-import net.iubris.ulysses.engine.model.PlaceEnhanced;
-import net.iubris.ulysses.engine.model.comparators.PlaceComparatorByAscendingDistance;
-import net.iubris.ulysses.engine.model.comparators.PlaceComparatorByDiscendingRating;
-import net.iubris.ulysses.ui.list.adapter.PlacesEnhancedListAdapter;
+import net.iubris.ulysses.model.Place;
+import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
+import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
+import net.iubris.ulysses.search.utils.Buffer;
+import net.iubris.ulysses.ui.fragments.map.MarkerShowable;
+import net.iubris.ulysses.ui.fragments.tabspager.selectable.FragmentSelectable;
+import net.iubris.ulysses.ui.list.adapter.PlacesListAdapter;
 import net.iubris.ulysses.ui.toast.utils.UIUtils;
 import net.iubris.ulysses_demo.R;
 import net.iubris.ulysses_demo.activity.list.task.PopulateOnResumeAsyncTask;
 import net.iubris.ulysses_demo.activity.list.task.UlyssesDemoSearchAndAdaptePopulaterAsyncTask;
+import net.iubris.ulysses_demo.activity.main.UlyssesDemoActivity;
 import roboguice.activity.RoboListActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,7 +46,7 @@ import android.widget.ListView;
 
 public class UlyssesDemoListActivity extends RoboListActivity {
 	
-	private PlacesEnhancedListAdapter placesAdapter;
+	private PlacesListAdapter placesAdapter;
 	private UlyssesDemoSearchAndAdaptePopulaterAsyncTask searchAndAdapterPopulateAsyncTask;
 	private PopulateOnResumeAsyncTask populateOnResumeAsyncTask;
 
@@ -59,7 +63,19 @@ public class UlyssesDemoListActivity extends RoboListActivity {
 		
 //		locationsInjector.stopLocationsTest();
 				
-		placesAdapter = new PlacesEnhancedListAdapter(this, R.layout.list_row)/* {
+		placesAdapter = new PlacesListAdapter(this, R.layout.list_row, 
+				new MarkerShowable() {
+					@Override
+					public void showMarker(String arg0) {}
+				}, 
+				new FragmentSelectable() {
+					@Override
+					public void setCurrentItem(int arg0, boolean arg1) {}
+				},
+				UlyssesDemoActivity.class, 
+				new Buffer()
+				
+				)/* {
 			
 			@Override
 			public View getView(final int position, View convertView, ViewGroup parent) {
@@ -96,8 +112,8 @@ public class UlyssesDemoListActivity extends RoboListActivity {
 				
 //				UIUtils.showShortToast( position+" "+listView.isItemChecked(position), UlyssesSampleListActivity.this);
 
-				PlaceEnhanced ph = (PlaceEnhanced) listView.getItemAtPosition(position);
-				UIUtils.showShortToast( ph.getPlace().getName(), UlyssesDemoListActivity.this);
+				Place ph = (Place) listView.getItemAtPosition(position);
+				UIUtils.showShortToast( ph.getPlaceName(), UlyssesDemoListActivity.this);
 				
 //				view.setSelected(false);
 			}			

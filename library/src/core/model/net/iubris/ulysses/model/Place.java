@@ -27,17 +27,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
-//import roboguice.util.Ln;
-import net.iubris.socrates.model.http.response.data.details.Details;
-
 import com.roscopeco.ormdroid.Entity;
+//import roboguice.util.Ln;
 
 
 /**
- * a enhanced wrapper for {@link Place}, including:<br/>
+ * a enhanced wrapper for {@link com.google.android.gms.location.places.Place}, including:<br/>
  * 1. distance from actual location and Place's location<br/>
- * 2. {@link Details} for place 
+ * 2. place details from {@link net.iubris.socrates.model.http.response.data.details.Details} 
  */
 
 //@Entity(name="places")

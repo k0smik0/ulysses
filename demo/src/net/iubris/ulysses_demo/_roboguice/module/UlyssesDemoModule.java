@@ -20,11 +20,13 @@
 package net.iubris.ulysses_demo._roboguice.module;
 
 import net.iubris.diane_library__test_utils._roboguice.module.DianeTestUtilModule;
+import net.iubris.socrates._di._roboguice.modules.AbstractSocratesBaseModule;
 import net.iubris.socrates.config.ConfigMandatory;
 import net.iubris.socrates.config.SearchOptions;
 import net.iubris.ulysses._di._roboguice.module.AbstractUlyssesModule;
 import net.iubris.ulysses._di._roboguice.module.SocratesToUlyssesModule;
 import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
+import net.iubris.ulysses.persist.Persister;
 import net.iubris.ulysses.ui._di._roboguice.module.AbstractUlyssesUiModule;
 import net.iubris.ulysses.ui._di.progressdialog.search.annotations.ProgressDialogForSearchPlacesString;
 import net.iubris.ulysses_demo.config.UlyssesDemoConfigMandatory;
@@ -67,15 +69,25 @@ public class UlyssesDemoModule extends AbstractUlyssesModule {
 	protected SocratesToUlyssesModule getSocratesToUlyssesModule() {
 		return new SocratesToUlyssesModule() {
 			@Override
-			protected void bindConfigMandatory() {
-//				bind(ConfigMandatory.class).toInstance(new UlyssesSampleConfigMandatory());
-				bind(ConfigMandatory.class).to(UlyssesDemoConfigMandatory.class);
-			}
-			@Override
-			protected void bindSearchOptions() {
-				bind(SearchOptions.class)/*.annotatedWith(Config.class)*/.to(UlyssesDemoConfigOptional.class);
+			protected AbstractSocratesBaseModule getSocratesBaseModule() {
+				return new AbstractSocratesBaseModule() {
+					@Override
+					protected void bindSearchOptions() {
+						bind(ConfigMandatory.class).toInstance(new UlyssesDemoConfigMandatory());
+						bind(ConfigMandatory.class).to(UlyssesDemoConfigMandatory.class);
+					}
+					@Override
+					protected void bindConfigMandatory() {
+						bind(SearchOptions.class)/*.annotatedWith(Config.class)*/.to(UlyssesDemoConfigOptional.class);
+					}
+				};
 			}
 		};
+	}
+
+	@Override
+	protected void bindPersister() {
+		
 	}
 	
 	

@@ -32,6 +32,6 @@ public class UlyssesThreeStateCacheAware implements ThreeStateCacheAware {
 	}
 	@Override
 	public boolean useFirstlyCache() {
-		return true;
+		return false;
 	}
 }

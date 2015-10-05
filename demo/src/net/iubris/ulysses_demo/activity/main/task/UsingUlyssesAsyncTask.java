@@ -19,21 +19,24 @@
  ******************************************************************************/
 package net.iubris.ulysses_demo.activity.main.task;
 
+
 import java.util.List;
 
 import javax.inject.Inject;
 
+import net.iubris.diane.aware.cache.exceptions.base.CacheEmptyException;
 import net.iubris.diane.aware.network.exceptions.base.NoNetworkException;
+import net.iubris.diane.searcher.aware.cache.exceptions.CacheAwareSearchException;
 import net.iubris.diane.searcher.aware.exceptions.base.StillSearchException;
 import net.iubris.diane.searcher.aware.location.exceptions.base.LocationNotSoUsefulException;
 import net.iubris.diane.searcher.aware.location.exceptions.base.LocationTooNearException;
 import net.iubris.diane.searcher.aware.network.exceptions.NetworkAwareSearchException;
-import net.iubris.polaris.locator.provider.LocationProvider;
-import net.iubris.ulysses.engine.model.PlaceEnhanced;
+import net.iubris.polaris.locator.core.provider.LocationProvider;
 import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
 import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesRetrievingException;
 import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
 import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
+import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.tasks.search.aware.SearchAwareTask;
 import android.content.Context;
 import android.util.Log;
@@ -65,11 +68,11 @@ public class UsingUlyssesAsyncTask extends /*UIyssesSearchAsyncTask*/ SearchAwar
 	}
 
 	@Override
-	public List<PlaceEnhanced> call() throws 
+	public List<Place> call() throws 
 		LocationTooNearException, LocationNotSoUsefulException,
 		NoNetworkException,
 		StillSearchException,
-		PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException
+		PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException, CacheEmptyException, CacheAwareSearchException
 		/*, NetworkAwareSearchException*/ {
 		Log.d(getClass().getSimpleName()+":53",""+locationProvider.getLocation());
 		ulyssesSearcher.search();
@@ -77,12 +80,12 @@ public class UsingUlyssesAsyncTask extends /*UIyssesSearchAsyncTask*/ SearchAwar
 	}
 
 	@Override
-	protected void onSuccess(List<PlaceEnhanced> result) throws RuntimeException {
+	protected void onSuccess(List<Place> result) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Ulysses finds "+result.size()+" places:");
 		sb.append("\n\n");
-		for (PlaceEnhanced r: result) {
-			sb.append(r.getPlace().getName()+" - "+r.getDetails().getFormattedAddress());
+		for (Place r: result) {
+			sb.append(r.getPlaceName()+" - "+r.getFormattedAddress());
 			sb.append("\n");
 		}
 		long end = System.currentTimeMillis();

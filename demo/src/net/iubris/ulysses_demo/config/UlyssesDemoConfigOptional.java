@@ -19,18 +19,19 @@
  ******************************************************************************/
 package net.iubris.ulysses_demo.config;
 
-
 import java.util.Set;
 
-import net.iubris.socrates.model.http.response.data.search.PlaceType;
+import javax.inject.Singleton;
+
+import net.iubris.socrates.model.http.response.data.search.GooglePlaceType;
 import net.iubris.ulysses.engine.searcher.location.aware.network.delegate.config.DefaultSearchOptions;
 
 @Singleton
 public final class UlyssesDemoConfigOptional extends DefaultSearchOptions {
 	
 	@Override
-	public Set<PlaceType> getTypes() {
-		types.add(PlaceType.bakery);
+	public Set<GooglePlaceType> getTypes() {
+		types.add(GooglePlaceType.bakery);
 		return types;
 	}
 	
