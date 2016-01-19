@@ -29,7 +29,7 @@ public class DetailsFragmentGalleryStreetView extends DetailsFragmentBase {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_details_gallery_street_view, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_details_gallery_streetview, container, false);
 		galleryPager = (ViewPager) rootView.findViewById(R.id.gallery_pager);
 		galleryLabelNoPhoto = (TextView) rootView.findViewById(R.id.gallery_label_no_photo);
 		

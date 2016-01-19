@@ -3,12 +3,12 @@
 	<classpathentry kind="src" path="src/core/model"/>
 	<classpathentry kind="src" path="src/core/engine"/>
 	<classpathentry kind="src" path="src/core/roboguice-module"/>
-	<classpathentry kind="src" path="src/core/tasks-roboguiced"/>
+	<classpathentry excluding="net/iubris/ulysses/tasks/search/aware/CopyOfLocationExceptionState.java|net/iubris/ulysses/tasks/search/aware/LocationExceptionState_UsingMap.java|net/iubris/ulysses/tasks/search/aware/LocationExceptionDefault_UsingMap.java|net/iubris/ulysses/tasks/search/aware/LocationExceptionStateNeverHappenedBefore_UsingMap.java" kind="src" path="src/core/tasks-roboguiced"/>
 	<classpathentry kind="src" path="src/core/misc"/>
 	<classpathentry kind="src" path="src/persisters/base"/>
 	<classpathentry kind="src" path="src/persisters/sql/ormdroid"/>
-	<classpathentry excluding="net/iubris/ulysses/intentable/Actionable.java" kind="src" path="src/ui/activities"/>
-	<classpathentry kind="src" path="src/ui/fragments"/>
+	<classpathentry excluding="net/iubris/ulysses/intentable/Actionable.java|net/iubris/ulysses/ui/activity/_base/Searchable.java" kind="src" path="src/ui/activities"/>
+	<classpathentry excluding="net/iubris/ulysses/ui/fragments/_base/Indexable.java" kind="src" path="src/ui/fragments"/>
 	<classpathentry kind="src" path="src/ui/tasks/search"/>
 	<classpathentry kind="src" path="src/ui/tasks/populate/base"/>
 	<classpathentry kind="src" path="src/ui/tasks/populate/list"/>
@@ -24,6 +24,7 @@
 	<classpathentry excluding="net/iubris/ulysses/ui/gallery/ImageViewFactory.java|net/iubris/ulysses/ui/gallery/ImageAdapter.java|net/iubris/apollus/ui/list/DividerItemDecoration.java|net/iubris/apollus/ui/list/EmptyRecyclerView.java|net/iubris/apollus/ui/list/RecyclerViewArrayAdapter.java|net/iubris/voyager/_roboguice/providers/ProgressDialogForSearchPlacesStringProvider.java" kind="src" path="NO"/>
 	<classpathentry excluding="net/iubris/ulysses/engine/persist/sql/ormlite/DatabaseConfigUtil.java|net/iubris/ulysses/engine/persist/sql/ormlite/DatabaseHelper.java|net/iubris/ulysses/engine/persist/sql/ormlite/OrmlitePersister.java" kind="src" path="src/persisters/sql/ormlite"/>
 	<classpathentry excluding="net/iubris/ulysses/persist/sql/storm/BaseAttributeConverter.java|net/iubris/ulysses/persist/sql/storm/LocationConverter.java|net/iubris/ulysses/persist/sql/storm/StringListConverter.java|net/iubris/ulysses/persist/sql/storm/StringSetConverter.java|net/iubris/ulysses/persist/sql/storm/UlyssesDatabaseHelper.java" kind="src" path="src/persisters/sql/storm"/>
+	<classpathentry excluding="net/iubris/ulysses/ui/activity/_base/|net/iubris/ulysses/ui/fragments/_base/|net/iubris/ulysses/ui/fragments/list/_base/|net/iubris/ulysses/ui/fragments/map/_base/|net/iubris/ulysses/ui/fragments/tabspager/|net/iubris/ulysses/ui/fragments/tabspager/activity/|net/iubris/ulysses/ui/fragments/tabspager/selectable/|net/iubris/ulysses/ui/fragments/tabspager/sliding/" kind="src" path="src/to_apollus"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>

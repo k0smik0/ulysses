@@ -59,7 +59,7 @@ public class PopulateMapLocalizedTask extends AbstractPopulateMapTask {
 	@SuppressWarnings("deprecation")
 	//	@Deprecated
 	@Override
-	public void execute(Location dummyLocation) {
+	public void execute(Location... dummyLocation) {
 		super.execute();
 	}
 	

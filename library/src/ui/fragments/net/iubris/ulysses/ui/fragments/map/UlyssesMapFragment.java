@@ -3,13 +3,15 @@ package net.iubris.ulysses.ui.fragments.map;
 
 
 import javax.inject.Inject;
+
+import net.iubris.apollus2.ui.fragments._base.Titleable;
+import net.iubris.apollus2.ui.fragments._base.Updatable;
+import net.iubris.apollus2.ui.fragments.list._base.Markerable;
+import net.iubris.apollus2.ui.fragments.map._base.MarkerShowable;
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.search.utils.Buffer;
-import net.iubris.ulysses.ui.fragments._base.Titleable;
-import net.iubris.ulysses.ui.fragments._base.Updatable;
-import net.iubris.ulysses.ui.fragments.list.Markerable;
-import net.iubris.ulysses.ui.fragments.tabspager.activity.ListMapTabsSearchTypableLocatableActivity;
+import net.iubris.ulysses.ui.activity._base.UlyssesSearchActivity;
 import net.iubris.ulysses.ui.icons.sieve.Sieve;
 import net.iubris.ulysses.ui.tasks._base.SearchType;
 import net.iubris.ulysses.ui.tasks.populate.map._base.MapTasksMap;
@@ -17,6 +19,7 @@ import net.iubris.ulysses.ui.tasks.populate.map._base.PopulateMapTask;
 import net.iubris.ulysses.ui.tasks.populate.map.aware.PopulateMapAwareTask;
 import net.iubris.ulysses.ui.tasks.populate.map.localized.PopulateMapLocalizedTask;
 import roboguice.RoboGuice;
+import roboguice.util.Ln;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
@@ -46,7 +49,8 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 	protected static final int INDEX = 1;
 	
 	private GoogleMap map;
-	private ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment> activity;
+//	private ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment> activity;
+	private UlyssesSearchActivity<ListFragmentMarkerable, MarkerShowableMapFragment> activity;
 
 	@Inject private Buffer buffer;
 	@Inject private Sieve sieve;
@@ -91,7 +95,8 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		this.activity = (ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment>) activity;
+//		this.activity = (ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment>) activity;
+		this.activity = (UlyssesSearchActivity<ListFragmentMarkerable, MarkerShowableMapFragment>) activity;
 	}
 	
 	@Override
@@ -235,10 +240,17 @@ extends SupportMapFragment implements MarkerShowable, Updatable, Titleable/*, Se
 	}
 	
 	@Override
-	public void updateData() {
+	public void updateData(Location... locations) {
 		// clear markers and (re)populate
 		if (map!=null) {
-			Location location = getLocation();
+			Location location = null;
+			if (locations!=null && locations.length>0 && locations[0]!=null) {
+				location = locations[0];
+				Ln.d("using location: "+location);
+			} else {
+				Ln.d("getting location...");
+				location = getLocation();
+			}
 			zoomOnFirstFixAndPopulate( map, location );
 		}
 	}

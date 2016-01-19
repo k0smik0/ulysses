@@ -143,7 +143,9 @@ abstract public class SplashActivity extends Activity {
 		startIntent.setAction(SplashActivity.ACTION_POST_SPLASH);
 		startIntent.setFlags(getLauncherModeForMainActivity());
 		startActivity(startIntent);
-		finish();
+		if (!this.isFinishing()) {
+			finish();
+		}
 	}
 
 	/*private void wrapperStuffInBackground(Application application) {

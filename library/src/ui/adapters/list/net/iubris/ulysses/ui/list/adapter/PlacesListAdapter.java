@@ -23,11 +23,11 @@ import in.flashbulb.coloredratingbar.ColoredRatingBar;
 
 import java.util.Comparator;
 
+import net.iubris.apollus2.ui.fragments.map._base.MarkerShowable;
+import net.iubris.apollus2.ui.fragments.tabspager.selectable.FragmentSelectable;
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.search.utils.Buffer;
-import net.iubris.ulysses.ui.fragments.map.MarkerShowable;
-import net.iubris.ulysses.ui.fragments.tabspager.selectable.FragmentSelectable;
 import net.iubris.ulysses.utils.misc.PlacesUtils;
 import android.app.Activity;
 import android.content.Intent;

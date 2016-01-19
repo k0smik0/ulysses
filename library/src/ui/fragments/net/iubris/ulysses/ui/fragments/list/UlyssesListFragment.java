@@ -1,22 +1,23 @@
 package net.iubris.ulysses.ui.fragments.list;
 
 
+
 import javax.inject.Inject;
 
+import net.iubris.apollus2.ui.activity._base.Refreshable;
+import net.iubris.apollus2.ui.fragments._base.Titleable;
+import net.iubris.apollus2.ui.fragments._base.Updatable;
+import net.iubris.apollus2.ui.fragments.list._base.Markerable;
+import net.iubris.apollus2.ui.fragments.map._base.MarkerShowable;
+import net.iubris.apollus2.ui.fragments.tabspager.selectable.FragmentSelectable;
 import net.iubris.ulysses.R;
-import net.iubris.ulysses.intentable.IntentUtils;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
 import net.iubris.ulysses.search.utils.Buffer;
-import net.iubris.ulysses.ui.fragments._base.Titleable;
-import net.iubris.ulysses.ui.fragments._base.Updatable;
-import net.iubris.ulysses.ui.fragments.map.MarkerShowable;
-import net.iubris.ulysses.ui.fragments.tabspager.activity.ListMapTabsSearchTypableLocatableActivity;
-import net.iubris.ulysses.ui.fragments.tabspager.selectable.FragmentSelectable;
+import net.iubris.ulysses.ui.activity._base.UlyssesSearchActivity;
 import net.iubris.ulysses.ui.icons.sieve.Sieve;
-import net.iubris.ulysses.ui.intentable.Refreshable;
-import net.iubris.ulysses.ui.intentable.Searchable;
+import net.iubris.ulysses.ui.intentable.IntentUtils;
 import net.iubris.ulysses.ui.list.adapter.PlacesListAdapter;
 import net.iubris.ulysses.ui.tasks._base.SearchType;
 import net.iubris.ulysses.ui.tasks.populate.list._base.ListTasksMap;
@@ -51,11 +52,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 //@ContentView(R.layout.list)
 public abstract class UlyssesListFragment
-<
-//extendingUlyssesMapFragment extends UlyssesMapFragment<ListFragmentMarkerable, MarkerShowableMapFragment>, 
-ListFragmentMarkerable extends ListFragment & Markerable & Updatable, 
-MarkerShowableMapFragment extends SupportMapFragment & MarkerShowable & Updatable> extends RoboListFragment 
-implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updatable {
+<ListFragmentMarkerable extends ListFragment & Markerable & Updatable, 
+MarkerShowableMapFragment extends SupportMapFragment & MarkerShowable & Updatable> 
+extends RoboListFragment 
+implements Refreshable, /*Searchable,*/ Titleable, /*Clickable,*/ Markerable, Updatable {
 
 	private static final String TITLE = "List";
 
@@ -70,7 +70,8 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 	@Inject private Sieve sieve;
 	@Inject private Buffer buffer;
 
-	private ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment> activity;
+//	private ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment> activity;
+	private UlyssesSearchActivity<ListFragmentMarkerable, MarkerShowableMapFragment> activity;
 
 	private MarkerShowable markerShowable;
 	private FragmentSelectable fragmentSelectable;
@@ -79,41 +80,16 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		this.activity = (ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment>) context;
-//		Ln.d(activity);
+		this.activity = (UlyssesSearchActivity<ListFragmentMarkerable, MarkerShowableMapFragment>) context;
 	}
-	
-//	@SuppressWarnings("deprecation")
-//	@Override
-//	public void onAttach(Activity activity) {
-//		super.onAttach(activity);
-//		this.activity = (ListMapTabsSearchTypableLocatableActivity<ListFragmentMarkerable, MarkerShowableMapFragment>) activity;
-//		Ln.d(activity);
-//	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
         setHasOptionsMenu(true);
-        placesAdapter = buildPlaceAdapter( getDetailsActivityClass() );
-        
-        listTasksMap.putTask(SearchType.AWARE, new PopulateListAwareTask(activity, placesAdapter));
-		listTasksMap.putTask(SearchType.LOCALIZED, new PopulateListLocalizedTask(activity, placesAdapter));
 	}
-	private PlacesListAdapter buildPlaceAdapter(Class<? extends Activity> clazz) {
-		PlacesListAdapter placesEnhancedListAdapter = new PlacesListAdapter(activity, R.layout.list_row, 
-				markerShowable, fragmentSelectable, clazz, buffer) {
-			@Override
-			protected void setImage(ImageView icon, Place url) {
-				Bitmap bitmap = sieve.find(url);
-				icon.setImageBitmap( bitmap );
-			}
-		};
-//		placesEnhancedListAdapter.setMarkerShowable(markerShowable, fragmentSelectable);
-		placesEnhancedListAdapter.setNotifyOnChange(true);
-		return placesEnhancedListAdapter;
-	}
+	
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -159,8 +135,28 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 //	            getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
 //	    }
 		super.onActivityCreated(savedInstanceState);
+		
+		placesAdapter = buildPlaceAdapter( getDetailsActivityClass() );
+        
+        listTasksMap.putTask(SearchType.AWARE, new PopulateListAwareTask(activity, placesAdapter));
+		listTasksMap.putTask(SearchType.LOCALIZED, new PopulateListLocalizedTask(activity, placesAdapter));
+		
 		// old ratafia
 		setupListView( getListView() );
+	}
+	private PlacesListAdapter buildPlaceAdapter(Class<? extends Activity> clazz) {
+//		Ln.d(activity+" "+R.layout.list_row+" "+markerShowable+" "+fragmentSelectable+" "+clazz+" "+buffer);
+		PlacesListAdapter placesEnhancedListAdapter = new PlacesListAdapter(activity, R.layout.list_row, 
+				markerShowable, fragmentSelectable, clazz, buffer) {
+			@Override
+			protected void setImage(ImageView icon, Place url) {
+				Bitmap bitmap = sieve.find(url);
+				icon.setImageBitmap( bitmap );
+			}
+		};
+//		placesEnhancedListAdapter.setMarkerShowable(markerShowable, fragmentSelectable);
+		placesEnhancedListAdapter.setNotifyOnChange(true);
+		return placesEnhancedListAdapter;
 	}
 	
 	@Override
@@ -186,15 +182,20 @@ implements Refreshable, Searchable, Titleable, /*Clickable,*/ Markerable, Updata
 		UIUtils.showShortToast("coming soon", activity);
 	}
 	
-	@Override
-	public void search(String query) {
-		UIUtils.showShortToast("coming soon", activity);
-	}
+//	@Override
+//	public void search(String query) {
+//		UIUtils.showShortToast("coming soon", activity);
+//	}
 	
 	@Override
-	public void updateData() {
-		Ln.d("getting location...");
-		Location location = activity.getLocation();
+	public void updateData(Location... locations) {
+		Location location = null;
+		if (locations!=null && locations.length>0 && locations[0]!=null) {
+			location = locations[0];
+		} else {
+			Ln.d("getting location...");
+			location = activity.getLocation();
+		}
 		Ln.d("using location: "+location);
 		listTasksMap.getTask( activity.getSearchType() ).execute(location);
 	}

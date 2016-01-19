@@ -25,9 +25,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import roboguice.util.Ln;
 import net.iubris.diane.aware.cache.exceptions.base.CacheEmptyException;
 import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
+import net.iubris.diane.aware.location.exceptions.base.LocationFreshNullException;
 import net.iubris.diane.aware.location.state.three.ThreeStateLocationAwareLocationSupplier;
 import net.iubris.diane.aware.network.exceptions.base.NoNetworkException;
 import net.iubris.diane.searcher.aware.cache.exceptions.CacheAwareSearchException;
@@ -41,6 +41,7 @@ import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.goog
 import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesTyrannusStatusException;
 import net.iubris.ulysses.engine.searcher.location.aware.network.exceptions.google.PlacesUnbelievableZeroResultStatusException;
 import net.iubris.ulysses.model.Place;
+import roboguice.util.Ln;
 import android.util.Log;
 
 @Singleton
@@ -53,30 +54,37 @@ implements UlyssesSearcher {
 //			LocalizedSearcherCacheNetworkAwareStrictChecking<Set<PlaceEnhanced>> localizedSearcher
 			UlyssesLocalizedSearcher localizedSearcher) {
 		super(locationAwareSupplier, localizedSearcher);
-		List<Place> res = new ArrayList<Place>(0); // NullObject pattern
-		setResult(res);		
+	}
+	
+	@Override
+	protected void initResult() {
+		List<Place> res = new ArrayList<Place>(); // NullObject pattern
+		setResult(res);
 	}
 	
 	@Override
 	public synchronized Void search(Void... v) throws
 		StillSearchException,
+		LocationFreshNullException,
 		LocationTooNearException,
 		LocationNotSoUsefulException, NoNetworkException,
-		CacheEmptyException,
+		CacheEmptyException, CacheAwareSearchException,
+//		NoNetworkAndCacheEmptyException,
 		PlacesRetrievingException, PlacesUnbelievableZeroResultStatusException, PlacesTyrannusStatusException
 		/*, NetworkAwareSearchException*/ {
 		try {
 			super.search();
 			
+			// TODO just for debug print
 			List<Place> result = getResult();
-			Ln.d("search completed; result: "+result);
+			Ln.d("search completed (using location "+getLocation()+"); result size: "+result.size());
 			
-			// exceptions below are never throwed here, so we get away from method signature
+			// FIXME ? exceptions below are never throwed in this release, so we get away from method signature
 		} catch (CacheTooOldException e) {
-			Log.d("UlyssesSearcher:39",e.getMessage());
-		} catch (CacheAwareSearchException e) {
+			Ln.d("CacheTooOldException: "+e.getMessage());
+		} /*catch (CacheAwareSearchException e) {
 			Log.d("UlyssesSearcher:69",e.getMessage());
-		} 
+		}*/ 
 		catch (NetworkAwareSearchException e) {
 			Log.d("UlyssesSearcher:72",e.getMessage());
 			e.printStackTrace();

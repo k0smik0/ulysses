@@ -151,10 +151,14 @@ public class DefaultSocratesDelegate implements SocratesDelegate {
 //					Ln.d("details for: "+place.getPlaceName()+" added: " +added);
 					
 //					latch.countDown();
-					} catch (Exception e) {
-						Ln.d(e.getMessage());
-						e.printStackTrace();
-					}
+					} catch( MalformedURLException e) {
+						Ln.d("MalformedURLException: "+e.getMessage());
+					} catch (DetailsRetrieverException | ZeroResultException | OverQuotaException | RequestDeniedException | InvalidRequestException | NotFoundException | UnknowErrorException e) {
+						Ln.d("A Socrates exception: "+e.getMessage());
+					} catch (NullPointerException e) {
+						Ln.d("NullPointerException: "+e.getMessage());
+//						e.printStackTrace();
+					}  
 					return null;
 				}
 			};

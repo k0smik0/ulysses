@@ -27,7 +27,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.roscopeco.ormdroid.Column;
 import com.roscopeco.ormdroid.Entity;
+import com.roscopeco.ormdroid.Table;
 //import roboguice.util.Ln;
 
 
@@ -39,103 +41,82 @@ import com.roscopeco.ormdroid.Entity;
 
 //@Entity(name="places")
 //@DatabaseTable(tableName="places")
+@Table(name="place")
 public class Place extends Entity implements Serializable, Comparable<Place> {
 	
 	private static final long serialVersionUID = 8907278452980472496L;
 	public static final double UNREACHABLE_DISTANCE = 1000000000000L; // 10E12 m
 	
-//	@Id 
+	public static final String PLACENAME_COLUMN = "placeName";
+	
+//	@Id
 //	@GeneratedValue(strategy=GenerationType.AUTO)
 //	@DatabaseField()
-	public int id;
+	@Column(primaryKey=true, name="id",forceMap=true)
+	private int id;
 	
-//	@Column
+	@Column(forceMap=true)
 	private String placeName;
-//	@Column
 	
+	@Column(forceMap=true)
+//	@Column(primaryKey=true, name="id",forceMap=true)
 	private String placeId;
 
-//	
+	
+	@Column(forceMap=true)
 	private String locationAsString;
 //	public static final int LocationColumn = 4;
 	private static final String SEPARATOR = "#";
-//	@Column	
+//	@Column(forceMap=true)	
 //	@Convert(converter=LocationConverter.class, disableConversion=false)
 //	private Location location;
 	
-//	@Column
-	
+	@Column(forceMap=true)
 	private String iconUrl;
-//	@Column
 	
+	@Column(forceMap=true)
 	private float rating;
-//	@Column
 	
+	@Column(forceMap=true)
 //	@Convert(converter=StringSetConverter.class)
 //	private Set<String> types;
 	private String typesAsString;
-	private String vicinity;
-//	@Column
 	
+	@Column(forceMap=true)
+	private String vicinity;
+	
+	@Column(forceMap=true)
 //	@Convert(converter=StringListConverter.class)
 //	private List<String> photosUrls;
 	private String photosUrlsAsString;
-	
+
+	@Column(forceMap=true)
 	private boolean permanentlyClosed;
 
-//	@Column
-	
+	@Column(forceMap=true)
 	private String formattedAddress;
-//	@Column
 	
+	@Column(forceMap=true)
 	private String internationalPhoneNumber;
-//	@Column
 	
+	@Column(forceMap=true)
 	private int reviewsCount;
-//	@Column
 	
+	@Column(forceMap=true)
 	private String website;
 	
-	
-//	@Column
-	
+	@Column(forceMap=true)
 	private double distance = UNREACHABLE_DISTANCE;
-//	@Column
 	
+	@Column(forceMap=true)
 	private String plusUrl;
 	
-	
-
 	
 	public Place() {
 		super();
 	}
 	
-	/*public PlaceEnhanced(Place place, Location locationHere) {
-		this.place = place;		
-		this.distance = distance(place,locationHere);
-	}
-	
-	public PlaceEnhanced(Place place, Location locationHere, Details details) {
-		this(place, locationHere);
-		this.details = details;
-	}	
-	
-	public Details getDetails() {
-		return details;
-	}
-	public void setDetails(Details details) {
-		this.details = details;
-	}
-
-	public Place getPlace() {
-		return place;
-	}
-	public void setPlace(Place place) {
-		this.place = place;
-	}*/
-	
-	public Place(String name, String id, Location location, String iconUrl,
+	public Place(String placeName, String placeId, Location location, String iconUrl,
 			float rating, 
 			Set<String> types, 
 			String vicinity,
@@ -144,25 +125,25 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 			String formattedAddress, String internationalPhoneNumber,
 			String googlePlusUrl, 
 			String website, int reviewsCount) {
-		this(name,id, location, iconUrl, rating, types, vicinity, photosUrl, permanentlyClosed, 
+		this(placeName, placeId, location, iconUrl, rating, types, vicinity, photosUrl, permanentlyClosed, 
 				formattedAddress, internationalPhoneNumber, googlePlusUrl, website);
 		this.reviewsCount = reviewsCount;
 	}
-	public Place(String name, String id, Location location, String iconUrl,
+	public Place(String placeName, String placeId, Location location, String iconUrl,
 			float rating, Set<String> types, String vicinity,
 			List<String> photosUrl, boolean permanentlyClosed,
 			String formattedAddress, String internationalPhoneNumber,
 			String plusUrl, String website) {
-		this(name,id, location, iconUrl, rating, types, vicinity, photosUrl, permanentlyClosed);
+		this(placeName, placeId, location, iconUrl, rating, types, vicinity, photosUrl, permanentlyClosed);
 		this.formattedAddress = formattedAddress;
 		this.internationalPhoneNumber = internationalPhoneNumber;
 		this.plusUrl = plusUrl;
 		this.website = website;
 	}
-	public Place(String name, String placeId, Location location, String icon,
+	public Place(String placeName, String placeId, Location location, String icon,
 			float rating, Set<String> types, String vicinity,
 			List<String> photosUrl, boolean permanentlyClosed) {
-		this.placeName = name;
+		this.placeName = placeName;
 		this.placeId = placeId;
 		this.locationAsString = stringifyLocation(location);
 //		this.location = location;
@@ -186,9 +167,10 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	public String getPlaceName() {
 		return placeName;
 	}
-	public void setName(String name) {
+	public void setPlaceName(String name) {
 		this.placeName = name;
 	}
+	
 	public String getPlaceId() {
 		return placeId;
 	}
@@ -371,15 +353,19 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	
 	@Override
 	public boolean equals(Object other) {
-		String placeId2 = ((Place)other).getPlaceId();
-		String placeName2 = ((Place)other).getPlaceName();
+		if (!(other instanceof Place)) {
+			return false;
+		}
+		Place p = ((Place)other);
+		String placeId2 = p.getPlaceId();
+		String placeName2 = p.getPlaceName();
 		
 //		Ln.d(placeId+" "+placeId2);
 //		Ln.d(placeName+" "+placeName2);
 		
-		if (placeId.equals(placeId2) &&
-				placeName.equals(placeName2))
-				return true;
+		if ( placeId.equals(placeId2) && placeName.equals(placeName2) ) {
+			return true;
+		}
 		return false;
 	}
 	

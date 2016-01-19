@@ -25,7 +25,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import roboguice.util.Ln;
 import net.iubris.diane.aware.cache.exceptions.base.CacheEmptyException;
 import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
 import net.iubris.diane.aware.cache.states.three.ThreeStateCacheAware;
@@ -36,13 +35,14 @@ import net.iubris.diane.searcher.location.aware.full.base.DefaultLocalizedSearch
 import net.iubris.ulysses.engine.searcher.location.aware.cache.UlyssesLocalizedSearcherCacheAware;
 import net.iubris.ulysses.engine.searcher.location.aware.network.UlyssesLocalizedSearcherNetworkAware;
 import net.iubris.ulysses.model.Place;
+import roboguice.util.Ln;
 import android.location.Location;
-import android.util.Log;
 
 
 /**
  * a localized searcher honoring Diane {@link DefaultLocalizedSearcherCacheNetworkAwareStrictChecking}<br/>
- * no cache awareness support in this version 
+ * no "cache empty" support in this version
+ * TODO add "cache empty" support 
  */
 @Singleton
 public class DefaultUlyssesLocalizedSearcher 
@@ -61,19 +61,24 @@ implements UlyssesLocalizedSearcher {
 	}
 	
 	@Override
-	public Void search(Location... locations) throws NoNetworkException,
-			NetworkAwareSearchException, CacheEmptyException {
+	public Void search(Location... locations) throws NoNetworkException, NetworkAwareSearchException, /*NoNetworkAndCacheEmptyException,*/ CacheEmptyException, CacheAwareSearchException {
 		try {
 //			Log.d("UlyssesLocalizedSearcherCacheNetworkAware:31","location: "+locations[0]);
 			super.search(locations);
-			
+
+			// just for debug
 			List<Place> result = getResult();
-			Ln.d("result: "+result);
+			String s="";
+			for (Place p: result) {
+				s+="|"+p.getPlaceName();
+			}
+			s.replaceFirst("|", "");
+			Ln.d("result: "+s);
 			
 		} catch (CacheTooOldException e) {
-			Log.d("DefaultUlyssesLocalizedSearcher:74", e.getMessage() );
-		} catch (CacheAwareSearchException e) {
-			Log.d("DefaultUlyssesLocalizedSearcher:76", e.getMessage() );
+			Ln.d(e.getMessage() );
+//		} catch (CacheAwareSearchException e) {
+//			Ln.d(e.getMessage() );
 		}
 		return null;
 	}

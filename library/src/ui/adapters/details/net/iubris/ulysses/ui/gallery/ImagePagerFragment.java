@@ -17,7 +17,7 @@ public class ImagePagerFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_details_gallery_street_view, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_details_gallery_streetview, container, false);
 		ViewPager pager = (ViewPager) rootView.findViewById(R.id.gallery_pager);
 		pager.setAdapter( new ImagePagerAdapter( getActivity(), imagesUrl ) );
 		pager.setCurrentItem(0);

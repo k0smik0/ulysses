@@ -20,52 +20,134 @@
 package net.iubris.ulysses.ui.utils.menu;
 
 
-import net.iubris.ulysses.model.Location;
+import net.iubris.apollus2.ui.activity._base.Refreshable;
+import net.iubris.apollus2.ui.activity._base.Searchable;
 import net.iubris.ulysses.R;
+import net.iubris.ulysses.model.Location;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingAlphabetic;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
 import net.iubris.ulysses.ui.activity.details.StreetViewPanoramaActivity;
 import net.iubris.ulysses.ui.intentable.IntentUtils;
-import net.iubris.ulysses.ui.intentable.Refreshable;
-import net.iubris.ulysses.ui.intentable.Searchable;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Build;
+import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnActionExpandListener;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.SubMenu;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.TextView;
 
 
 public class MenuUtils {
 	
+	public static <SA extends Activity & Searchable> MenuItem addSearchNew(Menu menu, final SA searchableActivity, String query) {
+//		Inflate the menu; this adds items to the action bar if it is present.
+		searchableActivity.getMenuInflater().inflate(R.menu.search, menu);
+
+		MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+		searchMenuItem.expandActionView();
+
+		// Get the SearchView and set the searchable configuration
+		SearchManager searchManager = (SearchManager) searchableActivity.getSystemService(Context.SEARCH_SERVICE);
+		final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+		// Assumes current activity is the searchable activity
+		searchView.setSearchableInfo(searchManager.getSearchableInfo(searchableActivity.getComponentName()));
+		// searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+		searchView.setQuery(query, false);
+
+		// Evito che compaia la tastiera quando vengono visualizzati i risultati della ricerca
+		searchView.clearFocus();
+
+		searchView.setOnQueryTextListener(new OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String arg0) {
+				// Nel momento in cui viene eseguita una nuova ricerca, i filtri vengono resettati
+//				filterActivated = false;
+//				for (int i = 0; i < categoryFilters.size(); i++) {
+//					categoryFilters.get(i).resetFilter();
+//				}
+				// Evito che compaia la tastiera quando viene eseguita una nuova ricerca
+				searchView.clearFocus();
+				return false;
+			}
+			@Override
+			public boolean onQueryTextChange(String arg0) {
+				// filterActivated = false;
+				return false;
+			}
+		});
+
+		MenuItemCompat.setOnActionExpandListener(searchMenuItem, new android.support.v4.view.MenuItemCompat.OnActionExpandListener() {
+			@Override
+			public boolean onMenuItemActionExpand(MenuItem arg0) {
+				return true; // true if the item should expand
+			}
+			@Override
+			public boolean onMenuItemActionCollapse(MenuItem arg0) {
+				searchableActivity.finish();
+				return false; // false if collapsing should be suppressed
+			}
+		});
+		return searchMenuItem;
+	}
+	
+	public static MenuItem addSearchAction(Menu menu, Activity activity) {
+		activity.getMenuInflater().inflate(R.menu.main, menu);
+        
+        final MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+        
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) 
+//        		menu.findItem(R.id.action_search).getActionView();
+//        		(SearchView)searchMenuItem.getActionView();
+        		MenuItemCompat.getActionView(searchMenuItem);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
+        searchView.setOnQueryTextListener(new OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String arg0) {
+				if (searchMenuItem != null)
+	                searchMenuItem.collapseActionView();
+				// false to let the SearchView perform the default action
+				return false;
+			}
+			@Override
+			public boolean onQueryTextChange(String arg0) {
+				// false if the SearchView should perform the default action
+				// of showing any suggestions if available
+				return false;
+			}
+		});
+        
+        return searchMenuItem;
+	}
+	
 	@SuppressLint("NewApi")
-	public static MenuItem addSearch(Menu menu, final Searchable searchable, final Activity activity) {
-		/* old semi-working
-		MenuItem menuItem = menu.add(R.string.menu__search)
-				.setIcon(R.drawable.ic_action_search_white);
-		if (Build.VERSION.SDK_INT > 10)
-			menuItem
-				.setActionView(R.layout.collapsible_edittext)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT| MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-		*/
+	public static <SA extends Activity & Searchable> MenuItem addSearch(Menu menu, final SA searchableActivity/*, final Activity activity*/) {
+		/*
+//		 old semi-working
+//		MenuItem menuItem = menu.add(R.string.menu__search)
+//				.setIcon(R.drawable.ic_action_search_white);
+//		if (Build.VERSION.SDK_INT > 10)
+//			menuItem
+//				.setActionView(R.layout.collapsible_edittext)
+//				.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT| MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+		
 
 		MenuItem menuItem = menu.add(R.string.menu__search);
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			SearchView searchView = new SearchView(activity);
+			SearchView searchView = new SearchView(searchableActivity);
 //			changeSearchTextColor(searchView);
 			
 			menuItem
@@ -74,18 +156,18 @@ public class MenuUtils {
 				.setActionView(searchView)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT| MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 			
-			SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
+			SearchManager searchManager = (SearchManager) searchableActivity.getSystemService(Context.SEARCH_SERVICE);
 //			SearchView searchView = (SearchView) menuItem.getActionView();
-			searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
+			searchView.setSearchableInfo(searchManager.getSearchableInfo(searchableActivity.getComponentName()));
 			searchView.setIconifiedByDefault(false);
 			searchView.setSubmitButtonEnabled(true);
 						
 			searchView.setOnQueryTextListener( new OnQueryTextListener() {
 				@Override
 				public boolean onQueryTextSubmit(String query) {
-					searchable.search(query);
+					searchableActivity.search(query);
 //					new Intent(Intent.ACTION_SEARCH).
-					activity.onSearchRequested();
+					searchableActivity.onSearchRequested();
 					return false;
 				}
 				@Override
@@ -100,15 +182,18 @@ public class MenuUtils {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
 	//Log.d("MenuUtilsLegacy:64","onMenuItemClick");
-						activity.onSearchRequested();
+						searchableActivity.onSearchRequested();
 						return false;
 					}
 				});
 		}
-		return menuItem;
+		return menuItem;*/
+		return net.iubris.apollus2.ui.fragments.tabspager.activity.MenuUtils.addSearch(menu, searchableActivity);
 	}
+	/*
 	@SuppressLint("NewApi")
 	private static void changeSearchTextColor(SearchView searchView) {
+		
 //		searchView.setQueryHint("Type something...");
 		Resources resources = searchView.getContext().getResources();
         int searchPlateId = resources.getIdentifier("android:id/search_plate", null, null);
@@ -123,7 +208,7 @@ public class MenuUtils {
 //	            searchText.setHintTextColor(Color.WHITE);
             }
         }
-	}
+	}*/
 
 	
 	@SuppressLint({ "NewApi", "InlinedApi" })

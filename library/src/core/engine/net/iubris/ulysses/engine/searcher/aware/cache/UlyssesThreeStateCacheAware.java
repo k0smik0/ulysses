@@ -19,19 +19,28 @@
  ******************************************************************************/
 package net.iubris.ulysses.engine.searcher.aware.cache;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
+import net.iubris.diane.aware.cache.states.three.SearchingByCacheBehaviour;
 import net.iubris.diane.aware.cache.states.three.ThreeStateCacheAware;
 
 @Singleton
 public class UlyssesThreeStateCacheAware implements ThreeStateCacheAware {
+	
+	private final SearchingByCacheBehaviour searchingByCacheBehaviour;
+	
+	@Inject
+	public UlyssesThreeStateCacheAware(SearchingByCacheBehaviour searchingByCacheBehaviour) {
+		this.searchingByCacheBehaviour = searchingByCacheBehaviour;
+	}
 	@Override
 	public Boolean isCacheAvailable() throws CacheTooOldException {
 		return true;
 	}
 	@Override
 	public boolean useFirstlyCache() {
-		return false;
+		return searchingByCacheBehaviour.useFirstlyCache();
 	}
 }

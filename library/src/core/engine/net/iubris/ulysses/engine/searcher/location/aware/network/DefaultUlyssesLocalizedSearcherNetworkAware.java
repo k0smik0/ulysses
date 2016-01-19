@@ -55,8 +55,7 @@ implements UlyssesLocalizedSearcherNetworkAware {
 	private List<Place> result;
 	
 	@Inject
-	public DefaultUlyssesLocalizedSearcherNetworkAware(CheckerStateNetworkAware checkerStateNetworkAware, 
-			SocratesDelegate socratesDelegate, Persister persister) {
+	public DefaultUlyssesLocalizedSearcherNetworkAware(CheckerStateNetworkAware checkerStateNetworkAware, SocratesDelegate socratesDelegate, Persister persister) {
 		super(checkerStateNetworkAware);
 		this.socratesDelegate = socratesDelegate;
 		this.persister = persister;
@@ -93,6 +92,7 @@ implements UlyssesLocalizedSearcherNetworkAware {
 				persister.setPlaces(r);
 			}
 		} catch (PlacesSearcherException e) {
+			Ln.d("PlacesSearcherException");
 			throw new PlacesRetrievingException(e);
 		} 
 		catch (DetailsRetrieverException e) {
@@ -110,6 +110,9 @@ implements UlyssesLocalizedSearcherNetworkAware {
 			throw new PlacesTyrannusStatusException(e);
 		} catch (UnknowErrorException e) {
 			throw new PlacesTyrannusStatusException(e);
+		} catch(NullPointerException e) {
+			Ln.d("NullPointerException");
+			throw new PlacesRetrievingException(e);
 		} catch(Exception e) {
 			throw new PlacesRetrievingException(e);
 		}

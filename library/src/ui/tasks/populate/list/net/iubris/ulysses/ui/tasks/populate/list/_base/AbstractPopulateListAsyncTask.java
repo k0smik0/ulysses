@@ -65,8 +65,8 @@ public abstract class AbstractPopulateListAsyncTask extends AbstractUlyssesTask 
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void execute(Location location) {
-		this.location = location;
+	public void execute(Location... location) {
+		this.location = location[0];
 //		Ln.d("using location: "+location);
 		super.execute();
 	}

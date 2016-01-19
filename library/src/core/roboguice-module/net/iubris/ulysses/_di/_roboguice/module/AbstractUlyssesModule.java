@@ -23,12 +23,14 @@ package net.iubris.ulysses._di._roboguice.module;
 import java.util.List;
 
 import net.iubris.diane._roboguice.module.AbstractDianeModule;
+import net.iubris.diane.aware.cache.states.three.SearchingByCacheBehaviour;
 import net.iubris.diane.aware.cache.states.three.ThreeStateCacheAware;
 import net.iubris.diane.aware.location.state.three.base.annotation.DistanceMaximumThreshold;
 import net.iubris.diane.searcher.location.aware.cache.LocalizedSearcherCacheAwareStrictChecking;
 import net.iubris.diane.searcher.location.aware.full.LocalizedSearcherCacheNetworkAwareStrictChecking;
 import net.iubris.diane.searcher.location.aware.network.LocalizedSearcherNetworkAwareStrictChecking;
 import net.iubris.ulysses.engine.searcher.aware.cache.UlyssesThreeStateCacheAware;
+import net.iubris.ulysses.engine.searcher.aware.cache.config.DefaultSearchingByCacheBehaviour;
 import net.iubris.ulysses.engine.searcher.aware.full.DefaultUlyssesSearcher;
 import net.iubris.ulysses.engine.searcher.aware.full.UlyssesSearcher;
 import net.iubris.ulysses.engine.searcher.location.aware.cache.DefaultUlyssesLocalizedSearcherCacheAware;
@@ -99,6 +101,10 @@ public abstract class AbstractUlyssesModule extends AbstractDianeModule {
 	@Override
 	protected void bindThreeStateCacheAware() {
 		bind(ThreeStateCacheAware.class).to(UlyssesThreeStateCacheAware.class);
+	}
+	@Override
+	protected void bindSearchByCacheBehaviourForThreeStateCacheAware() {
+		bind(SearchingByCacheBehaviour.class).to(DefaultSearchingByCacheBehaviour.class);
 	}
 	
 	protected abstract SocratesToUlyssesModule getSocratesToUlyssesModule();

@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.iubris.diane.aware.cache.exceptions.base.CacheEmptyException;
 import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
+import net.iubris.diane.aware.location.exceptions.base.LocationFreshNullException;
 import net.iubris.diane.aware.network.exceptions.base.NoNetworkException;
 import net.iubris.diane.searcher.aware.cache.exceptions.CacheAwareSearchException;
 import net.iubris.diane.searcher.aware.exceptions.base.StillSearchException;
@@ -19,11 +20,13 @@ public interface UlyssesSearcher extends FullAwareSearcher<List<Place>>{
 	@Override
 	public Void search(Void... arg0) throws 
 		StillSearchException,
+		LocationFreshNullException,
 		LocationTooNearException,
 		LocationNotSoUsefulException, NoNetworkException,
 		CacheTooOldException,
 		CacheEmptyException, 
 		CacheAwareSearchException,
+//		NoNetworkAndCacheEmptyException,
 		PlacesRetrievingException, 
 		PlacesUnbelievableZeroResultStatusException, 
 		PlacesTyrannusStatusException;

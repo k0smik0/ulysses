@@ -12,10 +12,10 @@ import android.widget.ArrayAdapter;
 
 public class PopulateListLocalizedTask extends AbstractPopulateListAsyncTask {
 
-	@Inject UlyssesLocalizedSearcher ulyssesLocalizedSearcher;
+	@Inject 
+	private UlyssesLocalizedSearcher ulyssesLocalizedSearcher;
 	
-	public PopulateListLocalizedTask(Activity context,
-			ArrayAdapter<Place> adapter) {
+	public PopulateListLocalizedTask(Activity context, ArrayAdapter<Place> adapter) {
 		super(context, adapter);
 	}
 

@@ -1,0 +1,39 @@
+package net.iubris.ulysses.tasks.search.aware.locationstate.provider;
+
+import javax.inject.Inject;
+
+import net.iubris.diane.searcher.aware.location.exceptions.base.LocationNotSoUsefulException;
+import net.iubris.ulysses.tasks.search.aware.SearchAwareTaskLocationStateable;
+import net.iubris.ulysses.tasks.search.aware.locationstate.LocationExceptionAfterFirstResult;
+import net.iubris.ulysses.tasks.search.aware.locationstate.LocationExceptionStateBeforeFirstResult;
+import net.iubris.ulysses.tasks.search.aware.locationstate.annotations.UIMessageForLocationStateHandlerAfterFirstResultForLocationTooNearException;
+import net.iubris.ulysses.tasks.search.aware.locationstate.annotations.UIMessageForLocationStateHandlerBeforeFirstResultForLocationTooNearException;
+import net.iubris.ulysses.tasks.search.aware.locationstate.uimessage.UIMessageForLocationStateHandlerAfterFirstResult;
+import net.iubris.ulysses.tasks.search.aware.locationstate.uimessage.UIMessageForLocationStateHandlerBeforeFirstResult;
+
+public class DefaultMetaProviderForLocationExceptionStateForLocationTooNearException
+	extends AbstractMetaProviderForLocationExceptionState
+	implements MetaProviderForLocationExceptionStateForLocationTooNearException {
+
+	private LocationExceptionAfterFirstResult locationExceptionAfterFirstResult;
+
+	@Inject
+	public DefaultMetaProviderForLocationExceptionStateForLocationTooNearException(@UIMessageForLocationStateHandlerBeforeFirstResultForLocationTooNearException UIMessageForLocationStateHandlerBeforeFirstResult uiMessageForLocationStateHandlerBeforeFirstResult, 
+			@UIMessageForLocationStateHandlerAfterFirstResultForLocationTooNearException UIMessageForLocationStateHandlerAfterFirstResult uiMessageForLocationStateHandlerAfterFirstResult) {
+		super(uiMessageForLocationStateHandlerBeforeFirstResult, uiMessageForLocationStateHandlerAfterFirstResult);	
+	}
+	
+	@Override
+	public MetaProviderForLocationExceptionState eventuallyInit(SearchAwareTaskLocationStateable searchAwareTaskLocationStateable) {
+		if (super.locationExceptionState==null) {
+			locationExceptionAfterFirstResult = new LocationExceptionAfterFirstResult(searchAwareTaskLocationStateable, LocationNotSoUsefulException.class, uiMessageForLocationStateHandlerAfterFirstResult);
+			super.locationExceptionState = new LocationExceptionStateBeforeFirstResult(searchAwareTaskLocationStateable, LocationNotSoUsefulException.class, uiMessageForLocationStateHandlerBeforeFirstResult, locationExceptionAfterFirstResult);
+		}
+		return this;
+	}
+	
+	@Override
+	public void setDefault() {
+		super.locationExceptionState = locationExceptionAfterFirstResult;
+	}
+}

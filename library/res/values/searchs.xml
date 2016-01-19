@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="search__searching">searching places</string>
-	
-	<string name="search__searching_address">searching your address</string>
-	
-	<string name="search__success">places found!</string>
-	<string name="search__found_by_cache">results found using cache</string>
-	
-	<string name="search__exception_still_working">searching is still working</string>
-	<string name="search__exception_no_network">no connectivity, trying to use cache</string>
-	<string name="search__exception_location_too_near">new location is too near to the old ones,\nusing previous result</string>
-	<string name="search__exception_location_not_so_useful">new location is not so useful than old ones,\nusing previous result</string>
 
-	<string name="search__exception_places_retrieving_status">something wrong retrieving data from google</string>
-	<string name="search__exception_place_unbelievable_zero_result_status">something wrong:\nzero results\nare you in Sibery?</string>
-	<string name="search__exception_places_tyrannus_status">something heavy wrong by google</string>
-	
-   <string name="search__exception_geocoder_unable_to_parse">Sorry,\nunable to retrieve your street address.\nAnyway, you can start a search!</string>
-	<string name="search__exception_generic">Sorry, sometimes something is wrong</string>
+    <string name="search__searching">searching places</string>
+    <string name="search__searching_address">searching your address</string>
+    <string name="search__success">places found!</string>
+    <string name="search__found_by_cache">results found using cache</string>
+    <string name="search__exception_still_working">searching is still working</string>
+    <string name="search__exception_no_network">no connectivity, trying to use cache</string>
+    <string name="search__exception_location_too_near">new location is too near to the old ones,\nusing previous result</string>
+    <string name="search__exception_location_not_so_useful">new location is not so useful than old ones,\nusing previous result</string>
+    <string name="search__exception_places_retrieving_status">something wrong retrieving data from google</string>
+    <string name="search__exception_place_unbelievable_zero_result_status">something wrong:\nzero results\nare you in Sibery?</string>
+    <string name="search__exception_places_tyrannus_status">something heavy wrong by google</string>
+    <string name="search__exception_geocoder_unable_to_parse">Sorry,\nunable to retrieve your street address.\nAnyway, you can start a search!</string>
+    <string name="search__exception_generic">Sorry, sometimes something is wrong</string>
+
 </resources>

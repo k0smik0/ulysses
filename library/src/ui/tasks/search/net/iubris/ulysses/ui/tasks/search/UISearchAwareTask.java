@@ -31,8 +31,10 @@ import net.iubris.ulysses.ui._di.progressdialog.search.annotations.ProgressDialo
 import roboguice.util.Ln;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Resources;
-import android.util.Log;
+import android.widget.Toast;
 
 @Singleton
 public class UISearchAwareTask extends SearchAwareTask {
@@ -49,14 +51,24 @@ public class UISearchAwareTask extends SearchAwareTask {
 	protected final String search__exception_place_unbelievable_zero_result_status;
 	protected final String search__exception_places_tyrannus_status;
 	protected final String search__exception_generic;
-	
 
-	@Inject @ProgressDialogForSearchPlaces protected ProgressDialog progressDialog;
+	@Inject
+	@ProgressDialogForSearchPlaces 
+	protected ProgressDialog progressDialog;
+
+	private OnSuccessCallback onSuccessCallback;
 	
 	
 	protected UISearchAwareTask(Activity activity) {
 		super(activity, Executors.newSingleThreadExecutor());
 		
+		progressDialog.setOnDismissListener(new OnDismissListener() {
+			
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				ulyssesSearcher.resetSearchState();
+			}
+		});
 		resources = activity.getResources();
 		search__success = resources.getString(R.string.search__success);
 		
@@ -82,21 +94,34 @@ public class UISearchAwareTask extends SearchAwareTask {
 	
 	@Override
 	protected void onSuccess(List<Place> places) throws Exception {
+		super.onSuccess(places);
 		doOnSuccess(places);
 	}
-	
-	protected void doOnSuccess(List<Place> places) {
-		if (ulyssesSearcher.isFoundByCache())
+	@Override
+	public void doOnSuccess(List<Place> places) {
+		super.doOnSuccess(places);
+		
+		if (isFoundByCache()) {
 			eventuallyNotifyIsFoundByCache();
+		}
+		if (onSuccessCallback!=null) {
+			onSuccessCallback.exec();
+		}
+		Ln.d("doOnSuccess!");
 		
-		eventuallyCancelSearchWaitingUi();
-		
+		// TODO remove
 		printPhotosDetailsForDebug(places);
 	}
+	protected void eventuallyNotifyIsFoundByCache() {}
+	public void setOnSuccessCallback(OnSuccessCallback onSuccessCallback) {
+		if (this.onSuccessCallback==null) {
+			this.onSuccessCallback = onSuccessCallback;
+		}
+	}
 	private void printPhotosDetailsForDebug(List<Place> places) {
-		if (places==null)
+		if (places==null) {
 			return;
-		
+		}		
 		for (Place place : places) {
 			List<String> photosUrls = place.getPhotosUrls();
 			if (photosUrls!=null && photosUrls.size() > 1) {
@@ -104,27 +129,28 @@ public class UISearchAwareTask extends SearchAwareTask {
 				Ln.d(photosUrls.toArray());
 			}
 		}
-	}
-	
-	protected void eventuallyNotifyIsFoundByCache() {}
+	}	
 	
 	protected void onException(ZeroResultException e) {
 		eventuallyCancelSearchWaitingUi();
+		Toast.makeText(context, "sorry, no results", Toast.LENGTH_LONG).show();
 	}
 	
 	/**
 	 * default: {@link ProgressDialog#show()}
 	 */
 	protected void eventuallyShowSearchWaitingUi() {
-		if (!((Activity)context).isFinishing())
+		if (!((Activity)context).isFinishing()) {
 			progressDialog.show();
+		}
 	}
 	/**
 	 * default: {@link ProgressDialog#cancel()}
 	 */
 	protected void eventuallyCancelSearchWaitingUi() {
-		if (!((Activity)context).isFinishing())
+		if (!((Activity)context).isFinishing()) {
 			progressDialog.cancel();
+		}
 	}
 	
 	/**
@@ -152,6 +178,12 @@ public class UISearchAwareTask extends SearchAwareTask {
 	protected void onException(CacheAwareSearchException arg0) throws RuntimeException {
 		eventuallyCancelSearchWaitingUi();
 	}
+	
+	@Override
+	protected void onException(CacheEmptyException e) throws RuntimeException {
+		eventuallyCancelSearchWaitingUi();
+	}
+	
 	/**
 	 * default: executes {@link #eventuallyCancelSearchWaitingUi}
 	 */
@@ -167,10 +199,6 @@ public class UISearchAwareTask extends SearchAwareTask {
 		eventuallyCancelSearchWaitingUi();
 	}
 	
-	
-	protected void onException(CacheEmptyException e) throws RuntimeException {
-		eventuallyCancelSearchWaitingUi();
-	}
 	/**
 	 * default: executes {@link #eventuallyCancelSearchWaitingUi}
 	 */
@@ -199,9 +227,21 @@ public class UISearchAwareTask extends SearchAwareTask {
 	 */
 	@Override
 	protected void onException(LocationTooNearException arg0) throws RuntimeException {
-		Log.d("UISearchawareTask","LocationTooNearException");
+		Ln.d("LocationTooNearException: "+arg0.getMessage());
 		eventuallyCancelSearchWaitingUi();
+		super.onException(arg0);
 	}
+//	@Override
+//	protected void eventuallyHandleInUIPreSearchingOnLocationTooNearExceptionWhenNeverHappenedBefore() {}
+//	@Override
+//	protected void eventuallyHandleInUISearchResultUsingNetworkOnLocationTooNearExceptionIfNeverResultBefore(List<Place> resultForced) {}
+//	@Override
+//	protected void eventuallyHandleInUISearchResultUsingCacheOnLocationTooNearExceptionIfNeverResultBefore(List<Place> resultForced) {}
+//	@Override
+//	protected void eventuallyHandleInUISearchingFailedByCacheInLocationTooNearException() {}
+//	@Override
+//	protected void eventuallyShowErrorMessageOnLocationTooNearException(LocationTooNearException e) {}
+	
 	/**
 	 * default: executes {@link #eventuallyCancelSearchWaitingUi}
 	 */
@@ -217,12 +257,23 @@ public class UISearchAwareTask extends SearchAwareTask {
 		eventuallyCancelSearchWaitingUi();
 	}
 	/**
-	 * default: executes {@link #eventuallyCancelSearchWaitingUi}
+	 * default: executes {@link #eventuallyCancelSearchWaitingUi}, then {@link #onException(NoNetworkException) in {@link SearchAwareTask}
 	 */
 	@Override
 	protected void onException(NoNetworkException arg0) throws RuntimeException {
 		eventuallyCancelSearchWaitingUi();
+		super.onException(arg0);
 	}
+	@Override
+	protected void eventuallyHandleInUIPreSearchingByCacheInOnNoNetworkException() {}
+	@Override
+	protected void eventuallyHandleInUISearchingFoundByCacheInOnNoNetworkException() {}
+//	@Override
+//	protected void eventuallyHandleInUISearchingFailedByCacheInOnNoNetworkException() {}
+//	@Override
+//	protected void eventuallyHandleInUIAnyExceptionSearchingByCacheInOnNoNetworkException(Exception e) {}
+	@Override
+	protected void eventuallyHandleInUISearchingFoundByNetworkUsingInMemoryResultsInOnNoNetworkException() {}
 	/**
 	 * default: executes {@link #eventuallyCancelSearchWaitingUi}
 	 */
@@ -288,7 +339,7 @@ public class UISearchAwareTask extends SearchAwareTask {
 	protected void onException(PlacesTyrannusStatusException e) throws RuntimeException {
 		eventuallyCancelSearchWaitingUi();
 		eventuallyShowErrorMessage(search__exception_places_tyrannus_status, e);
-	}	
+	}
 	/*
 	 * end socrates zone
 	 */

@@ -58,9 +58,9 @@ public class PopulateMapAwareTask extends AbstractPopulateMapTask {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void execute(Location myLocation) {
+	public void execute(Location... myLocations) {
 //		if (myLocation==null) throw new LocationNullException();
-		this.myLocation = myLocation;
+		this.myLocation = myLocations[0];
 		super.execute();
 	}
 	

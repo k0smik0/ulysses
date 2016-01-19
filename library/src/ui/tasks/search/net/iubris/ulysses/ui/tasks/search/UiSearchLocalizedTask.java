@@ -10,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import roboguice.util.Ln;
 import net.iubris.diane.aware.cache.exceptions.CacheStateException;
 import net.iubris.diane.aware.cache.exceptions.base.CacheTooOldException;
 import net.iubris.diane.aware.network.exceptions.NetworkStateException;
@@ -50,7 +51,9 @@ public class UiSearchLocalizedTask extends SearchLocalizedTask {
 	
 	@Inject @ProgressDialogForSearchPlaces protected ProgressDialog progressDialog;
 	
-	@Inject UlyssesLocalizedSearcher ulyssesLocalizedSearcher;
+	@Inject private UlyssesLocalizedSearcher ulyssesLocalizedSearcher;
+
+	private OnSuccessCallback onSuccessCallback;
 	
 	protected UiSearchLocalizedTask(Context context) {
 		super(context);
@@ -77,8 +80,19 @@ public class UiSearchLocalizedTask extends SearchLocalizedTask {
 	@Override
 	protected void onSuccess(List<Place> t) throws Exception {
 		super.onSuccess(t);
-		if (ulyssesLocalizedSearcher.isFoundByCache())
+		if (ulyssesLocalizedSearcher.isFoundByCache()) {
 			eventuallyNotifyIsFoundByCache();
+		}
+		if (onSuccessCallback!=null) {
+			onSuccessCallback.exec();
+		}
+		Ln.d("doOnSuccess!");
+		eventuallyCancelSearchWaitingUi();
+	}
+	public void setOnSuccessCallback(OnSuccessCallback onSuccessCallback) {
+		if (this.onSuccessCallback==null) {
+			this.onSuccessCallback = onSuccessCallback;
+		}
 	}
 	
 	protected void eventuallyNotifyIsFoundByCache() {}
@@ -210,6 +224,7 @@ public class UiSearchLocalizedTask extends SearchLocalizedTask {
 	 * default: {@link ProgressDialog#show()}
 	 */
 	protected void eventuallyShowSearchWaitingUi() {
+		Ln.d("showing progressdialog: "+progressDialog);
 		progressDialog.show();
 	}
 	/**

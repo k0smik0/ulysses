@@ -24,6 +24,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import net.iubris.diane.aware.cache.exceptions.base.CacheEmptyException;
 import net.iubris.diane.aware.cache.states.three.ThreeStateCacheAware;
 import net.iubris.diane.searcher.aware.cache.exceptions.CacheAwareSearchException;
 import net.iubris.diane.searcher.location.aware.cache.base.AbstractLocalizedSearcherCacheAwareStrictChecking;
@@ -35,6 +36,13 @@ import android.location.Location;
 public class DefaultUlyssesLocalizedSearcherCacheAware 
 extends AbstractLocalizedSearcherCacheAwareStrictChecking<List<Place>> 
 implements UlyssesLocalizedSearcherCacheAware {
+	
+	public enum CacheSearchExceptions {
+		RESULTS_LESS_THAN_MINIMUM,
+		RESULTS_EMPTY
+	}
+	public static final int MINIMUM = 20;
+	
 
 	private final Persister persister;
 	private List<Place> result;
@@ -52,11 +60,15 @@ implements UlyssesLocalizedSearcherCacheAware {
 	}
 	
 	@Override
-	protected void doSearch(Location location) throws CacheAwareSearchException {
+	protected void doSearch(Location location) throws CacheEmptyException, CacheAwareSearchException {
 		List<Place> found = persister.searchPlaces(location);
 		result = found;
-		if (found.size() < 20)
-			throw new CacheAwareSearchException("results < 20, you should try network searching");
+		if (found.size() == 0) {
+			throw new CacheEmptyException(CacheSearchExceptions.RESULTS_EMPTY.name());
+		}
+		if (found.size() < MINIMUM) {
+			throw new CacheAwareSearchException(CacheSearchExceptions.RESULTS_LESS_THAN_MINIMUM.name());
+		}
 //			new HashList<Place>();
 //		Log.d("UlyssesLocalizedSearcherCacheAware", "found some results from cache? "+result.size());
 	}
