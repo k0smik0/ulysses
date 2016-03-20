@@ -205,7 +205,7 @@ public class SearchAwareTask extends RoboSearchAwareAsyncTask<DefaultUlyssesSear
 	}
 	@Override
 	public void doOnSuccess(List<Place> result) throws RuntimeException {
-		setLocationExceptionStatesDefault();
+		setLocationExceptionStatesAfterFirstResult();
 		if (ulyssesSearcher.isFoundByCache()) {
 			setResultFoundByCache();
 		} else {
@@ -241,9 +241,9 @@ public class SearchAwareTask extends RoboSearchAwareAsyncTask<DefaultUlyssesSear
 		};
 		abstract public void setLocationExceptionState(LocationExceptionState futureLocationExceptionState, SearchAwareTask searchAwareTask);
 	}
-	private void setLocationExceptionStatesDefault() {
-		this.metaProviderForLocationExceptionStateForLocationTooNearException.setDefault();
-		this.metaProviderForLocationExceptionStateForLocationNotSoUsefulException.setDefault();
+	private void setLocationExceptionStatesAfterFirstResult() {
+		this.metaProviderForLocationExceptionStateForLocationTooNearException.setAfterFirstResult();
+		this.metaProviderForLocationExceptionStateForLocationNotSoUsefulException.setAfterFirstResult();
 	}
 	@Override
 	public void setResultFoundByNetwork() {

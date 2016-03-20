@@ -2,6 +2,7 @@ package net.iubris.ulysses.tasks.search.aware.locationstate.provider;
 
 import javax.inject.Inject;
 
+import roboguice.util.Ln;
 import net.iubris.diane.searcher.aware.location.exceptions.base.LocationNotSoUsefulException;
 import net.iubris.ulysses.tasks.search.aware.SearchAwareTaskLocationStateable;
 import net.iubris.ulysses.tasks.search.aware.locationstate.LocationExceptionAfterFirstResult;
@@ -26,14 +27,16 @@ public class DefaultMetaProviderForLocationExceptionStateForLocationTooNearExcep
 	@Override
 	public MetaProviderForLocationExceptionState eventuallyInit(SearchAwareTaskLocationStateable searchAwareTaskLocationStateable) {
 		if (super.locationExceptionState==null) {
-			locationExceptionAfterFirstResult = new LocationExceptionAfterFirstResult(searchAwareTaskLocationStateable, LocationNotSoUsefulException.class, uiMessageForLocationStateHandlerAfterFirstResult);
+			Ln.d("Init DefaultMetaProviderForLocationExceptionStateForLocationTooNearException");
+			this.locationExceptionAfterFirstResult = new LocationExceptionAfterFirstResult(searchAwareTaskLocationStateable, LocationNotSoUsefulException.class, uiMessageForLocationStateHandlerAfterFirstResult);
 			super.locationExceptionState = new LocationExceptionStateBeforeFirstResult(searchAwareTaskLocationStateable, LocationNotSoUsefulException.class, uiMessageForLocationStateHandlerBeforeFirstResult, locationExceptionAfterFirstResult);
 		}
 		return this;
 	}
 	
 	@Override
-	public void setDefault() {
+	public void setAfterFirstResult() {
 		super.locationExceptionState = locationExceptionAfterFirstResult;
+		Ln.d("locationExceptionState is set to LocationExceptionAfterFirstResult");
 	}
 }

@@ -67,7 +67,7 @@ public class Sieve {
 			if (filter.matchOn(place))
 				return filter.getBitmap();
 		}
-		Ln.d("no bitmap found for place '"+place.getPlaceName()+"', using defaultBitmap");
+		Ln.d("no specific bitmap by type/name found for place '"+place.getPlaceName()+"', using defaultBitmap");
 		return defaultBitmap;
 	}
 }

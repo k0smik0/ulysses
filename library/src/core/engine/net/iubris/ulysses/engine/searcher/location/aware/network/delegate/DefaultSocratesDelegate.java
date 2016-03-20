@@ -126,13 +126,18 @@ public class DefaultSocratesDelegate implements SocratesDelegate {
 					net.iubris.ulysses.model.Location location = buildLocation(googlePlace.getGeometry().getLocation());
 					String icon = uriToString(googlePlace.getIcon());
 					Set<String> typesAsString = googleTypesAsString(googlePlace.getTypes());
-					List<String> photosUrls = buildPhotosUrls(googlePlace.getPhotos());
+					List<String> photosUrls = buildPhotosUrls(
+//							googlePlace.getPhotos()
+							details.getPhotos()
+							);
+//					List<String> photosComments = details.getPhotos().g
+//					Ln.d("added "+photosUrls.size()+" photos for "+googlePlace.getName());
 					
 					Place place = new Place(googlePlace.getName(), googlePlace.getPlaceId(), 
 							location,
 							icon, googlePlace.getRating(), 
 							typesAsString, googlePlace.getVicinity(), 
-							photosUrls, 
+							photosUrls,
 							googlePlace.isPermanentlyClosed(),
 							
 							details.getFormattedAddress(),

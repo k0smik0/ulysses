@@ -30,9 +30,12 @@
 	
 	<string name="label_gallery">Galleria Immagini</string>
 	<string name="label_links">Sito Web</string>
-	<string name="label_street_view">Nei dintorni</string>
-	<string name="label_no_photo">presto su questi schermi !</string>
+	
+	<string name="label_no_photo">Spiacente, non sono presenti foto,\nma è comunque possibile visualizzare la StreetView!</string>
 	<string name="label_no_url">Spiacente, non è stato fornito alcun link</string>
+	
+	<string name="label_street_view">Nei dintorni</string>
+	<string name="label_button_street_view">Apri la visualizzazione 360\'!</string>
 	
 	<string name="gplus">dettagli</string>
 	<string name="reviews">recensioni</string>

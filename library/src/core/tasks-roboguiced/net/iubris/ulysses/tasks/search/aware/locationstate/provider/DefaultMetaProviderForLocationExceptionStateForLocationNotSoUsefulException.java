@@ -10,6 +10,7 @@ import net.iubris.ulysses.tasks.search.aware.locationstate.annotations.UIMessage
 import net.iubris.ulysses.tasks.search.aware.locationstate.annotations.UIMessageForLocationStateHandlerBeforeFirstResultForLocationNotSoUsefulException;
 import net.iubris.ulysses.tasks.search.aware.locationstate.uimessage.UIMessageForLocationStateHandlerAfterFirstResult;
 import net.iubris.ulysses.tasks.search.aware.locationstate.uimessage.UIMessageForLocationStateHandlerBeforeFirstResult;
+import roboguice.util.Ln;
 
 public class DefaultMetaProviderForLocationExceptionStateForLocationNotSoUsefulException
 	extends AbstractMetaProviderForLocationExceptionState
@@ -18,22 +19,25 @@ public class DefaultMetaProviderForLocationExceptionStateForLocationNotSoUsefulE
 	private LocationExceptionAfterFirstResult locationExceptionDefault;
 
 	@Inject
-	public DefaultMetaProviderForLocationExceptionStateForLocationNotSoUsefulException(@UIMessageForLocationStateHandlerBeforeFirstResultForLocationNotSoUsefulException UIMessageForLocationStateHandlerBeforeFirstResult uiMessageForLocationStateNeverHappenedBeforeHandler, 
+	public DefaultMetaProviderForLocationExceptionStateForLocationNotSoUsefulException(
+			@UIMessageForLocationStateHandlerBeforeFirstResultForLocationNotSoUsefulException UIMessageForLocationStateHandlerBeforeFirstResult uiMessageForLocationStateNeverHappenedBeforeHandler, 
 			@UIMessageForLocationStateHandlerAfterFirstResultForLocationNotSoUsefulException UIMessageForLocationStateHandlerAfterFirstResult uiMessageForLocationStateDefaultHandler) {
 		super(uiMessageForLocationStateNeverHappenedBeforeHandler, uiMessageForLocationStateDefaultHandler);	
 	}
 
 	@Override
 	public MetaProviderForLocationExceptionState eventuallyInit(SearchAwareTaskLocationStateable searchAwareTaskLocationStateable) {
-		if (super.locationExceptionState==null) {
+		if (locationExceptionState==null) {
+			Ln.d("Init DefaultMetaProviderForLocationExceptionStateForLocationNotSoUsefulException");
+			locationExceptionState = new LocationExceptionStateBeforeFirstResult(searchAwareTaskLocationStateable, LocationNotSoUsefulException.class, uiMessageForLocationStateHandlerBeforeFirstResult, locationExceptionDefault);
 			locationExceptionDefault = new LocationExceptionAfterFirstResult(searchAwareTaskLocationStateable, LocationNotSoUsefulException.class, uiMessageForLocationStateHandlerAfterFirstResult);
-			super.locationExceptionState = new LocationExceptionStateBeforeFirstResult(searchAwareTaskLocationStateable, LocationNotSoUsefulException.class, uiMessageForLocationStateHandlerBeforeFirstResult, locationExceptionDefault);
 		}
 		return this;
 	}
 	
 	@Override
-	public void setDefault() {
-		super.locationExceptionState = locationExceptionDefault;
+	public void setAfterFirstResult() {
+		locationExceptionState = locationExceptionDefault;
+		Ln.d("locationExceptionState is set to LocationExceptionAfterFirstResult");
 	}
 }

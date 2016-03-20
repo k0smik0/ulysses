@@ -41,4 +41,9 @@
     <style name="AddressStyle" parent="@style/TextViewStyle"/>
     <style name="DistanceStyle" parent="@style/TextViewStyle"/>
     
+    <style name="ColoredButton" parent="@android:style/Widget.Button">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:background">#0000bb</item>
+    </style>
+    
 </resources>

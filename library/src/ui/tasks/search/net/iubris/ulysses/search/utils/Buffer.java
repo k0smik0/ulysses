@@ -9,17 +9,18 @@ package net.iubris.ulysses.search.utils;
 import javax.inject.Singleton;
 
 import net.iubris.ulysses.model.Place;
+import roboguice.util.Ln;
 
 @Singleton
 public class Buffer {
 	private Place place;
 	
 	public Place get() {
-//Log.d("Buffer:12","returning: "+place);
+Ln.d("returning: "+place);
 		return place;
 	}
 	public void set(Place placeEnhanced) {
-//Log.d("Buffer:16","setting: "+placeEnhanced);
+Ln.d("setting: "+placeEnhanced);
 		this.place = placeEnhanced;
 	}
 }

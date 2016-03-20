@@ -10,8 +10,8 @@
  ******************************************************************************/
 package net.iubris.ulysses.ui.list.adapter;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.inject.Inject;
 
 // import roboguice.util.Ln;
 import android.app.Activity;

@@ -30,9 +30,11 @@
 	
 	<string name="label_gallery">Gallery</string>
 	<string name="label_links">WebSite</string>
-	<string name="label_street_view">Street View</string>
-	<string name="label_no_photo">Sorry, no photos available</string>
+	<string name="label_no_photo">Sorry, no photos available,\nbut you still view StreeView Panorama!</string>
 	<string name="label_no_url">Sorry, no links provided</string>
+	
+	<string name="label_street_view">Street View</string>
+	<string name="label_button_street_view">Open StreetViewPanorama</string>
 	
 	<string name="gplus">details</string>
 	<string name="reviews">reviews</string>	

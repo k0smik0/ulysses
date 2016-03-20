@@ -369,6 +369,13 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 		return false;
 	}
 	
+	@Override
+	public String toString() {
+		String msg = "";
+		msg += placeName+" "+distance+" "/*+photosUrlsAsString+" "+placeId*/;
+		return msg;
+	}
+	
 	/*public static class Location implements Serializable {
 		private static final long serialVersionUID = 8145546699386327997L;
 		private double latitude;

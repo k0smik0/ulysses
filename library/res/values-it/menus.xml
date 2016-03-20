@@ -22,6 +22,7 @@
 	<string name="actionbar_home">Home</string>
 	
 	<string name="menu__call">Chiama</string>
+	<string name="menu__gplus">Dettagli</string>
 
 	<string name="menu__refresh">Aggiorna</string>
 	<string name="menu__search">Cerca da un indirizzo</string>

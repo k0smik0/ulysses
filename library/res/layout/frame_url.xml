@@ -18,36 +18,57 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
-	
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+    
+    <!-- <TextView
+            android:id="@+id/url_no"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:autoLink="web"
+            android:clickable="true"
+            android:text="@string/label_no_url"
+            android:textIsSelectable="true"
+            android:textStyle="italic" /> -->
 
-		<TextView
-			android:id="@+id/url_label"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			style="@style/label"
-			android:textStyle="bold"
-			android:text="@string/label_links"
-			android:gravity="center" />
-		
-		<TextView
-			android:id="@+id/url"
-			style="@style/label"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="3dp"
-			android:textStyle="italic"
-			android:textIsSelectable="true"
-			android:clickable="true"
-			android:text="@string/label_no_url"
-			android:autoLink="web"/>
-	</LinearLayout>
-		
+    <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/icon_web"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:contentDescription="webicon"
+            android:height="4dp"
+            android:width="4dp"
+            android:src="@drawable/web"
+            android:visibility="visible"/> -->
+
+        <TextView
+            android:id="@+id/url_label"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:drawableLeft="@drawable/web"
+            android:drawableStart="@drawable/web"
+            android:gravity="center"
+            android:autoLink="web"
+            android:text="www.prova.com"
+            android:textStyle="bold" />
+        
+    <!-- </LinearLayout> -->
+
 </FrameLayout>
-
 <!-- android:background="#ffffff" -->

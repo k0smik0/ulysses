@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- <TextView
+        android:id="@+id/gallery_label"
+        style="@style/label"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_gallery"
+        android:visibility="visible" /> -->
+        
+				<!-- <ImageView
+        android:id="@+id/imageview_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:minHeight="128dp"
+        android:src="@drawable/ic_launcher"
+        android:visibility="visible" /> -->
+        
+    <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"> -->
+        
+		    <android.support.v4.view.ViewPager
+		        xmlns:android="http://schemas.android.com/apk/res/android"
+		        android:id="@+id/gallery_pager"
+		        android:layout_width="match_parent"
+		        android:layout_height="256dp"
+		        android:minHeight="256dp"
+		        android:layout_margin="-3dp"
+		        android:padding="-3dp"
+		        android:layout_gravity="center"
+		        android:background="@drawable/shadow"
+		        android:visibility="visible"/>
+		    <!-- android:background="@drawable/border_details_gallery" -->
+		    <!-- android:background="@drawable/border_blue" -->
+		    <!-- android:background="@drawable/border_gallery_streetview" -->
+		    
+		    <TextView 
+		        android:id="@+id/gallery_counter"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="0dp"
+		        android:gravity="center"
+		        android:text="source"/>
+		    
+    <!-- </LinearLayout> -->
+        
+    <!-- <com.celerysoft.imagepager.ImagePager  
+        android:id="@+id/zoom_images_gallery_pager"  
+        android:layout_width="match_parent"  
+        android:layout_height="1dp" 
+        android:minHeight="256dp"
+        android:background="@drawable/border_blue"
+        android:visibility="visible" /> -->
+
+    <include
+        android:id="@+id/gallery_label_nophoto_included"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        layout="@layout/frame_no_photo"/>
+    
+    
+    
+<!--     <ImageView
+        android:id="@+id/imageview_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:minHeight="256dp"
+        android:src="@drawable/ic_launcher"
+        android:visibility="gone" /> -->
+    
+    <!-- <TextView
+        android:id="@+id/gallery_comments"
+        style="@style/label"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="photos comments"
+        android:visibility="visible" /> -->
+
+    <!-- <include
+        android:id="@+id/frame_line_post_gallery_included"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/frame_line" /> -->
+    
+<!--     <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/label_button_street_view"
+            android:id="@+id/button_get_panorama"
+            android:visibility="visible"/>
+
+    <include
+        android:id="@+id/street_view_included"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        layout="@layout/frame_street_view"
+        android:visibility="visible" /> -->
+    <!-- android:background="@drawable/border_gallery_streetview" -->
+
+</LinearLayout>

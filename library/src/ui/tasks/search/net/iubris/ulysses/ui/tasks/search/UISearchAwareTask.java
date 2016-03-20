@@ -66,7 +66,7 @@ public class UISearchAwareTask extends SearchAwareTask {
 			
 			@Override
 			public void onDismiss(DialogInterface dialog) {
-				ulyssesSearcher.resetSearchState();
+				ulyssesSearcher.resetSearchState("UISearchAwareTask: progressDialog:OnDismissListener.onDismiss");
 			}
 		});
 		resources = activity.getResources();
@@ -110,7 +110,7 @@ public class UISearchAwareTask extends SearchAwareTask {
 		Ln.d("doOnSuccess!");
 		
 		// TODO remove
-		printPhotosDetailsForDebug(places);
+//		printPhotosDetailsForDebug(places);
 	}
 	protected void eventuallyNotifyIsFoundByCache() {}
 	public void setOnSuccessCallback(OnSuccessCallback onSuccessCallback) {
@@ -118,7 +118,7 @@ public class UISearchAwareTask extends SearchAwareTask {
 			this.onSuccessCallback = onSuccessCallback;
 		}
 	}
-	private void printPhotosDetailsForDebug(List<Place> places) {
+	/*private void printPhotosDetailsForDebug(List<Place> places) {
 		if (places==null) {
 			return;
 		}		
@@ -129,7 +129,7 @@ public class UISearchAwareTask extends SearchAwareTask {
 				Ln.d(photosUrls.toArray());
 			}
 		}
-	}	
+	}*/	
 	
 	protected void onException(ZeroResultException e) {
 		eventuallyCancelSearchWaitingUi();

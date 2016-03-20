@@ -1,6 +1,8 @@
 package net.iubris.ulysses.persist.sql.ormdroid;
 
 
+import static com.roscopeco.ormdroid.Query.eql;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -21,8 +23,6 @@ import com.roscopeco.ormdroid.Entity;
 import com.roscopeco.ormdroid.ORMDroidApplication;
 import com.roscopeco.ormdroid.ORMDroidException;
 
-import static com.roscopeco.ormdroid.Query.eql;
-
 @Singleton
 public class OrmdroidPersister implements Persister {
 	
@@ -32,6 +32,7 @@ public class OrmdroidPersister implements Persister {
 	public OrmdroidPersister(Context context, SearchOptions searchOptions) {
 		this.searchOptions = searchOptions;
 		ORMDroidApplication.initialize(context);
+//		ORMDroidApplication.
 		SQLiteDatabase database = ORMDroidApplication.getDefaultDatabase();
 		Ln.d("database: "+database.getPath());
 //		ORMDroidApplication.getSingleton().enableLoggingVerbose(true);
@@ -61,21 +62,15 @@ public class OrmdroidPersister implements Persister {
 	@Override
 	public void setPlaces(Collection<Place> places) {
 		// just for debug
-		String msg = "storing "+places.size()+" places";
 		String s="";
-		for (Place p: places) {
-			s+="|"+p.getPlaceName();
-		}
-		s.replaceFirst("|", "");
-		Ln.d(msg+": "+s);
-		
-		for (Place place : places) {
+		int reallyStored = 0;
+		for (Place place : places) {			
 			try {
 				String state;
 				Place placeExistant = Entity.query(Place.class).where( eql(Place.PLACENAME_COLUMN,place.getPlaceName()) ).execute();
 				if (placeExistant!=null && placeExistant.equals(place)) {
 					state = "_same";
-					Ln.d(placeExistant.getPlaceName()+": save_state="+state);
+//					Ln.d(placeExistant.getPlaceName()+": save_state="+state);
 //					int oldId = placeExistant.getId();
 //					place.setId(oldId);
 //					state = ""+place.save();
@@ -84,12 +79,18 @@ public class OrmdroidPersister implements Persister {
 				} else {
 					state = ""+place.save();
 					Ln.d(place.getPlaceName()+": save_state="+state);
+					
+					s+="|"+place.getPlaceName();
+					reallyStored++;
 				}
 				
 			} catch(ORMDroidException e) {
 				Ln.d("setPlaces exception: "+e.getMessage());
 			}
 		}
+		s.replaceFirst("|", "");
+		String msg = "storing "+reallyStored+"/"+places.size()+" places";
+		Ln.d(msg+": "+s);		
 	}
 
 	@Override

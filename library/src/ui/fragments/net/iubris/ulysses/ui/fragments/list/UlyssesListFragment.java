@@ -146,17 +146,29 @@ implements Refreshable, /*Searchable,*/ Titleable, /*Clickable,*/ Markerable, Up
 	}
 	private PlacesListAdapter buildPlaceAdapter(Class<? extends Activity> clazz) {
 //		Ln.d(activity+" "+R.layout.list_row+" "+markerShowable+" "+fragmentSelectable+" "+clazz+" "+buffer);
-		PlacesListAdapter placesEnhancedListAdapter = new PlacesListAdapter(activity, R.layout.list_row, 
+		PlacesListAdapter placesListAdapter = new PlacesListAdapter(activity, R.layout.list_row, 
 				markerShowable, fragmentSelectable, clazz, buffer) {
+			
+//			private boolean isImageSetup;
 			@Override
-			protected void setImage(ImageView icon, Place url) {
+			protected void displayImage(Place url, ImageView icon) {
+				// TODO cache sieve search!
 				Bitmap bitmap = sieve.find(url);
 				icon.setImageBitmap( bitmap );
 			}
+			
+			/*@Override
+			protected void getImage(Place place) {
+				if (!isImageSetup) {
+					Bitmap bitmap = sieve.find(place);
+					
+					isImageSetup = true;
+				}
+			}*/
 		};
 //		placesEnhancedListAdapter.setMarkerShowable(markerShowable, fragmentSelectable);
-		placesEnhancedListAdapter.setNotifyOnChange(true);
-		return placesEnhancedListAdapter;
+		placesListAdapter.setNotifyOnChange(true);
+		return placesListAdapter;
 	}
 	
 	@Override

@@ -16,7 +16,7 @@
 
     <!-- android:background="@drawable/row_item_border" -->
     <!-- android:background="#ffffff" -->
-
+    
     <ImageView
         android:id="@+id/icon"
         android:layout_width="wrap_content"
@@ -29,6 +29,8 @@
         android:minHeight="64dp"
         android:minWidth="64dp" />
     <!-- android:background="@drawable/row_item_border" -->
+    
+    
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,8 +107,24 @@
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:minWidth="10dp" />
+                    
+                    
                 <!-- </LinearLayout> -->
             </LinearLayout>
+            
+            <ImageView
+								        android:id="@+id/hasPhotoIcon"
+								        android:src="@android:drawable/ic_menu_camera"
+								        android:layout_width="wrap_content"
+								        android:layout_height="wrap_content"
+								        android:layout_gravity="center_vertical"
+								        android:layout_marginRight="5dip"
+								        android:contentDescription="the place has photos icon"
+								        android:focusable="false"
+								        android:focusableInTouchMode="false"
+								        android:minHeight="20dp"
+								        android:minWidth="20dp" 
+								        android:visibility="visible"/>
 
             <ImageButton
                 android:id="@+id/button_list_to_map"

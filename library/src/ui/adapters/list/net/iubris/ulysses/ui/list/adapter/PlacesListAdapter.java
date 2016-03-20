@@ -19,9 +19,11 @@
  ******************************************************************************/
 package net.iubris.ulysses.ui.list.adapter;
 
+
 import in.flashbulb.coloredratingbar.ColoredRatingBar;
 
 import java.util.Comparator;
+import java.util.List;
 
 import net.iubris.apollus2.ui.fragments.map._base.MarkerShowable;
 import net.iubris.apollus2.ui.fragments.tabspager.selectable.FragmentSelectable;
@@ -31,7 +33,6 @@ import net.iubris.ulysses.search.utils.Buffer;
 import net.iubris.ulysses.utils.misc.PlacesUtils;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -55,6 +56,8 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 	
 	private final Buffer buffer;
 	private final Class<? extends Activity> detailsActivityClass;
+	
+//	iconImageLoadingListener = new
 
 	public PlacesListAdapter(Activity activity, int textViewResourceId,
 			MarkerShowable markerShowable, FragmentSelectable fragmentSelectable,
@@ -71,6 +74,7 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 		this.buffer = buffer;
 //		this.aQuery = new AQuery(activity);
 		this.imageLoader = ImageLoader.getInstance();
+//		Ln.d("ImageLoader:"+imageLoader);
 //		activity.setProgressBarIndeterminateVisibility(true);
 	}
 	
@@ -94,6 +98,10 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 				placeHolder.distance = (TextView) convertView.findViewById(R.id.distance);
 				placeHolder.ratingBar = (ColoredRatingBar) convertView.findViewById(R.id.rating_bar);
 				placeHolder.ratingText = (TextView) convertView.findViewById(R.id.rating_text);
+				placeHolder.photoIcon = (ImageView) convertView.findViewById(R.id.hasPhotoIcon);
+//				placeHolder.photoIconSpinner = (ProgressBar) convertView.findViewById(R.id.icon_progress_bar);
+//				imageLoadingListenerS = new ImageLoadingListenerS(placeHolder.photoIconSpinner);
+				
 //				placeHolder.compass = (CompassView) convertView.findViewById(R.id.arrow);
 				
 				placeHolder.buttonToMap = (ImageButton) convertView.findViewById(R.id.button_list_to_map);
@@ -101,7 +109,7 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 					@Override
 					public void onClick(View v) {
 						String placeId = place.getPlaceId();
-						Log.d("PlacesEnhancedListAdapter",placeId);
+//						Log.d("PlaceListAdapter",placeId);
 						markerShowable.showMarker( placeId );
 						fragmentSelectable.setCurrentItem(1, true);
 					}
@@ -112,16 +120,19 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 			}
 
 			
+			displayImage(place, placeHolder.icon/*, placeHolder.photoIconSpinner*/);
+			
 //Log.d("PlacesHereListAdapter:89",place.getName());	
 			placeHolder.name.setText( place.getPlaceName() );
 			
 			placeHolder.address.setText( PlacesUtils.getUsefulAddress(place.getFormattedAddress(), 2)); // 2 = country, city 
 			
 			double distance = place.getDistance();
-			if (distance!=Place.UNREACHABLE_DISTANCE && distance!=0)
+			if (distance!=Place.UNREACHABLE_DISTANCE && distance!=0) {
 				placeHolder.distance.setText( PlacesUtils.getFormattedDistance( distance ));
-			else
+			} else {
 				placeHolder.distance.setVisibility(View.GONE);
+			}
 			
 			float rating = place.getRating();
 			if (rating>0) {
@@ -134,20 +145,36 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 				placeHolder.ratingText.setVisibility(View.GONE);
 				placeHolder.ratingText.setText( "" );
 			}
+			
+			List<String> photosUrls = place.getPhotosUrls();
+			if (photosUrls == null || photosUrls.size()<1) {
+				placeHolder.photoIcon.setVisibility(View.GONE);
+//				ImageLoader.getInstance().
+			} 
+			if (photosUrls != null && photosUrls.size()>0) {
+				placeHolder.photoIcon.setVisibility(View.VISIBLE);
+//				Ln.d(place.getPlaceName()+" "+place.getPhotosUrls().size()+" photos");				
+			}
+			
 //			placeHolder.rating.setText( Math.floor(place.getRating()*2*10)+"%" );
 //Log.d("PlacesHereListAdapter:93","position: "+position);
-			setImage(placeHolder.icon, place);
+			
 			if (position == getCount()-1) activity.setProgressBarIndeterminateVisibility(false);
 			
-			setOnClickListener(place, placeHolder.name, placeHolder.address, placeHolder.distance, placeHolder.ratingBar, placeHolder.icon);
+			setOnClickListener(place, placeHolder.name, placeHolder.address, placeHolder.distance, placeHolder.ratingBar, placeHolder.icon, placeHolder.photoIcon);
 		}
 		return convertView;
 	}
 	
-	protected void setImage(ImageView icon, Place placeEnhanced) {
-//		imageLoader.setImage(place.getIcon().toString(), icon, activity);
-		imageLoader.displayImage(placeEnhanced.getIcon().toString(), icon);
+	protected void displayImage(Place place, ImageView icon/*, ProgressBar spinner*/) {
+		imageLoader.displayImage(place.getIcon().toString(), icon);
+//		this.image = place.getIcon().toString();
 	}
+	
+//	private void displayImage(ImageView icon) {
+//		imageLoader.displayImage(getImage(), icon);
+//	}
+	
 	
 	private void setOnClickListener(final Place place, View... views) {
 		for (View view : views) {
@@ -185,6 +212,8 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 	}
 	
 	class PlaceHolder {		
+//		public ProgressBar photoIconSpinner;
+		public ImageView photoIcon;
 		public TextView ratingText;
 		public ImageButton buttonToMap;
 		public ImageView icon;

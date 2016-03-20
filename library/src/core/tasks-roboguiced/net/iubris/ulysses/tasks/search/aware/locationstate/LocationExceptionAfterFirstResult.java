@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import net.iubris.diane.searcher.aware.location.exceptions.LocationAwareSearchException;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.tasks.search.aware.SearchAwareTaskLocationStateable;
@@ -17,7 +15,7 @@ public class LocationExceptionAfterFirstResult extends AbstractLocationException
 	private final UIMessageForLocationStateHandlerAfterFirstResult uiMessageHandler;
 //	private final Map<Class<? extends LocationStateException>, UIMessageForLocationStateDefaultHandler> uiMessageForLocationStateDefaultHandlersMap = new HashMap<>() ;
 	
-	@Inject
+//	@Inject
 	public LocationExceptionAfterFirstResult(SearchAwareTaskLocationStateable searchAwareTask,
 			Class<? extends LocationAwareSearchException> extendingLocationAwareSearchExceptionClass
 			, UIMessageForLocationStateHandlerAfterFirstResult uiMessageHandler 
@@ -38,5 +36,4 @@ public class LocationExceptionAfterFirstResult extends AbstractLocationException
 	}
 	@Override
 	public void completeExecution(/*Class<? extends LocationAwareSearchException> locationAwareSearchExceptionClass*/) {/*nothing to complete*/ }
-
 }

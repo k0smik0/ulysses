@@ -16,7 +16,7 @@ import net.iubris.ulysses.tasks.search.aware.locationstate.uimessage.UIMessageFo
 import roboguice.util.Ln;
 import android.location.Location;
 
-// this model a LocationTooNearException throwing at the first search (just after install), 
+// this models a LocationTooNearException throwing at the first search (just after install), 
 // when connection occurs to be not available (it could be) and cache is (obviously) empty 
 public class LocationExceptionStateBeforeFirstResult extends AbstractLocationExceptionState {
 	private final UIMessageForLocationStateHandlerBeforeFirstResult uiMessageHandler;

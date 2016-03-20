@@ -28,9 +28,28 @@
         style="@style/label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
         android:text="@string/label_no_photo"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:visibility="visible" />
+    
+    <!-- android:background="@drawable/border_green" -->
+
+    <Button
+        android:id="@+id/button_get_panorama"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:padding="5dp"
+        android:text="@string/label_button_street_view"
+        android:textColor="@android:color/white"
+        style="@style/ColoredButton"
+        android:visibility="visible" />
+    
+    <!-- android:background="@drawable/border_green" -->
 
 </FrameLayout>

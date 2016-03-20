@@ -2,6 +2,7 @@ package net.iubris.ulysses.ui._di._roboguice.module;
 
 import java.util.List;
 
+import net.iubris.ulysses._di._roboguice.module.ImageLoaderProvider;
 import net.iubris.ulysses.engine.searcher.location.aware.cache.DefaultUlyssesLocalizedSearcherCacheAware.CacheSearchExceptions;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.tasks.search.aware.locationstate.annotations.UIMessageForLocationStateHandlerAfterFirstResultForLocationNotSoUsefulException;
@@ -22,6 +23,7 @@ import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
 
 import com.google.inject.AbstractModule;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public abstract class AbstractUlyssesUiModule extends AbstractModule {
 
@@ -39,6 +41,8 @@ public abstract class AbstractUlyssesUiModule extends AbstractModule {
 		
 		bindMetaProviderForLocationExceptionStateForLocationNotSoUsefulException();
 		bindMetaProviderForLocationExceptionStateForLocationTooNearException();
+		
+		bind(ImageLoader.class).toProvider(ImageLoaderProvider.class);
 	}
 	
 	/**

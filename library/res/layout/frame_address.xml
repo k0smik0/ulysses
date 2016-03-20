@@ -31,7 +31,7 @@
 		android:autoLink="map|web"
 		android:focusable="false"
 		style="@style/AddressStyle"
-		android:text="address"/>
+		android:text=""/>
 
 </FrameLayout>
 

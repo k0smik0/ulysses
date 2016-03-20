@@ -8,5 +8,5 @@ import net.iubris.ulysses.tasks.search.aware.locationstate.LocationExceptionStat
 public interface MetaProviderForLocationExceptionState extends Provider<LocationExceptionState> {
 	MetaProviderForLocationExceptionState eventuallyInit(SearchAwareTaskLocationStateable searchAwareTaskLocationStateable);
 	void setLocationExceptionState(LocationExceptionState locationExceptionState);
-	void setDefault();
+	void setAfterFirstResult();
 }

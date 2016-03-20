@@ -19,6 +19,7 @@
  ******************************************************************************/
 package net.iubris.ulysses.ui.activity.splash;
 
+import net.iubris.ulysses.R;
 import roboguice.util.Ln;
 import android.app.Activity;
 import android.app.Application;
@@ -145,8 +146,20 @@ abstract public class SplashActivity extends Activity {
 		startActivity(startIntent);
 		if (!this.isFinishing()) {
 			finish();
+//			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		}
+//		runFadeInAnimation();
+		overridePendingTransition(R.anim.fade_in_900ms, R.anim.fade_out);
 	}
+	
+	/*private void runFadeInAnimation() {
+		Ln.d("running runFadeInAnimation");
+	    Animation a = AnimationUtils.loadAnimation(this, R.anim.fade_in_900ms);
+	    a.reset();
+	    LinearLayout ll = (LinearLayout) findViewById(getLayoutResID());
+	    ll.clearAnimation();
+	    ll.startAnimation(a);   
+	}*/
 
 	/*private void wrapperStuffInBackground(Application application) {
 		countDownLatch = new CountDownLatch(1);

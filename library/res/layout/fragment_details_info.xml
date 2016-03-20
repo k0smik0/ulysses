@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    tools:context=".ui.activity.details.StreetViewPanoramaActivity" >
 
     <include
         android:id="@+id/name_included"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
         android:layout_marginTop="2dp"
         layout="@layout/frame_name" />
 
@@ -18,14 +20,22 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
+        
+        <ProgressBar
+        android:id="@+id/progressbar_photo"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginRight="5dip"
+        android:visibility="gone" />
 
         <ImageView
             android:id="@+id/photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:contentDescription="photo"
-            android:minHeight="96dp"
-            android:minWidth="96dp"
+            android:layout_marginRight="5dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             android:src="@android:drawable/ic_menu_camera" />
 
         <LinearLayout
@@ -50,6 +60,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal" >
 
                 <include
@@ -57,33 +68,55 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:layout_weight="0.7"
                     layout="@layout/frame_ratingbar" />
 
-                <Button
+                <include
+                    android:id="@+id/ratingtext_included"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    layout="@layout/frame_ratingtext" />
+            </LinearLayout> <!-- end rating -->
+            <!--
+                 android:textColor="#ffffff"
+                    android:background="#aa0000"
+            -->
+
+
+            <!-- in menu -->
+            <!--
+                 <Button
                     android:id="@+id/gplus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="0.2"
                     android:text="@string/gplus"
-                    
                     android:textSize="16sp"
                     android:textStyle="italic|bold" />
-            </LinearLayout>
-            <!-- android:textColor="#ffffff"
-                    android:background="#aa0000" -->
+            -->
 
-            <include
-                android:id="@+id/ratingtext_included"
+            <LinearLayout
+                android:id="@+id/layout_web"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="-0dp"
-                layout="@layout/frame_ratingtext" />
-        </LinearLayout>
-    </LinearLayout>
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <include
+                    android:id="@+id/url_included"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:minHeight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    layout="@layout/frame_url" />
+            </LinearLayout>
+        </LinearLayout> <!-- end right -->
+    </LinearLayout> <!-- end bottom -->
 
     <include
         android:id="@+id/frame_line_post_info_included"
@@ -91,14 +124,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         layout="@layout/frame_line" />
-
-    <include
-        android:id="@+id/url_included"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        layout="@layout/frame_url" />
 
     <include
         android:id="@+id/frame_line_post_url_included"

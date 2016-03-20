@@ -27,7 +27,7 @@
 		android:layout_height="wrap_content"
 		android:ellipsize="marquee"
 		android:singleLine="true"
-		
+		android:text=""
 		android:textIsSelectable="true" />
 </FrameLayout>
 

@@ -73,8 +73,7 @@ implements UlyssesLocalizedSearcher {
 				s+="|"+p.getPlaceName();
 			}
 			s.replaceFirst("|", "");
-			Ln.d("result: "+s);
-			
+			Ln.d("result: "+s);			
 		} catch (CacheTooOldException e) {
 			Ln.d(e.getMessage() );
 //		} catch (CacheAwareSearchException e) {

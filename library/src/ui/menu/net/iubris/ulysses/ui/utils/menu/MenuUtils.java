@@ -29,12 +29,14 @@ import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingAlphabetic
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
 import net.iubris.ulysses.ui.activity.details.StreetViewPanoramaActivity;
+import net.iubris.ulysses.ui.fragments.details.DetailsFragmentGallery;
 import net.iubris.ulysses.ui.intentable.IntentUtils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
@@ -297,17 +299,20 @@ public class MenuUtils {
 			public boolean onMenuItemClick(MenuItem item) {
 				
 				Intent intent = new Intent();
-		    	intent.putExtra("location", location);
+		    	intent.putExtra(DetailsFragmentGallery.EXTRA_ULYSSES_LOCATION, location);
 		    	intent.setClass(activity, StreetViewPanoramaActivity.class);
 		    	activity.startActivity(intent);
+		    	activity.overridePendingTransition(R.anim.flip_from, R.anim.flip_to);
 				
 				return false;
 			}
 		});
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		}
 		
-		menuItem.setIcon(R.drawable.ic_action_maps_pin_drop);
+//		menuItem.setIcon(R.drawable.ic_action_maps_pin_drop);
+		menuItem.setIcon(R.mipmap.ic_camera360);
 	}
 	
 	@SuppressLint("NewApi")
@@ -327,6 +332,24 @@ public class MenuUtils {
 		menuItem.setIcon(R.drawable.ic_action_maps_local_phone);
 	}
 	
+	@SuppressLint("NewApi")
+	public static void addGPlus(Menu menu, final String gplusURi, final Activity activity) {
+		MenuItem menuItem = menu.add(R.string.menu__gplus).setOnMenuItemClickListener(
+				new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse(gplusURi));
+						activity.startActivity(i);
+						return false;
+					}
+				});
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			menuItem
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		
+		menuItem.setIcon(R.drawable.common_signin_btn_icon_normal_dark);
+	}
 
 	
 	

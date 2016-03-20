@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="location_retrieving">retrieving geolocation</string>
+	<string name="address_retrieving">retrieving address</string>
+	<string name="address_retrieving_error">address not available, but you can still search</string>
 	<string name="location_null_all_wrong">Oops! Something was wrong ;/\n
 		Unable to retrieve geolocation.\n\n
 		Try to start Google Maps App and let it find you!\n
