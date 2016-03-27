@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rb="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!--
+         <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+    -->
+
+<!--
+             <include
+            android:id="@+id/ratingtext_included"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            layout="@layout/frame_ratingtext" />
+    -->
+
+    <TextView
+        android:id="@+id/rating_counter"
+        style="@style/RatingTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:textIsSelectable="false"
+        android:textSize="14sp" />
+
+    
+    <!--
+             <include
+            android:id="@+id/ratingbar_included"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            layout="@layout/frame_ratingbar" />
+    -->
+
+    <in.flashbulb.coloredratingbar.ColoredRatingBar
+        android:id="@+id/rating_bar"
+        style="@style/coloredRatingBarStyleSmallIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        rb:indicator="true"
+        rb:type="small" />
+    <!-- </LinearLayout> -->
+
+</FrameLayout>

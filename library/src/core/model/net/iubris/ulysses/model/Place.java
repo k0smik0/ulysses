@@ -21,11 +21,11 @@ package net.iubris.ulysses.model;
 
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import net.iubris.ulysses.data.Converter;
 
 import com.roscopeco.ormdroid.Column;
 import com.roscopeco.ormdroid.Entity;
@@ -45,7 +45,7 @@ import com.roscopeco.ormdroid.Table;
 public class Place extends Entity implements Serializable, Comparable<Place> {
 	
 	private static final long serialVersionUID = 8907278452980472496L;
-	public static final double UNREACHABLE_DISTANCE = 1000000000000L; // 10E12 m
+	public static final double UNREACHABLE_DISTANCE = 1000000000000L; // 10E12 m - distance Earth-Moon=10E8m...
 	
 	public static final String PLACENAME_COLUMN = "placeName";
 	
@@ -62,32 +62,32 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 //	@Column(primaryKey=true, name="id",forceMap=true)
 	private String placeId;
 
-	
+
+	private Location location;
 	@Column(forceMap=true)
 	private String locationAsString;
 //	public static final int LocationColumn = 4;
-	private static final String SEPARATOR = "#";
+//	private static final String SEPARATOR = "#";
 //	@Column(forceMap=true)	
 //	@Convert(converter=LocationConverter.class, disableConversion=false)
-//	private Location location;
 	
 	@Column(forceMap=true)
-	private String iconUrl;
+	private String iconUrlString;
 	
 	@Column(forceMap=true)
 	private float rating;
 	
+	private Set<String> types;
 	@Column(forceMap=true)
 //	@Convert(converter=StringSetConverter.class)
-//	private Set<String> types;
 	private String typesAsString;
 	
 	@Column(forceMap=true)
 	private String vicinity;
 	
+	private List<String> photosUrls;
 	@Column(forceMap=true)
 //	@Convert(converter=StringListConverter.class)
-//	private List<String> photosUrls;
 	private String photosUrlsAsString;
 
 	@Column(forceMap=true)
@@ -109,14 +109,16 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	private double distance = UNREACHABLE_DISTANCE;
 	
 	@Column(forceMap=true)
-	private String plusUrl;
+	private String googlePlusUrl;
+	
+	private final Converter converter = Converter.INSTANCE;
 	
 	
 	public Place() {
 		super();
 	}
 	
-	public Place(String placeName, String placeId, Location location, String iconUrl,
+	public Place(String placeName, String placeId, Location location, String iconUrlString,
 			float rating, 
 			Set<String> types, 
 			String vicinity,
@@ -125,35 +127,38 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 			String formattedAddress, String internationalPhoneNumber,
 			String googlePlusUrl, 
 			String website, int reviewsCount) {
-		this(placeName, placeId, location, iconUrl, rating, types, vicinity, photosUrl, permanentlyClosed, 
-				formattedAddress, internationalPhoneNumber, googlePlusUrl, website);
+		this(placeName, placeId, location, iconUrlString, rating, types, vicinity, photosUrl, permanentlyClosed, formattedAddress, internationalPhoneNumber, googlePlusUrl, website);
 		this.reviewsCount = reviewsCount;
 	}
-	public Place(String placeName, String placeId, Location location, String iconUrl,
+	public Place(String placeName, String placeId, Location location, String iconUrlString,
 			float rating, Set<String> types, String vicinity,
 			List<String> photosUrl, boolean permanentlyClosed,
 			String formattedAddress, String internationalPhoneNumber,
-			String plusUrl, String website) {
-		this(placeName, placeId, location, iconUrl, rating, types, vicinity, photosUrl, permanentlyClosed);
+			String googlePlusUrl, String website) {
+		this(placeName, placeId, location, iconUrlString, rating, types, vicinity, photosUrl, permanentlyClosed);
 		this.formattedAddress = formattedAddress;
 		this.internationalPhoneNumber = internationalPhoneNumber;
-		this.plusUrl = plusUrl;
+		this.googlePlusUrl = googlePlusUrl;
 		this.website = website;
 	}
 	public Place(String placeName, String placeId, Location location, String icon,
 			float rating, Set<String> types, String vicinity,
 			List<String> photosUrl, boolean permanentlyClosed) {
+		super();
 		this.placeName = placeName;
 		this.placeId = placeId;
-		this.locationAsString = stringifyLocation(location);
+//		this.locationAsString = stringifyLocation(location);
 //		this.location = location;
-		this.iconUrl = icon;
+		setLocation(location);
+		this.iconUrlString = icon;
 		this.rating = rating;
 //		this.types = types;
-		this.typesAsString = stringify(types);
+//		this.typesAsString = stringify(types);
+		setTypes(types);
 		this.vicinity = vicinity;
 //		this.photosUrls = photosUrl;
-		this.photosUrlsAsString = stringify(photosUrl);
+//		this.photosUrlsAsString = stringify(photosUrl);
+		setPhotosUrls(photosUrl);
 		this.permanentlyClosed = permanentlyClosed;
 	}
 	
@@ -178,33 +183,42 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 		this.placeId = placeId;
 	}
 	
-//	public String getLocationAsString() {
-//		return locationAsString;
-//	}
+	public String getLocationAsString() {
+		
+		return locationAsString;
+	}
 //	public void setLocationAsString(String locationAsString) {
 //		this.locationAsString = locationAsString;
 //	}
 	public Location getLocation() {
-		return destringifyLocation(locationAsString);
-//		return location;
+		if (location==null) {
+//			try {
+//				location = Location.fromJsonString(locationAsString);
+//			} catch (NoValidJSONStringException e) {
+//				return location;
+//			}
+			location = Location.fromString(locationAsString);
+		}
+//		return destringifyLocation(locationAsString);
+		return location;
 	}
-	private Location destringifyLocation(String locationAsString) {
-		String[] split = locationAsString.split(SEPARATOR);
-		return new Location(Double.parseDouble( split[0] ), Double.parseDouble( split[1] ));
-	}
+//	private Location destringifyLocation(String locationAsString) {
+//		String[] split = locationAsString.split(SEPARATOR);
+//		return new Location(Double.parseDouble( split[0] ), Double.parseDouble( split[1] ));
+//	}
 	public void setLocation(Location location) {
-		this.locationAsString = stringifyLocation(location);
-//		this.location = location;
+		this.location = location;
+		this.locationAsString = location.asString();
 	}
-	private String stringifyLocation(Location location) {
-		return location.getLatitude()+SEPARATOR+location.getLongitude();
-	}
+//	private String stringifyLocation(Location location) {
+//		return location.getLatitude()+SEPARATOR+location.getLongitude();
+//	}
 
-	public String getIcon() {
-		return iconUrl;
+	public String getIconUrlString() {
+		return iconUrlString;
 	}
-	public void setIcon(String iconUrl) {
-		this.iconUrl = iconUrl;
+	public void setIconUrlString(String iconUrlString) {
+		this.iconUrlString = iconUrlString;
 	}
 
 	public float getRating() {
@@ -215,18 +229,30 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	}
 
 	public Set<String> getTypes() {
-//		return types;
-		return destringifyToSet(typesAsString);
+//		return destringifyToSet(typesAsString);
+		if (types==null) {
+			// using json
+			/*try {
+				types = (Set<String>)JSONHandler.INSTANCE.fromString(typesAsString, Set.class);
+			} catch (NoValidJSONStringException e) {
+				return Collections.emptySet();
+			}*/
+			new HashSet<String>(converter.asList(typesAsString));
+		}
+		return types;
 	}
-	protected Set<String> destringifyToSet(String dataAsString) {
-		Set<String> hashSet = new HashSet<String>( destringifyToList(dataAsString) );
-//		Ln.d(hashSet.size());
-		return hashSet;
-	}
+//	protected Set<String> destringifyToSet(String dataAsString) {
+//		Set<String> hashSet = new HashSet<String>( destringifyToList(dataAsString) );
+////		Ln.d(hashSet.size());
+//		return hashSet;
+//	}
 
 	public void setTypes(Set<String> types) {
-		this.typesAsString = stringify(types);
-//		this.types = types;
+		this.types = types;
+		this.typesAsString = 
+//				stringify(types);
+//				JSONHandler.INSTANCE.toString(types)
+				converter.asString(types);
 	}
 //	protected String stringify(Set<String> data) {
 //		if (data==null)
@@ -250,20 +276,34 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	}
 
 	public List<String> getPhotosUrls() {
-		return destringifyToList(photosUrlsAsString);
-//		return photosUrls;
+		if (photosUrls==null) {
+			// using json
+			/*try {
+				photosUrls = (List<String>)JSONHandler.INSTANCE.fromString(photosUrlsAsString, List.class);
+			} catch (NoValidJSONStringException e) {
+//				e.printStackTrace();
+				return Collections.emptyList();
+			}*/
+			photosUrls = converter.asList(photosUrlsAsString);
+		}		
+		return photosUrls;
 	}
-	protected List<String> destringifyToList(String dataAsString) {
-		if (dataAsString.isEmpty())
+	/*protected List<String> destringifyToList(String dataAsString) {
+		if (dataAsString.isEmpty()) {
 			return null;
+		}
 		String[] split = dataAsString.split(SEPARATOR);
 		return Arrays.asList(split);
-	}
+	}*/
 
 	public void setPhotosUrls(List<String> photosUrls) {
-		this.photosUrlsAsString = stringify( photosUrls );
+		this.photosUrls = photosUrls;
+		this.photosUrlsAsString = 
+//				stringify( photosUrls )
+//				JSONHandler.INSTANCE.toString(photosUrls);
+				converter.asString(photosUrls);
 	}
-	protected String stringify(Collection<String> data) {
+	/*protected String stringify(Collection<String> data) {
 		if (data==null)
 			return "";
 		
@@ -274,7 +314,7 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 		if (data.size()>0)
 			sb.deleteCharAt(sb.length()-1); //delete last separator
 		return sb.toString();
-	}
+	}*/
 
 
 	public boolean isPermanentlyClosed() {
@@ -305,11 +345,11 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 		this.reviewsCount = reviewsCount;
 	}
 	
-	public String getPlacesUri() {
-		return plusUrl;
+	public String getPlusUrl() {
+		return googlePlusUrl;
 	}
-	public void setPlacesUri(String plusUrl) {
-		this.plusUrl = plusUrl;
+	public void setPlusUrl(String plusUrl) {
+		this.googlePlusUrl = plusUrl;
 	}
 
 	public String getWebsite() {
@@ -374,6 +414,29 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 		String msg = "";
 		msg += placeName+" "+distance+" "/*+photosUrlsAsString+" "+placeId*/;
 		return msg;
+	}
+
+	public void updateValues(String placeName, String placeId,
+			net.iubris.ulysses.model.Location location, String iconUrlString,
+			float rating, Set<String> types, String vicinity,
+			List<String> photosUrls, boolean permanentlyClosed,
+			String formattedAddress, String internationalPhoneNumber,
+			int reviewsCount, String website, double distance, String plusUrl) {
+		setPlaceName(placeName);
+		setPlaceId(placeId);
+		setLocation(location);
+		setIconUrlString(iconUrlString);
+		setRating(rating);
+		setTypes(types);
+		setVicinity(vicinity);
+		setPhotosUrls(photosUrls);
+		setPermanentlyClosed(permanentlyClosed);
+		setFormattedAddress(formattedAddress);
+		setInternationalPhoneNumber(internationalPhoneNumber);
+		setReviewsCount(reviewsCount);
+		setWebsite(website);
+		setDistance(distance);
+		setPlusUrl(plusUrl);
 	}
 	
 	/*public static class Location implements Serializable {

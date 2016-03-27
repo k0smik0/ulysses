@@ -8,7 +8,7 @@
 	<classpathentry kind="src" path="src/persisters/base"/>
 	<classpathentry kind="src" path="src/persisters/sql/ormdroid"/>
 	<classpathentry excluding="net/iubris/ulysses/intentable/Actionable.java|net/iubris/ulysses/ui/activity/_base/Searchable.java" kind="src" path="src/ui/activities"/>
-	<classpathentry excluding="net/iubris/ulysses/ui/fragments/_base/Indexable.java|net/iubris/ulysses/ui/fragments/details/UlyssesStreetViewPanoramaFragment.java" kind="src" path="src/ui/fragments"/>
+	<classpathentry excluding="net/iubris/ulysses/ui/fragments/_base/Indexable.java|net/iubris/ulysses/ui/fragments/details/UlyssesStreetViewPanoramaFragment.java|net/iubris/ulysses/ui/fragments/details/DetailsFragmentReviews.java" kind="src" path="src/ui/fragments"/>
 	<classpathentry kind="src" path="src/ui/tasks/search"/>
 	<classpathentry kind="src" path="src/ui/tasks/populate/base"/>
 	<classpathentry kind="src" path="src/ui/tasks/populate/list"/>

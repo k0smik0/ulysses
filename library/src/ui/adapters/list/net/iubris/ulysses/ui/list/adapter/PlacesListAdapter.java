@@ -167,7 +167,7 @@ public class PlacesListAdapter extends ArrayAdapter<Place> {
 	}
 	
 	protected void displayImage(Place place, ImageView icon/*, ProgressBar spinner*/) {
-		imageLoader.displayImage(place.getIcon().toString(), icon);
+		imageLoader.displayImage(place.getIconUrlString().toString(), icon);
 //		this.image = place.getIcon().toString();
 	}
 	

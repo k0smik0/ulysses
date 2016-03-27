@@ -196,7 +196,7 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
 		MenuUtils.addCall(menu, getPlace().getInternationalPhoneNumber(), getActivity());
-		MenuUtils.addGPlus(menu, getPlace().getPlacesUri(), getActivity());
+		MenuUtils.addGPlus(menu, getPlace().getPlusUrl(), getActivity());
 	}
 
 	private class ImageLoadingListenerS implements ImageLoadingListener {

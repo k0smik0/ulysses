@@ -5,6 +5,7 @@ import static com.roscopeco.ormdroid.Query.eql;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import net.iubris.socrates.config.SearchOptions;
+import net.iubris.ulysses.model.GeoAddress;
 import net.iubris.ulysses.model.Place;
 import net.iubris.ulysses.persist.Persister;
 import roboguice.util.Ln;
@@ -60,12 +62,15 @@ public class OrmdroidPersister implements Persister {
 	}
 
 	@Override
-	public void setPlaces(Collection<Place> places) {
+	public void savePlaces(Collection<Place> places) {
 		// just for debug
-		String s="";
-		int reallyStored = 0;
+//		String s="";
+//		int reallyStored = 0;
+		// end debug
 		for (Place place : places) {			
 			try {
+				// insert only if not existant
+				/*
 				String state;
 				Place placeExistant = Entity.query(Place.class).where( eql(Place.PLACENAME_COLUMN,place.getPlaceName()) ).execute();
 				if (placeExistant!=null && placeExistant.equals(place)) {
@@ -82,18 +87,41 @@ public class OrmdroidPersister implements Persister {
 					
 					s+="|"+place.getPlaceName();
 					reallyStored++;
-				}
+				}*/
 				
+				// always overwrite
+				Place placeExistant = Entity.query(Place.class).where( eql(Place.PLACENAME_COLUMN,place.getPlaceName()) ).execute();
+				if (placeExistant!=null) {
+//					placeExistant.delete();
+//					place.save();
+					placeExistant.updateValues(place.getPlaceName(), 
+							place.getPlaceId(), 
+							place.getLocation(), 
+							place.getIconUrlString(), 
+							place.getRating(),
+							place.getTypes(),
+							place.getVicinity(),
+							place.getPhotosUrls(),
+							place.isPermanentlyClosed(),
+							place.getFormattedAddress(),
+							place.getInternationalPhoneNumber(),
+							place.getReviewsCount(),
+							place.getWebsite(),
+							place.getDistance(),
+							place.getPlusUrl());
+					placeExistant.save();
+				}
 			} catch(ORMDroidException e) {
 				Ln.d("setPlaces exception: "+e.getMessage());
 			}
 		}
-		s.replaceFirst("|", "");
-		String msg = "storing "+reallyStored+"/"+places.size()+" places";
-		Ln.d(msg+": "+s);		
+		// just for debug - used in "not existant IF"
+//		s.replaceFirst("|", "");
+//		String msg = "storing "+reallyStored+"/"+places.size()+" places";
+//		Ln.d(msg+": "+s);		
 	}
 
-	@Override
+/*	@Override
 	public List<Location> getLocations() {
 		return null;
 	}
@@ -104,6 +132,44 @@ public class OrmdroidPersister implements Persister {
 	}
 
 	@Override
-	public void setLocation(Location location) {}
+	public void setLocation(Location location) {}*/
+
+	@Override
+	public Collection<GeoAddress> getGeoAddresses() {
+		List<GeoAddress> geoAddresses = Entity.query(GeoAddress.class).executeMulti();
+		if (geoAddresses==null) {
+			Ln.d("geoAddresses was null...");
+			geoAddresses = Collections.emptyList();
+		}
+		return geoAddresses;
+	}
+	@Override
+	public void saveGeoAddress(GeoAddress geoAddress) {
+		GeoAddress geoaddressExistant = Entity.query(GeoAddress.class).where( eql(GeoAddress.ADDRESS_COLUMN, geoAddress.getFormattedAddress()) ).execute();
+		/*String state;
+		if (geoaddressExistant!=null && geoaddressExistant.equals(geoAddress)) {
+			state = "_same";
+//			Ln.d(placeExistant.getPlaceName()+": save_state="+state);
+//			int oldId = placeExistant.getId();
+//			place.setId(oldId);
+//			state = ""+place.save();
+			
+//			do nothing
+		} else {
+			state = ""+geoAddress.save();
+			Ln.d(geoAddress.getFormattedAddress() +": save_state="+state);
+		}*/
+		if (geoaddressExistant==null) {
+			geoaddressExistant = geoAddress;
+			Ln.d("inserted geoaddress: "+geoAddress);
+		} else {
+			// update
+			Ln.d("updating geoaddress: "+geoaddressExistant);
+			geoaddressExistant.setFormattedAddress( geoAddress.getFormattedAddress() );
+			geoaddressExistant.setLocation( geoAddress.getLocation() );
+			Ln.d("updated geoaddress: "+geoaddressExistant);
+		}
+		geoaddressExistant.save();
+	}
 
 }

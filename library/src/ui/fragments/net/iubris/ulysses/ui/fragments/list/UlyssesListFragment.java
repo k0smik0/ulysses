@@ -146,7 +146,7 @@ implements Refreshable, /*Searchable,*/ Titleable, /*Clickable,*/ Markerable, Up
 	}
 	private PlacesListAdapter buildPlaceAdapter(Class<? extends Activity> clazz) {
 //		Ln.d(activity+" "+R.layout.list_row+" "+markerShowable+" "+fragmentSelectable+" "+clazz+" "+buffer);
-		PlacesListAdapter placesListAdapter = new PlacesListAdapter(activity, R.layout.list_row, 
+		PlacesListAdapter placesListAdapter = new PlacesListAdapter(activity, R.layout.search_list_row, 
 				markerShowable, fragmentSelectable, clazz, buffer) {
 			
 //			private boolean isImageSetup;

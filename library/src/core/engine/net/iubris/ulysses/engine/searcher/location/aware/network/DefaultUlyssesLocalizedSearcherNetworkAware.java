@@ -89,7 +89,7 @@ implements UlyssesLocalizedSearcherNetworkAware {
 			if (r!=null) {
 				Ln.d("r not null: "+r.size());
 				result = r;
-				persister.setPlaces(r);
+				persister.savePlaces(r);
 			}
 		} catch (PlacesSearcherException e) {
 			Ln.d("PlacesSearcherException");
