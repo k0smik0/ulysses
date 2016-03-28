@@ -35,7 +35,7 @@
             android:textIsSelectable="true"
             android:textStyle="italic" /> -->
 
-    <!-- <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal" >
@@ -51,7 +51,7 @@
             android:height="4dp"
             android:width="4dp"
             android:src="@drawable/web"
-            android:visibility="visible"/> -->
+            android:visibility="visible"/>
 
         <TextView
             android:id="@+id/url_label"
@@ -61,14 +61,17 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_gravity="center_vertical"
-            android:drawableLeft="@drawable/web"
-            android:drawableStart="@drawable/web"
+            
             android:gravity="center"
             android:autoLink="web"
-            android:text="www.prova.com"
+            
             android:textStyle="bold" />
+        <!--
+        android:text="www.prova.com" 
+        android:drawableLeft="@drawable/web"
+            android:drawableStart="@drawable/web" -->
         
-    <!-- </LinearLayout> -->
+    </LinearLayout>
 
 </FrameLayout>
 <!-- android:background="#ffffff" -->

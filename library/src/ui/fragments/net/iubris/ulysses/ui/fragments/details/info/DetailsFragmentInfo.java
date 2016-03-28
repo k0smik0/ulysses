@@ -1,4 +1,4 @@
-package net.iubris.ulysses.ui.fragments.details;
+package net.iubris.ulysses.ui.fragments.details.info;
 
 import in.flashbulb.coloredratingbar.ColoredRatingBar;
 
@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.Place;
+import net.iubris.ulysses.ui.fragments._base.DetailsFragmentBase;
 import net.iubris.ulysses.ui.icons.sieve.Sieve;
 import net.iubris.ulysses.ui.utils.menu.MenuUtils;
 import net.iubris.ulysses.utils.misc.PlacesUtils;
@@ -58,10 +59,12 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 	private TextView distance;
 	private ColoredRatingBar ratingBar;
 	private TextView ratingSuffix;
+	
+	private ImageView iconWeb;
 	private TextView urlLabel;
 	
 //	private TextView urlNo;
-//	private ImageView iconWeb;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +103,7 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 		urlLabel = (TextView) rootView.findViewById(R.id.url_label);
 //		reviewsString = ((Activity) activity).getResources().getString(R.string.reviews);
 //		urlNo = (TextView) rootView.findViewById(R.id.url_no);
-//		iconWeb = (ImageView)rootView.findViewById(R.id.icon_web);
+		iconWeb = (ImageView)rootView.findViewById(R.id.icon_web);
 		
 		imageLoadingListenerS = new ImageLoadingListenerS(photoSpinner);
 		
@@ -115,7 +118,7 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 	@Override
 	public void onResume() {
 		super.onResume();
-		fillData(photo, name, address, distance, ratingBar, ratingSuffix, urlLabel/*, iconWeb, urlNo*/);
+		fillData(photo, name, address, distance, ratingBar, ratingSuffix, urlLabel, iconWeb/*, urlNo*/);
 	}
 	
 	/*private static class Holder {
@@ -136,7 +139,7 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 		super.onResume();
 		fillHolderData();
 	}*/
-	private void fillData(ImageView photo, TextView name, TextView address, TextView distance, ColoredRatingBar ratingBar, TextView ratingSuffix, TextView urlLabel/*, ImageView iconWeb, View urlNo*/) {
+	private void fillData(ImageView photo, TextView name, TextView address, TextView distance, ColoredRatingBar ratingBar, TextView ratingSuffix, TextView urlLabel, ImageView iconWeb/*, View urlNo*/) {
 		final Place place = getPlace();
 //		final Place place = placeEnhanced.getPlace();
 //		final Details details = placeEnhanced.getDetails();
@@ -180,11 +183,11 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 				Ln.d(place.getWebsite());
 				urlLabel.setText(place.getWebsite());
 				urlLabel.setVisibility(View.VISIBLE);
-//				iconWeb.setVisibility(View.VISIBLE);
+				iconWeb.setVisibility(View.VISIBLE);
 //				urlNo.setVisibility(View.GONE);
 			} else {
 				urlLabel.setVisibility(View.GONE);
-//				iconWeb.setVisibility(View.GONE);
+				iconWeb.setVisibility(View.GONE);
 //				urlNo.setVisibility(View.VISIBLE);
 			}		
 		} catch (NullPointerException e) {

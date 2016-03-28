@@ -1,4 +1,4 @@
-package net.iubris.ulysses.ui.fragments.details;
+package net.iubris.ulysses.ui.fragments.details.reviews;
 
 
 import java.util.Date;

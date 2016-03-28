@@ -37,7 +37,7 @@
     
     <!-- android:background="@drawable/border_green" -->
 
-    <Button
+    <!-- <Button
         android:id="@+id/button_get_panorama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         android:text="@string/label_button_street_view"
         android:textColor="@android:color/white"
         style="@style/ColoredButton"
-        android:visibility="visible" />
+        android:visibility="visible" /> -->
     
     <!-- android:background="@drawable/border_green" -->
 

@@ -29,7 +29,7 @@ import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingAlphabetic
 import net.iubris.ulysses.model.comparators.PlaceComparatorByAscendingDistance;
 import net.iubris.ulysses.model.comparators.PlaceComparatorByDiscendingRating;
 import net.iubris.ulysses.ui.activity.details.StreetViewPanoramaActivity;
-import net.iubris.ulysses.ui.fragments.details.DetailsFragmentGallery;
+import net.iubris.ulysses.ui.fragments.details.gallery.DetailsFragmentGallery;
 import net.iubris.ulysses.ui.intentable.IntentUtils;
 import android.annotation.SuppressLint;
 import android.app.Activity;

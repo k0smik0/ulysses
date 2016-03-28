@@ -1,4 +1,4 @@
-package net.iubris.ulysses.ui.fragments.details;
+package net.iubris.ulysses.ui.fragments._base;
 
 import net.iubris.ulysses.model.Place;
 import android.support.v4.app.Fragment;

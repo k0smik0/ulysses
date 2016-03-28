@@ -70,6 +70,6 @@ public class GeoAddress extends Entity implements Serializable {
 	
 	@Override
 	public String toString() {
-		return GeoAddress.class.getSimpleName()+":["+location+","+formattedAddress+"]";
+		return GeoAddress.class.getSimpleName()+":[id:"+id+",location:"+location+",formattedAddress:'"+formattedAddress+"']";
 	}
 }

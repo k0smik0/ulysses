@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
 import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
 
-public class UlyssesStreetViewPanoramaFragment extends SupportStreetViewPanoramaFragment{
+public class UlyssesStreetViewPanoramaFragment_OLD extends SupportStreetViewPanoramaFragment{
     public static final UlyssesStreetViewPanoramaFragment newInstance(double latitude, double longitude){
         Bundle args = new Bundle();
         args.putDouble("latitude", latitude);

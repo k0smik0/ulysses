@@ -21,11 +21,14 @@ package net.iubris.ulysses.model;
 
 
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import net.iubris.ulysses.data.Converter;
+import net.iubris.ulysses.data.Converter.Stringable;
 
 import com.roscopeco.ormdroid.Column;
 import com.roscopeco.ormdroid.Entity;
@@ -74,9 +77,6 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	@Column(forceMap=true)
 	private String iconUrlString;
 	
-	@Column(forceMap=true)
-	private float rating;
-	
 	private Set<String> types;
 	@Column(forceMap=true)
 //	@Convert(converter=StringSetConverter.class)
@@ -99,8 +99,15 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	@Column(forceMap=true)
 	private String internationalPhoneNumber;
 	
+	private List<Review> reviews;
 	@Column(forceMap=true)
-	private int reviewsCount;
+	private String reviewsAsString;
+	
+	@Column(forceMap=true)
+	private float rating;
+	
+//	@Column(forceMap=true)
+//	private int reviewsCount;
 	
 	@Column(forceMap=true)
 	private String website;
@@ -112,6 +119,7 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	private String googlePlusUrl;
 	
 	private final Converter converter = Converter.INSTANCE;
+	
 	
 	
 	public Place() {
@@ -126,9 +134,10 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 			boolean permanentlyClosed,
 			String formattedAddress, String internationalPhoneNumber,
 			String googlePlusUrl, 
-			String website, int reviewsCount) {
+			String website, List<Review> reviews) {
 		this(placeName, placeId, location, iconUrlString, rating, types, vicinity, photosUrl, permanentlyClosed, formattedAddress, internationalPhoneNumber, googlePlusUrl, website);
-		this.reviewsCount = reviewsCount;
+		setReviews(reviews);
+//		this.reviewsCount = reviewsCount;
 	}
 	public Place(String placeName, String placeId, Location location, String iconUrlString,
 			float rating, Set<String> types, String vicinity,
@@ -337,13 +346,32 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	public void setInternationalPhoneNumber(String internationalPhoneNumber) {
 		this.internationalPhoneNumber = internationalPhoneNumber;
 	}
+	
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+		this.reviewsAsString = converter.asString(reviews);
+	}
+	public List<Review> getReviews() {
+		if (reviews==null) {
+			/*List<String> asList = converter.asList(reviewsAsString);
+			reviews = new ArrayList<>();
+			for (String string : asList) {
+				reviews.add(Review.fromString(string));
+			}*/
+			reviews = converter.asListRecursive(reviewsAsString, Review.class);
+		}
+		return reviews;
+	}
+	public void addReview(Review review) {
+		reviews.add(review);		
+	}
 
 	public int getReviewsCount() {
-		return reviewsCount;
+		return getReviews().size();
 	}
-	public void setReviewsCount(int reviewsCount) {
-		this.reviewsCount = reviewsCount;
-	}
+//	public void setReviewsCount(int reviewsCount) {
+//		this.reviewsCount = reviewsCount;
+//	}
 	
 	public String getPlusUrl() {
 		return googlePlusUrl;
@@ -421,7 +449,7 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 			float rating, Set<String> types, String vicinity,
 			List<String> photosUrls, boolean permanentlyClosed,
 			String formattedAddress, String internationalPhoneNumber,
-			int reviewsCount, String website, double distance, String plusUrl) {
+			List<Review> reviews, String website, double distance, String plusUrl) {
 		setPlaceName(placeName);
 		setPlaceId(placeId);
 		setLocation(location);
@@ -433,7 +461,8 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 		setPermanentlyClosed(permanentlyClosed);
 		setFormattedAddress(formattedAddress);
 		setInternationalPhoneNumber(internationalPhoneNumber);
-		setReviewsCount(reviewsCount);
+		setReviews(reviews);
+//		setReviewsCount(reviewsCount);
 		setWebsite(website);
 		setDistance(distance);
 		setPlusUrl(plusUrl);
@@ -456,4 +485,76 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 			return longitude;
 		}
 	}*/
+	
+	public static class Review implements Stringable, Serializable {
+
+		private static final long serialVersionUID = -2584426579916379622L;
+		
+		private String authorName;
+		private URI authorUrl;
+		private long time;
+		private String text;		
+//		private String authorUrlAsString;
+		
+		private static final String SEPARATOR = "|"; 
+
+		public Review(String authorName, URI authorUrl, long time, String text) {
+			this.authorName = authorName;
+			this.authorUrl = authorUrl;
+			this.time = time;
+			this.text = text;
+		}
+		public Review(Review review) {
+			this(review.getAuthorName(), review.getAuthorUrl(), review.getTime(), review.getText());
+		}
+		public Review(String fromString) {
+			this(fromString(fromString));
+		}
+		public Review() {}
+		public String getAuthorName() {
+			return authorName;
+		}
+		public void setAuthorName(String authorName) {
+			this.authorName = authorName;
+		}
+		public URI getAuthorUrl() {
+			return authorUrl;
+		}
+		public void setAuthorUrl(URI authorUrl) {
+			this.authorUrl = authorUrl;
+//			this.authorUrlAsString = authorUrl.toString();
+		}
+
+		public long getTime() {
+			return time;
+		}
+		public void setTime(long time) {
+			this.time = time;
+		}
+
+		public String getText() {
+			return text;
+		}
+		public void setText(String text) {
+			this.text = text;
+		}
+		
+		@Override
+		public String asString() {
+			return authorName+SEPARATOR+authorUrl+SEPARATOR+time+SEPARATOR+text;
+		}
+		public static Review fromString(String fromString) /*throws NoValidJSONStringException*/ {
+//			return JSONHandler.INSTANCE.fromString(fromJsonString,Location.class);
+//			return converter.as asLocation(fromString,Location.class);
+			String[] split = fromString.split(SEPARATOR);
+			try {
+				return new Review(split[0], new URI(split[1]), Long.parseLong(split[2]), split[3]);
+			} catch (NumberFormatException | URISyntaxException e) {
+				e.printStackTrace();
+				return new Review(split[0], null, Long.parseLong(split[2]), split[3]);
+			}
+		}
+		
+	}
+	
 }

@@ -22,21 +22,26 @@ public class GeoAddressCache {
 	@Inject
 	public GeoAddressCache(Persister persister) {
 		this.persister = persister;
-		
-//		Ln.d("cache: "+cache.hashCode());
-		
 		init();
 	}
 
 	public void init() {
 		if (cache.size()==0) {
 			Collection<GeoAddress> geoAddresses = persister.getGeoAddresses();
+			// debug start
 			Ln.d("Populating cache with "+geoAddresses.size()+" geoAddresses");
 			for (GeoAddress geoAddress : geoAddresses) {
 				Ln.d("geoAddress:"+geoAddress);
 			}
+			// debug end
 			for (GeoAddress geoAddress : geoAddresses) {
-				cache.put(geoAddress.getLocation(), geoAddress);
+				try {
+					cache.put(geoAddress.getLocation(), geoAddress);
+				} catch(NullPointerException e) {
+					Ln.d("removing geoaddress:"+geoAddress+" from db, since its location or itself is null");
+					geoAddress.delete();
+					persister.find(geoAddress);
+				}
 			}
 		}
 	}
@@ -44,9 +49,14 @@ public class GeoAddressCache {
 	// always overwritten
 	public GeoAddress save(GeoAddress geoAddress) {
 		Ln.d("putting: "+geoAddress);
-		GeoAddress geoAddressMaybeExistant = cache.put(geoAddress.getLocation(), geoAddress);
-		persister.saveGeoAddress(geoAddress);
-		return geoAddressMaybeExistant;
+		try {
+			GeoAddress geoAddressMaybeExistant = cache.put(geoAddress.getLocation(), geoAddress);
+			persister.saveGeoAddress(geoAddress);
+			return geoAddressMaybeExistant;
+		} catch(NullPointerException e) {
+			// we don't care too much if 'save' fails..
+			return null;
+		}		
 	}
 	public GeoAddress find(Location location) {
 		Ln.d("finding by: "+location+" within:");

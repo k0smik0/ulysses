@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -26,7 +25,7 @@ public class ImagePagerAdapter extends /*FragmentStatePagerAdapter*/ PagerAdapte
 
 	private LayoutInflater inflater;
 
-	private TextView counter;
+//	private TextView counter;
 //	private final DisplayImageOptions options;
 
 //	private Picasso picasso;
@@ -39,10 +38,10 @@ public class ImagePagerAdapter extends /*FragmentStatePagerAdapter*/ PagerAdapte
 		this.inflater = LayoutInflater.from(context);
 		this.imagesURLS = imagesURLS;
 	}
-	public ImagePagerAdapter(Context context, TextView counter) {
+	/*public ImagePagerAdapter(Context context, TextView counter) {
 		this(context, new ArrayList<String>());
 		this.counter = counter;
-	}
+	}*/
 	public ImagePagerAdapter(Context context) {
 		this(context, new ArrayList<String>());
 		Ln.d("ImagePagerAdapter:"+this);
@@ -87,10 +86,10 @@ public class ImagePagerAdapter extends /*FragmentStatePagerAdapter*/ PagerAdapte
 //		Ln.d("ImageLoader:"+imageLoader);
 		imageLoader.displayImage(url, imageView, new SimpleImageListenerSpinnerable(spinner));
 		
-		Ln.d("position: "+position);
-		String counterText = (position+1)+"/"+imagesURLS.size();
-		Ln.d("counterText:"+ counterText);
-		counter.setText(counterText);
+//		Ln.d("position: "+position);
+//		String counterText = (position+1)+"/"+imagesURLS.size();
+//		Ln.d("counterText:"+ counterText);
+//		counter.setText(counterText);
 		
 //		ImageLoader.getInstance().displayImage(url, imageView);
 		

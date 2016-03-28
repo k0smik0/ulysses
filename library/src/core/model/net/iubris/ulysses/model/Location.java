@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import net.iubris.ulysses.data.Converter;
+import net.iubris.ulysses.data.Converter.Stringable;
 import roboguice.util.Ln;
 
-public class Location implements Serializable, Comparable<Location> {
+public class Location implements Serializable, Comparable<Location>, Stringable {
 	private static final long serialVersionUID = 8145546699386327997L;
 	private static final Converter converter = Converter.INSTANCE;
 	
@@ -22,7 +23,7 @@ public class Location implements Serializable, Comparable<Location> {
 		this.latitude = new BigDecimal(latitude).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue(); 
 		this.longitude = new BigDecimal(longitude).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		
-		Ln.d("saved with:"+this.latitude+","+this.longitude);
+//		Ln.d("saved with:"+this.latitude+","+this.longitude);
 	}
 	public Location() {}
 	public Location(String fromString) /*throws NoValidJSONStringException*/ {
@@ -45,13 +46,14 @@ public class Location implements Serializable, Comparable<Location> {
 		this.longitude = longitude;
 	}
 	
+	@Override
 	public String asString() {
 //		return JSONHandler.INSTANCE.toString(this);
 		return converter.asString(this);
 	}
-	public static Location fromString(String fromJsonString) /*throws NoValidJSONStringException*/ {
+	public static Location fromString(String fromString) /*throws NoValidJSONStringException*/ {
 //		return JSONHandler.INSTANCE.fromString(fromJsonString,Location.class);
-		return converter .asObject(fromJsonString,Location.class);
+		return converter.asLocation(fromString,Location.class);
 	}
 	
 	@Override

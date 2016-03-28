@@ -1,4 +1,4 @@
-package net.iubris.ulysses.ui.fragments.details;
+package net.iubris.ulysses.ui.fragments.details.gallery;
 
 import android.support.v4.view.ViewPager.PageTransformer;
 import android.view.View;

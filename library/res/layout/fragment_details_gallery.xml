@@ -30,24 +30,27 @@
 		        xmlns:android="http://schemas.android.com/apk/res/android"
 		        android:id="@+id/gallery_pager"
 		        android:layout_width="match_parent"
-		        android:layout_height="256dp"
+		        android:layout_height="300dp"		        
 		        android:minHeight="256dp"
-		        android:layout_margin="-3dp"
-		        android:padding="-3dp"
-		        android:layout_gravity="center"
-		        android:background="@drawable/shadow"
+		        android:layout_margin="0dp"
+		        android:paddingTop="3dp"
+		        android:paddingBottom="3dp"
+		        android:paddingLeft="3dp"
+		        android:paddingRight="3dp"
+		        android:layout_gravity="center"		        
 		        android:visibility="visible"/>
+		    <!--  -->
 		    <!-- android:background="@drawable/border_details_gallery" -->
 		    <!-- android:background="@drawable/border_blue" -->
 		    <!-- android:background="@drawable/border_gallery_streetview" -->
 		    
-		    <TextView 
+		    <!-- <TextView 
 		        android:id="@+id/gallery_counter"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="0dp"
 		        android:gravity="center"
-		        android:text="source"/>
+		        android:text="source"/> -->
 		    
     <!-- </LinearLayout> -->
         
@@ -64,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:visibility="gone"
         layout="@layout/frame_no_photo"/>
     
     

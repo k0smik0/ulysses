@@ -1,29 +1,27 @@
-package net.iubris.ulysses.ui.fragments.details;
+package net.iubris.ulysses.ui.fragments.details.gallery;
 
 import java.util.List;
 
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.Location;
 import net.iubris.ulysses.model.Place;
-import net.iubris.ulysses.ui.activity.details.StreetViewPanoramaActivity;
+import net.iubris.ulysses.ui.fragments._base.DetailsFragmentBase;
 import net.iubris.ulysses.ui.gallery.ImagePagerAdapter;
 import net.iubris.ulysses.ui.utils.menu.MenuUtils;
 import roboguice.util.Ln;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class DetailsFragmentGallery extends DetailsFragmentBase {
 	
-	public static String TAG = "DetailsFragmentGallery";
+	public static String TAG = DetailsFragmentGallery.class.getSimpleName();
 
 	// my own
 	private ViewPager galleryPager;
@@ -37,10 +35,10 @@ public class DetailsFragmentGallery extends DetailsFragmentBase {
 	private TextView galleryLabelNoPhoto;
 	private List<String> photosUrls;
 	
-	private Button buttonGetPanorama;
+//	private Button buttonGetPanorama;
 	private Location location;
 
-	private TextView galleryCounter;
+//	private TextView galleryCounter;
 
 //	private ImageView imageviewTest;
 	
@@ -64,15 +62,13 @@ Ln.d("new galleryPager");
 			zoomImagesGalleryPager = (ImagePager) rootView.findViewById(R.id.zoom_images_gallery_pager);
 			zoomImagesGalleryPager.setPageTransformer(false, new DepthPageTransformer());
 Ln.d("new galleryPager");
-		}*/
-		
-		galleryCounter = (TextView) rootView.findViewById(R.id.gallery_counter);
-//		imageviewTest = (ImageView) rootView.findViewById(R.id.imageview_test);
+		}*/		
+//		galleryCounter = (TextView) rootView.findViewById(R.id.gallery_counter);
 //		galleryComments = (TextView) rootView.findViewById(R.id.gallery_comments);
-		galleryLabelNoPhoto = (TextView) rootView.findViewById(R.id.gallery_label_no_photo);
 		
-		buttonGetPanorama = (Button) rootView.findViewById(R.id.button_get_panorama);
-		buttonGetPanorama.setOnClickListener( buttonPanoramaOnClickListener );
+		galleryLabelNoPhoto = (TextView) rootView.findViewById(R.id.gallery_label_no_photo);
+//		buttonGetPanorama = (Button) rootView.findViewById(R.id.button_get_panorama);
+//		buttonGetPanorama.setOnClickListener( buttonPanoramaOnClickListener );
 		
 		return rootView;
 	}
@@ -88,7 +84,7 @@ Ln.d("new galleryPager");
 		}*/
 		// using my
 		if (imagePagerAdapter==null) {
-			imagePagerAdapter = new ImagePagerAdapter(getView().getContext(), galleryCounter);
+			imagePagerAdapter = new ImagePagerAdapter(getView().getContext()/*, galleryCounter*/);
 			galleryPager.setAdapter(imagePagerAdapter);
 			Ln.d("new ImagePagerAdapter");
 		}
@@ -139,13 +135,13 @@ Ln.d("new galleryPager");
 			// external not working
 //			zoomImagesGalleryPager.setVisibility(View.GONE);
 			galleryLabelNoPhoto.setVisibility(View.VISIBLE);
-			buttonGetPanorama.setVisibility(View.VISIBLE);
+//			buttonGetPanorama.setVisibility(View.VISIBLE);
 		}
 //		if (photosUrls.size()>0) {
 		else {
 			Ln.d(getPlace().getPlaceName()+", getting photos: "+photosUrls.size());
 			galleryLabelNoPhoto.setVisibility(View.GONE);
-			buttonGetPanorama.setVisibility(View.GONE);			
+//			buttonGetPanorama.setVisibility(View.GONE);			
 			
 			// my own
 			galleryPager.setVisibility(View.VISIBLE);
@@ -179,37 +175,39 @@ Ln.d("new galleryPager");
 		MenuUtils.addPanorama(menu, location, getActivity());
 	}
 	
-	OnClickListener buttonPanoramaOnClickListener = new OnClickListener() {
+	/*OnClickListener buttonPanoramaOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-//			arguments = getArguments();
 			Ln.d("clicked for panorama");
-	    	Location location = getPlace().getLocation();
+	    	Location location = DetailsFragmentGallery.this.getPlace().getLocation();
 	    	
+//	    	method 1
 //	    	UlyssesStreetViewPanoramaFragment streetViewFragment = UlyssesStreetViewPanoramaFragment.newInstance(location.getLatitude(), location.getLongitude());
 //	    	getFragmentManager().beginTransaction().attach(streetViewFragment).show(streetViewFragment).commit();
 	    	
-	    	/*UlyssesStreetViewPanoramaFragment ulyssesStreetViewPanoramaFragment = (UlyssesStreetViewPanoramaFragment) getFragmentManager().findFragmentById(R.id.fragment_streetviewpanorama);
-	    	if (ulyssesStreetViewPanoramaFragment==null) {
-	    		Ln.d("ulyssesStreetViewPanoramaFragment is null, instancing");
-	    		ulyssesStreetViewPanoramaFragment = UlyssesStreetViewPanoramaFragment.newInstance(location.getLatitude(), location.getLongitude());
-	    		getChildFragmentManager().beginTransaction().add(R.id.fragment_streetviewpanorama, ulyssesStreetViewPanoramaFragment).commit();
-	    	}
-	    	ulyssesStreetViewPanoramaFragment.setLocation(location);*/
+//	    	method 2
+//	    	UlyssesStreetViewPanoramaFragment ulyssesStreetViewPanoramaFragment = (UlyssesStreetViewPanoramaFragment) getFragmentManager().findFragmentById(R.id.fragment_streetviewpanorama);
+//	    	if (ulyssesStreetViewPanoramaFragment==null) {
+//	    		Ln.d("ulyssesStreetViewPanoramaFragment is null, instancing");
+//	    		ulyssesStreetViewPanoramaFragment = UlyssesStreetViewPanoramaFragment.newInstance(location.getLatitude(), location.getLongitude());
+//	    		getChildFragmentManager().beginTransaction().add(R.id.fragment_streetviewpanorama, ulyssesStreetViewPanoramaFragment).commit();
+//	    	}
+//	    	ulyssesStreetViewPanoramaFragment.setLocation(location);
 	    	
+//	    	method 3
 //	    	UlyssesStreetViewPanoramaFragment findFragmentById = (UlyssesStreetViewPanoramaFragment) getFragmentManager().findFragmentById(R.id.fragment_streetviewpanorama);
 //	    	if (findFragmentById ==null)
 //	    		findFragmentById = UlyssesStreetViewPanoramaFragment.newInstance(location.getLatitude(), location.getLongitude());
 //	    	if (!findFragmentById.isVisible())
 //	    		getFragmentManager().beginTransaction().show(findFragmentById).commit();
 
-//	    	 working
+//	    	method 4 - working
 	    	Intent intent = new Intent();
 	    	intent.putExtra(EXTRA_ULYSSES_LOCATION, location);
 	    	intent.setClass(getActivity(), StreetViewPanoramaActivity.class);
 	    	startActivity(intent);
 		}
-	};
+	};*/
 	
 	
 	/*private SimpleImagePagerAdapter buildSimpleImagePagerAdapter() {

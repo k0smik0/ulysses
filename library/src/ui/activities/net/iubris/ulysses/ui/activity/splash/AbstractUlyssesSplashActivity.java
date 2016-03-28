@@ -19,6 +19,8 @@
  ******************************************************************************/
 package net.iubris.ulysses.ui.activity.splash;
 
+import java.util.Locale;
+
 import net.iubris.ulysses.R;
 import roboguice.util.Ln;
 import android.app.Activity;
@@ -27,6 +29,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 /**
  * heavy inspired to RoboSplashActivity (from RoboGuice): as default, show a splash image for 500ms,<br/>
@@ -36,15 +39,18 @@ import android.os.Handler;
  * really in post_boot.
  * @author Massimiliano Leone - k0smik0
  */
-abstract public class SplashActivity extends Activity {
+public abstract class AbstractUlyssesSplashActivity extends Activity {
 	
-	public static String ACTION_POST_SPLASH = "action_post_splash";
+	private static final Class<?> thisClass = AbstractUlyssesSplashActivity.class;
+	private static final String TAG = thisClass.getPackage().getName().toUpperCase(Locale.getDefault())+"/"+thisClass.getSimpleName();
+	
+	public static final String ACTION_POST_SPLASH = "action_post_splash";
 	
 	
 	/**
 	 * milliseconds
 	 */
-	protected int minDisplayMilliseconds = 700;
+	protected int minDisplayMilliseconds = 500;
 
 
 	private Application application;
@@ -141,7 +147,7 @@ abstract public class SplashActivity extends Activity {
 	
 	protected void startMainActivity() {
 		final Intent startIntent = new Intent(this,getActivityToStart());
-		startIntent.setAction(SplashActivity.ACTION_POST_SPLASH);
+		startIntent.setAction(AbstractUlyssesSplashActivity.ACTION_POST_SPLASH);
 		startIntent.setFlags(getLauncherModeForMainActivity());
 		startActivity(startIntent);
 		if (!this.isFinishing()) {
@@ -149,7 +155,8 @@ abstract public class SplashActivity extends Activity {
 //			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		}
 //		runFadeInAnimation();
-		overridePendingTransition(R.anim.fade_in_900ms, R.anim.fade_out);
+		Log.d(TAG,"calling 'overridePendingTransition'");
+		overridePendingTransition(R.anim.fade_in_900ms, R.anim.fade_out_900ms);
 	}
 	
 	/*private void runFadeInAnimation() {

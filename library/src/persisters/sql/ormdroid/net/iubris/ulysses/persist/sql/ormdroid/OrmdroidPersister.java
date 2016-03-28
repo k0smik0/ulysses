@@ -89,8 +89,8 @@ public class OrmdroidPersister implements Persister {
 					reallyStored++;
 				}*/
 				
-				// always overwrite
-				Place placeExistant = Entity.query(Place.class).where( eql(Place.PLACENAME_COLUMN,place.getPlaceName()) ).execute();
+				// update if existant
+				Place placeExistant = Entity.query(Place.class).where( eql(Place.PLACENAME_COLUMN, place.getPlaceName()) ).execute();
 				if (placeExistant!=null) {
 //					placeExistant.delete();
 //					place.save();
@@ -105,12 +105,16 @@ public class OrmdroidPersister implements Persister {
 							place.isPermanentlyClosed(),
 							place.getFormattedAddress(),
 							place.getInternationalPhoneNumber(),
-							place.getReviewsCount(),
+							place.getReviews(),
 							place.getWebsite(),
 							place.getDistance(),
 							place.getPlusUrl());
-					placeExistant.save();
+					Ln.d("place:"+placeExistant+" existant, to update");
+				} else {
+					placeExistant = place;
+					Ln.d("place:"+placeExistant+" new, to insert");
 				}
+				placeExistant.save();
 			} catch(ORMDroidException e) {
 				Ln.d("setPlaces exception: "+e.getMessage());
 			}
@@ -170,6 +174,15 @@ public class OrmdroidPersister implements Persister {
 			Ln.d("updated geoaddress: "+geoaddressExistant);
 		}
 		geoaddressExistant.save();
+	}
+	
+	@Override
+	public GeoAddress find(GeoAddress geoAddress) {
+		List<GeoAddress> executeMulti = Entity.query(GeoAddress.class).executeMulti();
+		for (GeoAddress ga : executeMulti) {
+			Ln.d(ga);
+		}
+		return null;
 	}
 
 }

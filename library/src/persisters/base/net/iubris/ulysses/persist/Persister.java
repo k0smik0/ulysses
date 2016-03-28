@@ -19,4 +19,5 @@ public interface Persister {
 	
 	Collection<GeoAddress> getGeoAddresses();
 	void saveGeoAddress(GeoAddress geoAddress);
+	GeoAddress find(GeoAddress geoAddress);
 }

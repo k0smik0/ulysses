@@ -121,7 +121,7 @@ public class DefaultSocratesDelegate implements SocratesDelegate {
 					try {
 					Details details = getDetails( googlePlace.getPlaceId() );
 					
-					List<Review> reviews = details.getReviews();
+					List<Review> googleReviews = details.getReviews();
 					
 					net.iubris.ulysses.model.Location location = buildLocation(googlePlace.getGeometry().getLocation());
 					String icon = uriToString(googlePlace.getIcon());
@@ -145,8 +145,20 @@ public class DefaultSocratesDelegate implements SocratesDelegate {
 							uriToString(details.getUri()),
 							uriToString(details.getWebsite()) );
 					
-					if (reviews!=null) {
-						place.setReviewsCount(reviews.size());
+					if (googleReviews!=null && googleReviews.size()>0) {
+//						place.setReviewsCount(reviews.size());
+						place.setReviews(new ArrayList<net.iubris.ulysses.model.Place.Review>());
+						
+						for (Review googleReview : googleReviews) {
+							net.iubris.ulysses.model.Place.Review review = 
+								new net.iubris.ulysses.model.Place.Review(googleReview.getAuthorName(),
+										googleReview.getAuthorUrl(),
+										googleReview.getTime(),
+										googleReview.getText());
+							place.addReview(review);
+						}
+						
+						
 					}
 //					placesHere.add( new PlaceEnhanced(place, locationHere, details) );
 //					Ln.d("details for: "+place.getName()+"("+c+") ok.");
