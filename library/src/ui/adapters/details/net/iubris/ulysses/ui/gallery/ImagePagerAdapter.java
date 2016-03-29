@@ -3,7 +3,6 @@ package net.iubris.ulysses.ui.gallery;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import net.iubris.ulysses.R;
@@ -25,6 +24,8 @@ public class ImagePagerAdapter extends /*FragmentStatePagerAdapter*/ PagerAdapte
 
 	private LayoutInflater inflater;
 
+//	private final SparseArray<View> views = new SparseArray<>();
+
 //	private TextView counter;
 //	private final DisplayImageOptions options;
 
@@ -34,7 +35,7 @@ public class ImagePagerAdapter extends /*FragmentStatePagerAdapter*/ PagerAdapte
 //	private List<Drawable> testImages;
 
 	public ImagePagerAdapter(Context context, List<String> imagesURLS) {
-		Ln.d("ImagePagerAdapter:"+this);
+//		Ln.d("ImagePagerAdapter:"+this);
 		this.inflater = LayoutInflater.from(context);
 		this.imagesURLS = imagesURLS;
 	}
@@ -44,7 +45,7 @@ public class ImagePagerAdapter extends /*FragmentStatePagerAdapter*/ PagerAdapte
 	}*/
 	public ImagePagerAdapter(Context context) {
 		this(context, new ArrayList<String>());
-		Ln.d("ImagePagerAdapter:"+this);
+//		Ln.d("ImagePagerAdapter:"+this);
 		// test
 //		testImages = new ArrayList<>();
 //		testImages.add(context.getResources().getDrawable(R.drawable.star_green));
@@ -54,7 +55,14 @@ public class ImagePagerAdapter extends /*FragmentStatePagerAdapter*/ PagerAdapte
 
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-		container.removeView((View) object);
+//		container.removeView((View) object);
+		object = null;
+		
+//		View view = (View)object;
+//	    ((ViewPager) container).removeView(view);
+//	    views.remove(position);
+//	    view = null;
+		
 	}
 
 	@Override
@@ -65,12 +73,21 @@ public class ImagePagerAdapter extends /*FragmentStatePagerAdapter*/ PagerAdapte
 
 	@Override
 	public void notifyDataSetChanged() {
+		/*int key = 0;
+	    for(int i = 0; i < views.size(); i++) {
+	       key = views.keyAt(i);
+	       View view = views.get(key);
+	       <refresh view with new data>
+	    }*/
+		
+		
 		super.notifyDataSetChanged();
-		Ln.d("new data!");
+		Ln.d("notifyDataSetChanged");
 	}
 	
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
+		Ln.d("instantiateItem:"+position);
 //		Ln.d("ImagePagerAdapter:instantiateItem");
 		View imageLayout = inflater.inflate(R.layout.frame_item_pager_image, container, false);
 //		assert imageLayout != null;
@@ -109,14 +126,21 @@ public class ImagePagerAdapter extends /*FragmentStatePagerAdapter*/ PagerAdapte
 //		imageView.setImageDrawable(testImages.get(position));
 
 		container.addView(imageLayout);
+//		views.put(position, imageLayout);
 		return imageLayout;
+	}
+	
+	@Override
+	public int getItemPosition(Object object) {
+		return POSITION_NONE;
 	}
 
 	@Override
 	public boolean isViewFromObject(View view, Object object) { return view.equals(object); }
 
-	public void setPhotoURLS(String... photosUrls) {
-		this.imagesURLS = Arrays.asList(photosUrls);
+	public void setPhotoURLS(List<String>/*...*/ photosUrls) {
+		this.imagesURLS = /*Arrays.asList(*/photosUrls/*)*/;
+		notifyDataSetChanged();
 	}
 	
 

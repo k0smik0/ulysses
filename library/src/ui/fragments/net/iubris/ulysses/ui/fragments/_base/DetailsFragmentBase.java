@@ -11,7 +11,7 @@ public class DetailsFragmentBase extends Fragment {
 		this.place = place;
 	}
 	
-	protected Place getPlace() {
+	public Place getPlace() {
 		return place;
 	}
 }

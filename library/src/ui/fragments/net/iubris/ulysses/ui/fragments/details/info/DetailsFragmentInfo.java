@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.Place;
+import net.iubris.ulysses.ui.activity.details.PlaceProvideable;
 import net.iubris.ulysses.ui.fragments._base.DetailsFragmentBase;
 import net.iubris.ulysses.ui.icons.sieve.Sieve;
 import net.iubris.ulysses.ui.utils.menu.MenuUtils;
@@ -30,7 +31,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-public class DetailsFragmentInfo extends DetailsFragmentBase {
+public class DetailsFragmentInfo extends DetailsFragmentBase implements PlaceProvideable {
 	
 //	public static String TAG = "DetailsFragmentInfo_To_Change";
 
@@ -154,7 +155,7 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 				String photoUrl = photosUrl.get(0);
 				
 //				ImageLoader imageLoader = ImageLoader.getInstance();
-				Ln.d("ImageLoader:"+imageLoader);
+//				Ln.d("ImageLoader:"+imageLoader);
 				imageLoader.displayImage( photoUrl, photo, imageLoadingListenerS);
 			} else {
 				// TODO cache sieve search!
@@ -180,8 +181,11 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 		try {
 			String website = place.getWebsite();
 			if (website!=null && !website.isEmpty()) {
-				Ln.d(place.getWebsite());
-				urlLabel.setText(place.getWebsite());
+//				Ln.d(place.getWebsite());
+				String urlCleaned = place.getWebsite()
+						.replace(PREFIX_HTTP,STRING_EMPTY)
+						.replace(PREFIX_HTTPS,STRING_EMPTY);
+				urlLabel.setText(urlCleaned);
 				urlLabel.setVisibility(View.VISIBLE);
 				iconWeb.setVisibility(View.VISIBLE);
 //				urlNo.setVisibility(View.GONE);
@@ -195,6 +199,9 @@ public class DetailsFragmentInfo extends DetailsFragmentBase {
 			Ln.d(e.getClass().getSimpleName());
 		}
 	}
+	private static final String PREFIX_HTTP = "http://";
+	private static final String PREFIX_HTTPS = "https://";
+	private static final String STRING_EMPTY = "";
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {

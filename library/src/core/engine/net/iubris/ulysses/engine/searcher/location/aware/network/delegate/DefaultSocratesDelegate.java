@@ -119,52 +119,57 @@ public class DefaultSocratesDelegate implements SocratesDelegate {
 //					Ln.d("details for: "+googlePlace.getName()+" ("+counter.incrementAndGet()+") ...");
 //					int c = counter.get();
 					try {
-					Details details = getDetails( googlePlace.getPlaceId() );
-					
-					List<Review> googleReviews = details.getReviews();
-					
-					net.iubris.ulysses.model.Location location = buildLocation(googlePlace.getGeometry().getLocation());
-					String icon = uriToString(googlePlace.getIcon());
-					Set<String> typesAsString = googleTypesAsString(googlePlace.getTypes());
-					List<String> photosUrls = buildPhotosUrls(
-//							googlePlace.getPhotos()
-							details.getPhotos()
-							);
-//					List<String> photosComments = details.getPhotos().g
-//					Ln.d("added "+photosUrls.size()+" photos for "+googlePlace.getName());
-					
-					Place place = new Place(googlePlace.getName(), googlePlace.getPlaceId(), 
-							location,
-							icon, googlePlace.getRating(), 
-							typesAsString, googlePlace.getVicinity(), 
-							photosUrls,
-							googlePlace.isPermanentlyClosed(),
+						Details details = getDetails( googlePlace.getPlaceId() );
+						
+						net.iubris.ulysses.model.Location location = buildLocation(googlePlace.getGeometry().getLocation());
+						String icon = uriToString(googlePlace.getIcon());
+						Set<String> typesAsString = googleTypesAsString(googlePlace.getTypes());
+						List<String> photosUrls = buildPhotosUrls(
+	//							googlePlace.getPhotos()
+								details.getPhotos()
+								);
+	//					List<String> photosComments = details.getPhotos().g
+	//					Ln.d("added "+photosUrls.size()+" photos for "+googlePlace.getName());
+						
+						Place place = new Place(googlePlace.getName(), googlePlace.getPlaceId(), 
+								location,
+								icon, googlePlace.getRating(), 
+								typesAsString, googlePlace.getVicinity(), 
+								photosUrls,
+								googlePlace.isPermanentlyClosed(),
+								
+								details.getFormattedAddress(),
+								details.getInternationalPhoneNumber(),
+								uriToString(details.getUri()),
+								uriToString(details.getWebsite()) );
+						
+						List<Review> googleReviews = details.getReviews();					
+						if (googleReviews!=null && googleReviews.size()>0) {
+	//						place.setReviewsCount(reviews.size());
+							place.setReviews(new ArrayList<net.iubris.ulysses.model.Place.Review>());
 							
-							details.getFormattedAddress(),
-							details.getInternationalPhoneNumber(),
-							uriToString(details.getUri()),
-							uriToString(details.getWebsite()) );
-					
-					if (googleReviews!=null && googleReviews.size()>0) {
-//						place.setReviewsCount(reviews.size());
-						place.setReviews(new ArrayList<net.iubris.ulysses.model.Place.Review>());
-						
-						for (Review googleReview : googleReviews) {
-							net.iubris.ulysses.model.Place.Review review = 
-								new net.iubris.ulysses.model.Place.Review(googleReview.getAuthorName(),
-										googleReview.getAuthorUrl(),
-										googleReview.getTime(),
-										googleReview.getText());
-							place.addReview(review);
+							Ln.d("GoogleReview for:"+ googlePlace.getName()+" = "+googleReviews.size());
+							int added = 0;
+							for (Review googleReview : googleReviews) {
+								String text = googleReview.getText();
+								if (text==null || text.isEmpty()) {
+									continue;
+								}
+								net.iubris.ulysses.model.Place.Review review = 
+									new net.iubris.ulysses.model.Place.Review(googleReview.getAuthorName(),
+											googleReview.getAuthorUrl(),
+											googleReview.getTime(),
+											text.replace("\n", "").replace("\r","").replace("<br/>", ""));
+								place.addReview(review);
+								added++;
+							}
+							Ln.d("GoogleReview for:"+ googlePlace.getName()+" really added: "+added);
 						}
-						
-						
-					}
 //					placesHere.add( new PlaceEnhanced(place, locationHere, details) );
 //					Ln.d("details for: "+place.getName()+"("+c+") ok.");
 //					Ln.d("places contains "+place.getName()+" ? "+places.contains(place));
 //					boolean added = 
-							places.add( place );
+						places.add( place );
 //					Ln.d("details for: "+place.getPlaceName()+" added: " +added);
 					
 //					latch.countDown();

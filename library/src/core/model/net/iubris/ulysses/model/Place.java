@@ -29,6 +29,7 @@ import java.util.Set;
 
 import net.iubris.ulysses.data.Converter;
 import net.iubris.ulysses.data.Converter.Stringable;
+import roboguice.util.Ln;
 
 import com.roscopeco.ormdroid.Column;
 import com.roscopeco.ormdroid.Entity;
@@ -349,7 +350,9 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 	
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
+		Ln.d("storing "+reviews.size()+"as string");
 		this.reviewsAsString = converter.asString(reviews);
+		Ln.d("reviewsAsString "+reviewsAsString);
 	}
 	public List<Review> getReviews() {
 		if (reviews==null) {
@@ -358,7 +361,10 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 			for (String string : asList) {
 				reviews.add(Review.fromString(string));
 			}*/
+			Ln.d("place:"+placeName);
+			Ln.d("reviewsAsString:"+reviewsAsString);
 			reviews = converter.asListRecursive(reviewsAsString, Review.class);
+			Ln.d("num reviews: "+reviews.size());
 		}
 		return reviews;
 	}
@@ -486,12 +492,12 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 		}
 	}*/
 	
-	public static class Review implements Stringable, Serializable {
+	public static class Review implements Stringable, Serializable/*, Comparable<Review>*/ {
 
 		private static final long serialVersionUID = -2584426579916379622L;
 		
 		private String authorName;
-		private URI authorUrl;
+		private URI authorUri;
 		private long time;
 		private String text;		
 //		private String authorUrlAsString;
@@ -500,12 +506,12 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 
 		public Review(String authorName, URI authorUrl, long time, String text) {
 			this.authorName = authorName;
-			this.authorUrl = authorUrl;
+			this.authorUri = authorUrl;
 			this.time = time;
 			this.text = text;
 		}
 		public Review(Review review) {
-			this(review.getAuthorName(), review.getAuthorUrl(), review.getTime(), review.getText());
+			this(review.getAuthorName(), review.getAuthorUri(), review.getTime(), review.getText());
 		}
 		public Review(String fromString) {
 			this(fromString(fromString));
@@ -517,11 +523,11 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 		public void setAuthorName(String authorName) {
 			this.authorName = authorName;
 		}
-		public URI getAuthorUrl() {
-			return authorUrl;
+		public URI getAuthorUri() {
+			return authorUri;
 		}
-		public void setAuthorUrl(URI authorUrl) {
-			this.authorUrl = authorUrl;
+		public void setAuthorUri(URI authorUri) {
+			this.authorUri = authorUri;
 //			this.authorUrlAsString = authorUrl.toString();
 		}
 
@@ -541,20 +547,46 @@ public class Place extends Entity implements Serializable, Comparable<Place> {
 		
 		@Override
 		public String asString() {
-			return authorName+SEPARATOR+authorUrl+SEPARATOR+time+SEPARATOR+text;
+			return authorName+SEPARATOR+authorUri+SEPARATOR+time+SEPARATOR+text;
 		}
 		public static Review fromString(String fromString) /*throws NoValidJSONStringException*/ {
 //			return JSONHandler.INSTANCE.fromString(fromJsonString,Location.class);
 //			return converter.as asLocation(fromString,Location.class);
-			String[] split = fromString.split(SEPARATOR);
+//			Ln.d("fromString:"+fromString);
+			String[] split = fromString.split("\\"+SEPARATOR);
+			int length = split.length;
+//			for (int i=0;i<split.length;i++) {
+//				Ln.d("split["+i+"]:"+split[i]);
+//			}
 			try {
-				return new Review(split[0], new URI(split[1]), Long.parseLong(split[2]), split[3]);
+//				Ln.d("the long: "+split[2]);
+				String authorName = split[0];
+				URI authorUri = new URI(split[1]);
+				long time = Long.parseLong(split[2]);
+				String text = (length==4?split[3]:"");
+				return new Review(authorName, authorUri, time, text);
 			} catch (NumberFormatException | URISyntaxException e) {
-				e.printStackTrace();
-				return new Review(split[0], null, Long.parseLong(split[2]), split[3]);
+//				e.printStackTrace();
+				String text = (length==4?split[3]:"");
+				return new Review(split[0], null, Long.parseLong(split[2]), text);
 			}
 		}
 		
+		@Override
+		public String toString() {
+			return "[authorName:"+authorName+",authorUri:"+authorUri+",time:"+time+",text:'"+text+"']";
+		}
+		
+		/*@Override
+		public int compareTo(Review another) {
+			if (time<another.getTime()) {
+				return -1;
+			};
+			if (time>another.getTime()) {
+				return 1;
+			};
+			return 0;
+		}*/		
 	}
 	
 }

@@ -42,14 +42,12 @@
 
         <ImageView
             android:id="@+id/icon_web"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="10dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:contentDescription="webicon"
-            android:height="4dp"
-            android:width="4dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/web"
             android:visibility="visible"/>
 
@@ -58,14 +56,13 @@
             style="@style/label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="center_vertical"
-            
-            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="center_vertical|start"
+            android:gravity="start"
             android:autoLink="web"
-            
-            android:textStyle="bold" />
+            android:text="www.prova.com"
+            android:maxLines="1"/>
         <!--
         android:text="www.prova.com" 
         android:drawableLeft="@drawable/web"

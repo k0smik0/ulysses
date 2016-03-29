@@ -5,8 +5,8 @@
  ******************************************************************************/
 package net.iubris.ulysses.tasks.search.aware;
 
-import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -146,11 +146,12 @@ public class SearchAwareTask extends RoboSearchAwareAsyncTask<DefaultUlyssesSear
 		super.onException(e);
 		Ln.d("onException[LocationTooNearException]: "+e.getMessage());
 		
-		Location location = ulyssesSearcher.getLocation();
+		final Location location = ulyssesSearcher.getLocation();
 		Ln.d("onException[LocationTooNearException]: using location: "+location);
 		
 		try {
-			metaProviderForLocationExceptionStateForLocationTooNearException.eventuallyInit(this).get()			
+			metaProviderForLocationExceptionStateForLocationTooNearException
+				.eventuallyInit(this).get()			
 				.tryToSearch( ulyssesSearcher.getLocation() );
 		} catch (NoNetworkException e1) {
 			onException(e1);
@@ -174,11 +175,12 @@ public class SearchAwareTask extends RoboSearchAwareAsyncTask<DefaultUlyssesSear
 		super.onException(e);
 		Ln.d("onException[LocationNotSoUsefulException]: "+e.getMessage());
 		
-		Location location = ulyssesSearcher.getLocation();
+		final Location location = ulyssesSearcher.getLocation();
 		Ln.d("onException[LocationNotSoUsefulException]: using location: "+location);
 		
 		try {
-			metaProviderForLocationExceptionStateForLocationNotSoUsefulException.eventuallyInit(this).get()
+			metaProviderForLocationExceptionStateForLocationNotSoUsefulException
+				.eventuallyInit(this).get()
 				.tryToSearch( ulyssesSearcher.getLocation() );
 		} catch (NoNetworkException e1) {
 			onException(e);

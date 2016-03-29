@@ -36,7 +36,10 @@
 	<string name="label_street_view">Street View</string>
 	<string name="label_button_street_view">Open StreetViewPanorama</string>
 	
-	<string name="gplus">details</string>
-	<string name="reviews">reviews</string>	
+	<string name="gplus">Details</string>
+	<string name="reviews">Reviews</string>
+	<string name="reviews_date_prefix">at</string>
+	<string name="reviews_date_pattern">MM/dd/yyyy</string>
+	
 	
 </resources>

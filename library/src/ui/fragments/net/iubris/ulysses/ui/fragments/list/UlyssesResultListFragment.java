@@ -51,7 +51,7 @@ import android.widget.ListView;
 import com.google.android.gms.maps.SupportMapFragment;
 
 //@ContentView(R.layout.list)
-public abstract class UlyssesListFragment
+public abstract class UlyssesResultListFragment
 <ListFragmentMarkerable extends ListFragment & Markerable & Updatable, 
 MarkerShowableMapFragment extends SupportMapFragment & MarkerShowable & Updatable> 
 extends RoboListFragment 
@@ -146,8 +146,7 @@ implements Refreshable, /*Searchable,*/ Titleable, /*Clickable,*/ Markerable, Up
 	}
 	private PlacesListAdapter buildPlaceAdapter(Class<? extends Activity> clazz) {
 //		Ln.d(activity+" "+R.layout.list_row+" "+markerShowable+" "+fragmentSelectable+" "+clazz+" "+buffer);
-		PlacesListAdapter placesListAdapter = new PlacesListAdapter(activity, R.layout.search_list_row, 
-				markerShowable, fragmentSelectable, clazz, buffer) {
+		PlacesListAdapter placesListAdapter = new PlacesListAdapter(activity, R.layout.list_row_searchresults, markerShowable, fragmentSelectable, clazz, buffer) {
 			
 //			private boolean isImageSetup;
 			@Override
@@ -263,7 +262,7 @@ implements Refreshable, /*Searchable,*/ Titleable, /*Clickable,*/ Markerable, Up
 		return TITLE;
 	}
 	
-	public static <extendingUlyssesListFragment extends UlyssesListFragment<ListFragmentMarkerable,MarkerShowableMapFragment>,
+	public static <extendingUlyssesListFragment extends UlyssesResultListFragment<ListFragmentMarkerable,MarkerShowableMapFragment>,
 	ListFragmentMarkerable extends ListFragment & Markerable & Updatable, 
 	MarkerShowableMapFragment extends SupportMapFragment & MarkerShowable & Updatable>
 	extendingUlyssesListFragment getInstance(FragmentManager fragmentManager, Class<extendingUlyssesListFragment> clazz) {

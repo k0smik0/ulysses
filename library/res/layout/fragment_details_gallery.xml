@@ -4,83 +4,99 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <!-- <TextView
+    <!--
+         <TextView
         android:id="@+id/gallery_label"
         style="@style/label"
         android:layout_marginTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/label_gallery"
-        android:visibility="visible" /> -->
-        
-				<!-- <ImageView
+        android:visibility="visible" />
+    -->
+
+
+    <!--
+         <ImageView
         android:id="@+id/imageview_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:minHeight="128dp"
         android:src="@drawable/ic_launcher"
-        android:visibility="visible" /> -->
-        
-    <!-- <LinearLayout
+        android:visibility="visible" />
+    -->
+
+
+    <!--
+         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"> -->
-        
-		    <android.support.v4.view.ViewPager
-		        xmlns:android="http://schemas.android.com/apk/res/android"
-		        android:id="@+id/gallery_pager"
-		        android:layout_width="match_parent"
-		        android:layout_height="300dp"		        
-		        android:minHeight="256dp"
-		        android:layout_margin="0dp"
-		        android:paddingTop="3dp"
-		        android:paddingBottom="3dp"
-		        android:paddingLeft="3dp"
-		        android:paddingRight="3dp"
-		        android:layout_gravity="center"		        
-		        android:visibility="visible"/>
-		    <!--  -->
-		    <!-- android:background="@drawable/border_details_gallery" -->
-		    <!-- android:background="@drawable/border_blue" -->
-		    <!-- android:background="@drawable/border_gallery_streetview" -->
-		    
-		    <!-- <TextView 
+        android:orientation="vertical">
+    -->
+
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gallery_pager"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:layout_gravity="center"
+        android:layout_margin="0dp"
+        android:paddingBottom="1dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingTop="1dp"
+        android:visibility="visible" />
+    <!--  -->
+    <!-- android:background="@drawable/border_details_gallery" -->
+    <!-- android:background="@drawable/border_blue" -->
+    <!-- android:background="@drawable/border_gallery_streetview" -->
+
+
+    <!--
+           <TextView 
 		        android:id="@+id/gallery_counter"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="0dp"
 		        android:gravity="center"
-		        android:text="source"/> -->
-		    
+		        android:text="source"/>
+    -->
+
+
     <!-- </LinearLayout> -->
-        
-    <!-- <com.celerysoft.imagepager.ImagePager  
+
+
+    <!--
+         <com.celerysoft.imagepager.ImagePager  
         android:id="@+id/zoom_images_gallery_pager"  
         android:layout_width="match_parent"  
         android:layout_height="1dp" 
         android:minHeight="256dp"
         android:background="@drawable/border_blue"
-        android:visibility="visible" /> -->
+        android:visibility="visible" />
+    -->
 
     <include
         android:id="@+id/gallery_label_nophoto_included"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone"
-        layout="@layout/frame_no_photo"/>
-    
-    
-    
-<!--     <ImageView
+        layout="@layout/frame_no_photo"
+        android:visibility="gone" />
+
+    <!--
+         <ImageView
         android:id="@+id/imageview_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:minHeight="256dp"
         android:src="@drawable/ic_launcher"
-        android:visibility="gone" /> -->
-    
-    <!-- <TextView
+        android:visibility="gone" />
+    -->
+
+
+    <!--
+         <TextView
         android:id="@+id/gallery_comments"
         style="@style/label"
         android:layout_marginTop="3dp"
@@ -88,15 +104,21 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="photos comments"
-        android:visibility="visible" /> -->
+        android:visibility="visible" />
+    -->
 
-    <!-- <include
+
+    <!--
+         <include
         android:id="@+id/frame_line_post_gallery_included"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/frame_line" /> -->
-    
-<!--     <Button 
+        layout="@layout/frame_line" />
+    -->
+
+
+    <!--
+         <Button 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -110,7 +132,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         layout="@layout/frame_street_view"
-        android:visibility="visible" /> -->
+        android:visibility="visible" />
+    -->
     <!-- android:background="@drawable/border_gallery_streetview" -->
 
 </LinearLayout>

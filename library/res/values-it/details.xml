@@ -37,8 +37,10 @@
 	<string name="label_street_view">Nei dintorni</string>
 	<string name="label_button_street_view">Apri la visualizzazione 360\'!</string>
 	
-	<string name="gplus">dettagli</string>
-	<string name="reviews">recensioni</string>
+	<string name="gplus">Dettagli</string>
+	<string name="reviews">Recensioni</string>
+		<string name="reviews_date_prefix">il</string>
+	<string name="reviews_date_pattern">dd/MM/yyyy</string>
 	
 	
 </resources>

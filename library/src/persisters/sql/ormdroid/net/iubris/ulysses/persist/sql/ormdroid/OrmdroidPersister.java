@@ -109,10 +109,10 @@ public class OrmdroidPersister implements Persister {
 							place.getWebsite(),
 							place.getDistance(),
 							place.getPlusUrl());
-					Ln.d("place:"+placeExistant+" existant, to update");
+//					Ln.d("place:"+placeExistant+" existant, to update");
 				} else {
 					placeExistant = place;
-					Ln.d("place:"+placeExistant+" new, to insert");
+//					Ln.d("place:"+placeExistant+" new, to insert");
 				}
 				placeExistant.save();
 			} catch(ORMDroidException e) {
@@ -180,7 +180,10 @@ public class OrmdroidPersister implements Persister {
 	public GeoAddress find(GeoAddress geoAddress) {
 		List<GeoAddress> executeMulti = Entity.query(GeoAddress.class).executeMulti();
 		for (GeoAddress ga : executeMulti) {
-			Ln.d(ga);
+			if (ga.getLocation().equals(geoAddress.getLocation())) {
+				Ln.d("GeoAddress:"+ga);
+				return ga;
+			}
 		}
 		return null;
 	}

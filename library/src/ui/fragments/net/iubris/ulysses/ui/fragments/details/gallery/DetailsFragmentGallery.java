@@ -5,6 +5,7 @@ import java.util.List;
 import net.iubris.ulysses.R;
 import net.iubris.ulysses.model.Location;
 import net.iubris.ulysses.model.Place;
+import net.iubris.ulysses.ui.activity.details.PlaceProvideable;
 import net.iubris.ulysses.ui.fragments._base.DetailsFragmentBase;
 import net.iubris.ulysses.ui.gallery.ImagePagerAdapter;
 import net.iubris.ulysses.ui.utils.menu.MenuUtils;
@@ -16,10 +17,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-public class DetailsFragmentGallery extends DetailsFragmentBase {
+public class DetailsFragmentGallery extends DetailsFragmentBase implements PlaceProvideable {
 	
 	public static String TAG = DetailsFragmentGallery.class.getSimpleName();
 
@@ -51,12 +51,13 @@ public class DetailsFragmentGallery extends DetailsFragmentBase {
 		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_details_gallery, container, false);
 		
 		// using my imagepageradapter
-		if (galleryPager==null) {
+//		if (galleryPager==null) {
 			galleryPager = (ViewPager) rootView.findViewById(R.id.gallery_pager);
 //			galleryPager.setPageTransformer(false, new AlphaTransformer());
 			galleryPager.setPageTransformer(false, new DepthPageTransformer());
-Ln.d("new galleryPager");
-		}
+			Ln.d("new galleryPager:"+galleryPager);
+//		}
+		
 		// external
 		/*if (zoomImagesGalleryPager==null) {
 			zoomImagesGalleryPager = (ImagePager) rootView.findViewById(R.id.zoom_images_gallery_pager);
@@ -84,10 +85,14 @@ Ln.d("new galleryPager");
 		}*/
 		// using my
 		if (imagePagerAdapter==null) {
-			imagePagerAdapter = new ImagePagerAdapter(getView().getContext()/*, galleryCounter*/);
+			imagePagerAdapter = new ImagePagerAdapter(getView().getContext());
 			galleryPager.setAdapter(imagePagerAdapter);
-			Ln.d("new ImagePagerAdapter");
+			Ln.d("new ImagePagerAdapter:"+imagePagerAdapter);
 		}
+		// instancing every time
+//		imagePagerAdapter = new ImagePagerAdapter(getView().getContext()/*, galleryCounter*/);
+//		galleryPager.setAdapter(imagePagerAdapter);
+//		Ln.d("new ImagePagerAdapter:"+imagePagerAdapter);
 		
 		/*if (simpleImagePagerAdapter==null) {
 			simpleImagePagerAdapter = buildSimpleImagePagerAdapter();
@@ -145,9 +150,8 @@ Ln.d("new galleryPager");
 			
 			// my own
 			galleryPager.setVisibility(View.VISIBLE);
-			imagePagerAdapter.setPhotoURLS(photosUrls.toArray(new String[]{}));
+			imagePagerAdapter.setPhotoURLS(photosUrls/*.toArray(new String[]{})*/);
 			galleryPager.setCurrentItem( 0 );
-			imagePagerAdapter.notifyDataSetChanged();
 			
 			// external not completely working
 //			zoomImagesGalleryPager.setVisibility(View.VISIBLE);

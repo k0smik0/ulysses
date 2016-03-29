@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import roboguice.util.Ln;
 import net.iubris.ulysses.model.Location;
 
 public enum Converter {
@@ -26,25 +27,32 @@ public enum Converter {
 	}*/
 	
 	public List<String> asList(String dataAsString) {
-		if (dataAsString.isEmpty()) {
+		if (dataAsString==null || dataAsString.isEmpty()) {
 			return Collections.emptyList();
 		}
 		String[] split = dataAsString.split(SEPARATOR_FIRST_LEVEL);
+		for (String string : split) {
+			Ln.d("string: "+string);
+		}
 		return Arrays.asList(split);
 	}
-	public <T extends Stringable> List<T> asListRecursive(String dataAsStringOfData, Class<T> clazz) {
-		List<String> asList = asList(dataAsStringOfData);
+	public <T extends Stringable> List<T> asListRecursive(String dataStringsString, Class<T> clazz) {
+		if (dataStringsString==null || dataStringsString.isEmpty()) {
+			return Collections.emptyList();
+		}
+		List<String> asList = asList(dataStringsString);
 		List<T> list = new ArrayList<>();
 		for (String string : asList) {
 			try {
 				Constructor<T> constructor = clazz.getConstructor(String.class);
 				T t = constructor.newInstance(string);
+				Ln.d("adding: "+t);
 				list.add( t );
 			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e ) {
 				e.printStackTrace();
 			}
 		}
-		return Collections.emptyList();
+		return list;
 	}
 
 	public String asString(Location location) {
@@ -61,6 +69,7 @@ public enum Converter {
 			@SuppressWarnings("unchecked")
 			Collection<Stringable> stringables = (Collection<Stringable>) items;
 			for (Stringable sg : stringables) {
+				Ln.d("appending "+sg);
 				sb.append(sg.asString()).append(SEPARATOR_FIRST_LEVEL);
 			}
 		} catch (ClassCastException e) {
@@ -69,6 +78,7 @@ public enum Converter {
 			}
 		}		
 		sb.deleteCharAt(sb.length()-1); //delete last separator
+		Ln.d("completed string: "+sb.toString());
 		return sb.toString();
 	}
 

@@ -11,7 +11,7 @@
     android:background="@drawable/row_item_border"
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
-    android:tag="search_list_row" 
+    android:tag="list_row_searchresults" 
     >
 
     <!-- android:background="@drawable/row_item_border" -->

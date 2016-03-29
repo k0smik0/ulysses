@@ -38,11 +38,12 @@ public class GeoAddressCache {
 				try {
 					cache.put(geoAddress.getLocation(), geoAddress);
 				} catch(NullPointerException e) {
-					Ln.d("removing geoaddress:"+geoAddress+" from db, since its location or itself is null");
+					Ln.d("removing geoaddress:"+geoAddress+" (transient:"+geoAddress.isTransient()+") "+" from db, since its location or itself is null");
 					geoAddress.delete();
 					persister.find(geoAddress);
 				}
 			}
+			persister.getGeoAddresses();
 		}
 	}
 
